@@ -12,10 +12,8 @@ public class Server {
 
     private static ServerSocket serverSocket;
     private static Socket clientSocket;
-    private static String ip = "";
-    private static int port = 93;
-    private static List<Player> playerList = new ArrayList<>();
-    private static List<Threads> threadsList = new ArrayList<>();
+    private static int port = 930;
+    private static List<ClientHandler> threadsList = new ArrayList<>();
 
     public static void main(String[] args) {
         initializerServer();
@@ -24,36 +22,30 @@ public class Server {
     public static void initializerServer() {
 
         try {
-            //ip = InetAddress.getLocalHost();
+
             serverSocket = new ServerSocket(port);
             System.out.println("waiting for client to connect");
 
-            while (playerList.size() < 4) {
+            while (true) {
 
                 clientSocket = serverSocket.accept();
-                Threads thread = new Threads(clientSocket);
-                thread.start();
 
-                System.out.println("client connected " + clientSocket.getInetAddress().getHostAddress());
-                System.out.println("Digite o nome:");
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
 
-                Scanner sc = new Scanner(System.in);
+                clientHandler.start();
 
-                String name = sc.nextLine();
+                System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
 
-                Player player = new Player(name);
 
-                threadsList.add(thread);
-
-                playerList.add(player);
-                thread.getPlayer().getName();
+                threadsList.add(clientHandler);
 
             }
 
 
         } catch (Exception e) {
-            e.getMessage();
-            e.getMessage();
+
+            System.out.println(e.getMessage());
+
         }
 
 

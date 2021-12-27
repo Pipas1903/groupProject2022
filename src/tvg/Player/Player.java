@@ -4,13 +4,15 @@ import java.net.Socket;
 
 public class Player {
 
-    String name;
-    int money;
+    private Socket socket;
+    private String name;
+    private int money;
 
-    public Player (String name){
+    public Player(String name) {
         this.money = 800;
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
@@ -27,7 +29,11 @@ public class Player {
         this.money = money;
     }
 
-    public void setSocket(Socket socket) {
+    public Socket getSocket() {
+        return socket;
+    }
 
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 }

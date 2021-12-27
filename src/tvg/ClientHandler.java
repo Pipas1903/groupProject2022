@@ -8,13 +8,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Threads extends Thread {
+public class ClientHandler extends Thread {
 
     private final Socket clientSocket;
     private String name;
     private Player player = new Player(name);
 
-    public Threads(Socket socket) {
+    public ClientHandler(Socket socket) {
         this.clientSocket = socket;
     }
 
