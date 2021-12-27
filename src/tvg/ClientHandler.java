@@ -39,12 +39,6 @@ public class ClientHandler extends Thread {
             out.println();
             System.out.println("client " + line + " wrote their name");
 
-            out.println();
-            out.println("players that joined ");
-
-            for (int i = 0; i < playerList.size(); i++) {
-                out.println(playerList.get(i).getName());
-            }
             boolean notQuit = true;
 
             while (notQuit) {
@@ -53,15 +47,17 @@ public class ClientHandler extends Thread {
                 line = in.readLine();
 
                 if (line.equals("1")) {
+                    out.println();
+                    out.println("players that joined: ");
                     for (int i = 0; i < playerList.size(); i++) {
                         out.println(playerList.get(i).getName());
                     }
                 }
+
                 if (line.equals("2")) {
                     out.println("from now on, you won't be able to refresh the players in the game");
                     notQuit = false;
                 }
-
             }
 
         } catch (IOException e) {
