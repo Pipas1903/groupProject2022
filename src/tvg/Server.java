@@ -1,12 +1,9 @@
 package tvg;
 
-import tvg.Player.Player;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Server {
 
@@ -35,7 +32,6 @@ public class Server {
                 clientHandler.start();
 
                 System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
-
 
                 threadsList.add(clientHandler);
 
