@@ -7,23 +7,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientHandler extends Thread {
 
     private final Socket clientSocket;
-    private String name;
-    private Player player = new Player(name);
+    private static List<Player> playerList = new ArrayList<>();
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public String getPlayerName() {
-        return name;
     }
 
     @Override
@@ -35,33 +28,26 @@ public class ClientHandler extends Thread {
         try {
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out.println("escreve o teu nome: ");
+
+            out.println("insert your name: ");
             String line;
-            name = in.readLine();
-            while (clientSocket.isConnected()) {
-                line = in.readLine();
-                System.out.println(name + ":" + line);
-                out.println(line);
+
+            line = in.readLine();
+            Player player = new Player(line);
+            playerList.add(player);
+
+            out.println();
+            out.println("players that joined ");
+            for (int i = 0; i < playerList.size(); i++) {
+                out.println(playerList.get(i).getName());
+
             }
+            out.println();
+            System.out.println("client " + line + " wrote their name");
 
         } catch (IOException e) {
             e.printStackTrace();
-
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-
-                if (in != null) {
-                    in.close();
-                    clientSocket.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
     }
-
 }
