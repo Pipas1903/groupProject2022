@@ -41,7 +41,7 @@ public class ClientHandler extends Thread {
                 out.println(playerList.get(i).getName());
             }
             out.println();
-
+            System.out.println("client " + line + " wrote their name");
 
         } catch (IOException e) {
             e.printStackTrace();
