@@ -32,12 +32,16 @@ public class ClientHandler extends Thread {
             out.println("insert your name: ");
             String line;
 <<<<<<< HEAD
+<<<<<<< HEAD
             name = in.readLine();
             while (clientSocket.isConnected()) {
                 line = in.readLine();
                 System.out.println(name + ":" + line);
                 out.println(line);
 =======
+=======
+
+>>>>>>> master
             line = in.readLine();
             Player player = new Player(line);
             playerList.add(player);
@@ -46,6 +50,10 @@ public class ClientHandler extends Thread {
             out.println("players that joined ");
             for (int i = 0; i < playerList.size(); i++) {
                 out.println(playerList.get(i).getName());
+<<<<<<< HEAD
+>>>>>>> master
+=======
+
 >>>>>>> master
             }
             out.println();
