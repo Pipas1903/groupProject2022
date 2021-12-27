@@ -7,10 +7,19 @@ public class Player {
     private Socket socket;
     private String name;
     private int money;
+    private int order;
 
     public Player(String name) {
         this.money = 800;
         this.name = name;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getName() {
