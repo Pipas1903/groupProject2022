@@ -31,6 +31,7 @@ public class ClientHandler extends Thread {
 
             out.println("insert your name: ");
             String line;
+
             line = in.readLine();
             Player player = new Player(line);
             playerList.add(player);
@@ -39,6 +40,7 @@ public class ClientHandler extends Thread {
             out.println("players that joined ");
             for (int i = 0; i < playerList.size(); i++) {
                 out.println(playerList.get(i).getName());
+
             }
             out.println();
             System.out.println("client " + line + " wrote their name");
