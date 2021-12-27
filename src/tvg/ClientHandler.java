@@ -40,7 +40,7 @@ public class ClientHandler extends Thread {
             name = in.readLine();
             while (clientSocket.isConnected()) {
                 line = in.readLine();
-                System.out.println("envio do cliente: " + line);
+                System.out.println(name + ":" + line);
                 out.println(line);
             }
 
