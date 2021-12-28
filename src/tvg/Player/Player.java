@@ -1,6 +1,11 @@
 package tvg.Player;
 
+import tvg.Game.Tile;
+
+import java.awt.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
@@ -8,6 +13,7 @@ public class Player {
     private String name;
     private int money;
     private int order;
+    private List<Tile> listOfOwnedTiles = new ArrayList<>();
 
     public Player(String name) {
         this.money = 800;
@@ -44,5 +50,13 @@ public class Player {
 
     public void setSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public List<Tile> getListOfOwnedTiles() {
+        return listOfOwnedTiles;
+    }
+
+    public void setListOfOwnedTiles(List<Tile> listOfOwnedTiles) {
+        this.listOfOwnedTiles = listOfOwnedTiles;
     }
 }
