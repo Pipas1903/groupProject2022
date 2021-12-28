@@ -1,5 +1,6 @@
 package tvg.Game;
 
+import tvg.ConsoleUI;
 import tvg.Player.Player;
 
 import java.util.*;
@@ -20,7 +21,7 @@ public class Game {
 
     }
 
-    public void round() {
+    public void turn() {
 
         for (Player i : playerList) {
             System.out.println(i.getName() + Messages.PLAYER_TURN);
@@ -47,6 +48,16 @@ public class Game {
 
     public void chooseGameMode() {
         // until death or limited rounds
+        Scanner sc = new Scanner(System.in);
+        ConsoleUI.printModeSelection();
+
+        if (sc.nextInt() == 1) {
+            tenRoundsGameMode();
+            
+        } else if (sc.nextInt() == 2) {
+            longVersionGameMode();
+        }
+
     }
 
     public void playingOrder() {
@@ -65,6 +76,32 @@ public class Game {
 
         playerList.sort(Comparator.comparing(Player::getOrder));
 
+    }
+
+    public boolean checkGameStatus() {
+        removeFaintedPlayer();
+        if (playerList.size() == 1) {
+            System.out.println("Game over player" + playerList.get(0).getName());
+            return false;
+        }
+        return true;
+    }
+
+    public void removeFaintedPlayer() {
+        playerList.removeIf(player -> player.getMoney() <= 0 & player.getListOfOwnedTiles().size() == 0);
+    }
+
+    public void tenRoundsGameMode() {
+        while (round < 10 & checkGameStatus()) {
+            start();
+            round++;
+        }
+    }
+
+    public void longVersionGameMode() {
+        while (checkGameStatus()) {
+            turn();
+        }
     }
 
 }
