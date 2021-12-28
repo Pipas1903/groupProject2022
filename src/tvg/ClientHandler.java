@@ -1,7 +1,6 @@
 package tvg;
 
 import tvg.Player.Player;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,38 +20,55 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
+        clientJoin();
+    }
+
+    public void clientJoin() {
 
         PrintWriter out = null;
         BufferedReader in = null;
 
         try {
+
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            out.println("insert your name: ");
+            out.println("Insert your name: ");
             String line;
-            while (clientSocket.isConnected()) {
+
+            line = in.readLine();
+            Player player = new Player(line);
+            playerList.add(player);
+
+            System.out.println("Client " + line + " wrote their name");
+
+            boolean notQuit = true;
+
+            while (notQuit) {
+                out.println("If you wish to see the players that already joined, press 1");
+                out.println("Press 2 to quit this menu");
                 line = in.readLine();
-                System.out.println(name + ":" + line);
-                out.println(line);
 
-                line = in.readLine();
-                Player player = new Player(line);
-                playerList.add(player);
-
-                out.println();
-                out.println("players that joined ");
-                for (int i = 0; i < playerList.size(); i++) {
-                    out.println(playerList.get(i).getName());
-
+                if (line.equals("1")) {
+                    out.println();
+                    out.println("Players that joined: ");
+                    for (int i = 0; i < playerList.size(); i++) {
+                        out.println(playerList.get(i).getName());
+                    }
                 }
-                out.println();
-                System.out.println("client " + line + " wrote their name");
 
+                if (line.equals("2")) {
+                    out.println();
+                    out.println("From now on, you won't be able to refresh the players in the game!");
+                    notQuit = false;
+                }
 
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }
+
