@@ -57,20 +57,20 @@ public class ClientHandler extends Thread {
             boolean notQuit = true;
 
             while (notQuit) {
-                out.println("If you wish to see the players that already joined, press 1\n\"Press 2 to quit this menu");
+                out.println("If you wish to see the players that already joined, press 1            Press 2 to quit this menu");
                 line = in.readLine();
 
                 if (line.equals("1")) {
-                    out.println("\nPlayers that joined: " + playerList.iterator().next());
+                    out.println("    Players that joined: " + playerList.iterator().next());
                 }
 
                 if (line.equals("2")) {
-                    out.println("\nFrom now on, you won't be able to refresh the players in the game!");
+                    out.println("     From now on, you won't be able to refresh the players in the game!");
                     notQuit = false;
                 }
 
             }
-            out.println("do you wish to create a game or join one? \n1 - create \n2 - join");
+            out.println("do you wish to create a game or join one?    1 - create       2 - join");
             line = in.readLine();
 
             if (line.equals("1")) {
