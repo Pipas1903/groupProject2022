@@ -30,7 +30,7 @@ public class ClientHandler extends Thread {
         clientJoin();
     }
 
-    public void clientJoin() {
+    public void clientJoin() throws IOException {
 
         PrintWriter out = null;
         BufferedReader in = null;
@@ -39,6 +39,7 @@ public class ClientHandler extends Thread {
 
         //out = new PrintWriter(this.clientSocket.getOutputStream(), true);
         //in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        clientSocket.getOutputStream().write(Integer.parseInt("insert your name"));
         System.out.println("insert your name");
         //out.println("Insert your name: ");
         String line;
