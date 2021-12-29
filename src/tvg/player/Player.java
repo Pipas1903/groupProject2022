@@ -2,6 +2,8 @@ package tvg.player;
 
 import tvg.board.Tile;
 
+import javax.swing.*;
+import java.awt.*;
 import java.net.Socket;
 import java.util.HashMap;
 
@@ -14,6 +16,36 @@ public class Player {
     private static HashMap<Integer, String> playerOwnedTiles = new HashMap<>();
     private int position;
     private int diceRoll;
+    private boolean isHost;
+    JLabel playerSymbol;
+
+    public static HashMap<Integer, String> getPlayerOwnedTiles() {
+        return playerOwnedTiles;
+    }
+
+    public static void playerBuyTile(Integer tileNumber, String playerName) {
+        playerOwnedTiles.put(tileNumber, playerName);
+    }
+
+    public static void removeTileFromPlayer(Integer tileNumber, String playerName) {
+        playerOwnedTiles.remove(tileNumber, playerName);
+    }
+
+    public Player(String name) {
+        this.lifePoints = 800;
+        this.name = name;
+        playerSymbol = new JLabel();
+        playerSymbol.setOpaque(true);
+        playerSymbol.setText(name);
+    }
+
+    public void putSymbolInTile(int x, int y) {
+        playerSymbol.setBounds(x, y, 100, 30);
+    }
+
+    public void setPlayerSymbolColor(Color color) {
+        playerSymbol.setBackground(color);
+    }
 
     public int getDiceRoll() {
         return diceRoll;
@@ -21,23 +53,6 @@ public class Player {
 
     public void setDiceRoll(int diceRoll) {
         this.diceRoll = diceRoll;
-    }
-
-    public static HashMap<Integer, String> getPlayerOwnedTiles() {
-        return playerOwnedTiles;
-    }
-
-    public static void playerBuyTile(Integer tileNumber, String playerName) {
-        playerOwnedTiles.put(tileNumber,playerName);
-    }
-
-    public static void removeTileFromPlayer(Integer tileNumber, String playerName){
-        playerOwnedTiles.remove(tileNumber,playerName);
-    }
-
-    public Player(String name) {
-        this.lifePoints = 800;
-        this.name = name;
     }
 
     public int getOrder() {

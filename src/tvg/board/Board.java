@@ -15,10 +15,11 @@ public class Board extends JPanel implements MouseListener, ActionListener {
     public JButton stealTrap;
     public JButton throwDice;
     public JLabel textinho;
+    public JLabel rounds;
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
-    private ArrayList<Tile> unbuyableTiles = new ArrayList<>(); // tiles like "Start", "Ba" etc...
+    private ArrayList<Tile> unbuyableTiles = new ArrayList<>();
 
     public ArrayList<Tile> getUnbuyableTiles() {
         return unbuyableTiles;
@@ -40,8 +41,11 @@ public class Board extends JPanel implements MouseListener, ActionListener {
         setBorder(new LineBorder(new Color(0, 0, 0)));
         setBounds(xCoord, yCoord, 1100, 710);
         Buttons();
+        textBoxes();
+
         this.setLayout(null);
         this.add(textinho);
+        this.add(rounds);
 
         this.add(stealTrap);
         this.add(passTurn);
@@ -289,12 +293,20 @@ public class Board extends JPanel implements MouseListener, ActionListener {
         }
     }
 
-    public void Buttons() {
+    public void textBoxes() {
         textinho = new JLabel();
         textinho.setBounds(800, 320, 200, 50);
         textinho.setVisible(true);
         textinho.setOpaque(true);
 
+        rounds = new JLabel();
+        rounds.setBounds(800, 400, 100, 50);
+        rounds.setVisible(true);
+        rounds.setOpaque(true);
+
+    }
+
+    public void Buttons() {
 
         armTrap = new JButton();
         armTrap.setBounds(800, 25, 100, 80);
@@ -349,7 +361,6 @@ public class Board extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
 
 
     }

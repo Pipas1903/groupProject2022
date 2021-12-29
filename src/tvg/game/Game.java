@@ -17,17 +17,26 @@ public class Game implements ActionListener {
 
     private List<Player> playerList;
     private Board gameBoard;
-    private int round;
+    private int round = 1;
     private final int lifeRestoration = 80;
     Player winner;
     Player currentPlayer;
-    boolean click = true;
+    private int playerIndex = 0;
 
     public Game(List<Player> playerList) {
         this.playerList = playerList;
 
         gameBoard = new Board(6, 6, 612, 612);
         gameBoard.setBackground(new Color(192, 192, 192));
+
+        gameBoard.armTrap.addActionListener(this);
+        gameBoard.throwDice.addActionListener(this);
+        gameBoard.upgradeTrap.addActionListener(this);
+        gameBoard.stealTrap.addActionListener(this);
+        gameBoard.passTurn.addActionListener(this);
+
+        playingOrder();
+
     }
 
     public Board getGameBoard() {
@@ -39,114 +48,19 @@ public class Game implements ActionListener {
     }
 
     public void rounds() {
-        playingOrder();
-        for (Player i : playerList) {
-            currentPlayer = i;
-            playerTurnDecision(i);
-        }
-
+        currentPlayer = playerList.get(0);
+        gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
+        gameBoard.rounds.setText(Messages.ROUND + round);
+        gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
     }
 
-    public void turn(Player player) {
-        System.out.println(player.getName() + Messages.THROW_DICE);
-        Scanner sc = new Scanner(System.in);
-        sc.nextLine();
-        player.setDiceRoll(Dice.throwDice());
-        System.out.println(Messages.DICE_FACE + player.getDiceRoll());
+    public void turn() {
 
-        if (player.getDiceRoll() + player.getPosition() < gameBoard.getAllTiles().size()) {
-            player.setPosition(player.getPosition() + player.getDiceRoll());
-            playerTurnDecision(player);
-            return;
-        }
-
-        player.setPosition(player.getPosition() + player.getDiceRoll() - gameBoard.getAllTiles().size());
-        player.setLifePoints(player.getLifePoints() + lifeRestoration);
     }
-
-    public void playerTurnDecision(Player player) {
-        // checking if tile is buyable, if it isn't, player can't do anything
-
-        gameBoard.throwDice.addActionListener(this);
-
-/*
-        gameBoard.textinho.setText("you rolled " + player.getDiceRoll());
-        System.out.println("carreguei na merda do botão");*/
-
-        if (!gameBoard.getAllTiles().get(player.getPosition()).isBuyable()) {
-
-            // EVENT HAPPENS
-            gameBoard.passTurn.setEnabled(true);
-            gameBoard.armTrap.setEnabled(false);
-            gameBoard.stealTrap.setEnabled(false);
-            gameBoard.upgradeTrap.setEnabled(false);
-            gameBoard.throwDice.setEnabled(false);
-            ConsoleUI.printPassTurn();
-        }
-    }
-
-
-
-
-        /*
-        // checking if tile has owner
-        if (gameBoard.getTileAtIndex(player.getPosition()).isArmed()) {
-
-            if (playerOwnsTile(player)) {
-                if (!gameBoard.getTileAtIndex(player.getPosition()).isUpgraded()) {
-                    gameBoard.upgradeTrap.setEnabled(true);
-                    gameBoard.passTurn.setEnabled(true);
-                    gameBoard.armTrap.setEnabled(false);
-                    gameBoard.stealTrap.setEnabled(false);
-                    ConsoleUI.printUpgradeOption();
-
-                    return;
-                }
-
-            }
-            if (!gameBoard.getTileAtIndex(player.getPosition()).isUpgraded()) {
-                gameBoard.upgradeTrap.setEnabled(false);
-                gameBoard.passTurn.setEnabled(true);
-                gameBoard.armTrap.setEnabled(false);
-                gameBoard.stealTrap.setEnabled(true);
-                ConsoleUI.printStealOption();
-
-
-                return;
-            }
-        }
-        ConsoleUI.printBuyOption();
-        gameBoard.armTrap.setEnabled(true);
-        gameBoard.upgradeTrap.setEnabled(false);
-        gameBoard.passTurn.setEnabled(true);
-        gameBoard.stealTrap.setEnabled(false);
-        System.out.println(Player.getPlayerOwnedTiles());
-*/
 
 
     public boolean playerOwnsTile(Player player) {
         return Player.getPlayerOwnedTiles().get(player.getPosition()).equals(player.getName());
-    }
-
-
-    public void mouseClicked(MouseEvent e) {
-        for (JButton button : gameBoard.buttonsList)
-            if (e.getSource() == button && button == gameBoard.throwDice) {
-                System.out.println("carreguei na merda do botão");
-                gameBoard.throwDice.updateUI();
-            }
-    }
-
-    public void armTrap(Player player) {
-        Player.playerBuyTile(player.getPosition(), player.getName());
-        player.setLifePoints(player.getLifePoints() - gameBoard.getTileAtIndex(player.getPosition()).getPrice());
-        gameBoard.getTileAtIndex(player.getPosition()).setArmed(true);
-        System.out.println("tile is yours!");
-    }
-
-
-    private void hasPlayerWon() {
-
     }
 
     public void chooseGameMode() {
@@ -213,22 +127,116 @@ public class Game implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameBoard.throwDice) {
-            currentPlayer.setDiceRoll(Dice.throwDice());
-            gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
-            gameBoard.armTrap.setEnabled(true);
+            throwDice();
+        }
+        if (e.getSource() == gameBoard.armTrap) {
+            armTrap();
+        }
+        if (e.getSource() == gameBoard.upgradeTrap) {
+
+        }
+        if (e.getSource() == gameBoard.passTurn) {
+            passTurn();
+        }
+        if (e.getSource() == gameBoard.stealTrap) {
+
         }
     }
 
-    public void armTrap() {
-
-    }
 
     public void throwDice() {
 
+        currentPlayer.setDiceRoll(Dice.throwDice());
+
+        gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
+
+        System.out.println("PLAYER ROLLED DICE");
+
+        if (currentPlayer.getDiceRoll() + currentPlayer.getPosition() < gameBoard.getAllTiles().size()) {
+            currentPlayer.setPosition(currentPlayer.getPosition() + currentPlayer.getDiceRoll());
+            changeButtonsState();
+            return;
+        }
+
+        currentPlayer.setPosition(currentPlayer.getPosition() + currentPlayer.getDiceRoll() - gameBoard.getAllTiles().size());
+        currentPlayer.setLifePoints(currentPlayer.getLifePoints() + lifeRestoration);
+        changeButtonsState();
+    }
+
+    public void changeButtonsState() {
+
+        if (!gameBoard.getTileAtIndex(currentPlayer.getPosition()).isBuyable()) {
+            gameBoard.passTurn.setEnabled(true);
+            gameBoard.upgradeTrap.setEnabled(false);
+            gameBoard.stealTrap.setEnabled(false);
+            gameBoard.armTrap.setEnabled(false);
+            gameBoard.throwDice.setEnabled(false);
+            return;
+        }
+
+        if (gameBoard.getTileAtIndex(currentPlayer.getPosition()).isArmed()) {
+
+            if (playerOwnsTile(currentPlayer)) {
+                gameBoard.upgradeTrap.setEnabled(false);
+                gameBoard.passTurn.setEnabled(true);
+                gameBoard.armTrap.setEnabled(false);
+                gameBoard.stealTrap.setEnabled(false);
+                gameBoard.throwDice.setEnabled(false);
+
+                if (!gameBoard.getTileAtIndex(currentPlayer.getPosition()).isUpgraded()) {
+                    gameBoard.upgradeTrap.setEnabled(true);
+                    gameBoard.passTurn.setEnabled(true);
+                }
+                return;
+
+            }
+            gameBoard.upgradeTrap.setEnabled(false);
+            gameBoard.passTurn.setEnabled(true);
+            gameBoard.armTrap.setEnabled(false);
+            gameBoard.throwDice.setEnabled(false);
+
+            if (!gameBoard.getTileAtIndex(currentPlayer.getPosition()).isUpgraded()) {
+                gameBoard.stealTrap.setEnabled(true);
+            }
+            return;
+        }
+
+        gameBoard.throwDice.setEnabled(false);
+        gameBoard.upgradeTrap.setEnabled(false);
+        gameBoard.passTurn.setEnabled(true);
+        gameBoard.armTrap.setEnabled(true);
+        gameBoard.stealTrap.setEnabled(false);
+    }
+
+    public void armTrap() {
+        gameBoard.armTrap.setEnabled(false);
+        Player.playerBuyTile(currentPlayer.getPosition(), currentPlayer.getName());
+        currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getPrice());
+        gameBoard.getTileAtIndex(currentPlayer.getPosition()).setArmed(true);
+        gameBoard.textinho.setText("you bought " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
+        gameBoard.passTurn.setEnabled(true);
     }
 
     public void upgradeTrap() {
 
+    }
+
+    public void passTurn() {
+        gameBoard.passTurn.setEnabled(false);
+        gameBoard.armTrap.setEnabled(false);
+        gameBoard.upgradeTrap.setEnabled(false);
+        gameBoard.stealTrap.setEnabled(false);
+        gameBoard.throwDice.setEnabled(true);
+        playerIndex++;
+        if (playerIndex > 3) {
+            playerIndex = 0;
+            round++;
+        }
+        currentPlayer = playerList.get(playerIndex);
+
+        gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
+        gameBoard.rounds.setText(Messages.ROUND + round);
+        gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
     }
 }
 
