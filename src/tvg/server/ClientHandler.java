@@ -12,12 +12,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class ClientHandler extends Thread {
 
     private final Socket clientSocket;
     private static List<Player> playerList = new ArrayList<>();
+    Scanner sc = new Scanner(System.in);
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -33,58 +35,65 @@ public class ClientHandler extends Thread {
         PrintWriter out = null;
         BufferedReader in = null;
 
-        try {
+        // try {
 
-            out = new PrintWriter(this.clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        //out = new PrintWriter(this.clientSocket.getOutputStream(), true);
+        //in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        System.out.println("insert your name");
+        //out.println("Insert your name: ");
+        String line;
+        line = sc.nextLine();
+        //line = in.readLine();
+        Player player = new Player(line);
+        player.setSocket(clientSocket);
+        playerList.add(player);
 
-            out.println("Insert your name: ");
-            String line;
+        System.out.println("Client " + line + " wrote their name");
 
-            line = in.readLine();
-            Player player = new Player(line);
-            player.setSocket(clientSocket);
-            playerList.add(player);
+        boolean notQuit = true;
 
-            System.out.println("Client " + line + " wrote their name");
-
-            boolean notQuit = true;
-
-            while (notQuit) {
-                out.println("If you wish to see the players that already joined, press 1");
-                out.println("Press 2 to quit this menu");
-                line = in.readLine();
-
-                if (line.equals("1")) {
-                    out.println();
-                    out.println("Players that joined: ");
-                    for (int i = 0; i < playerList.size(); i++) {
-                        out.println(playerList.get(i).getName());
-                    }
-                }
-
-                if (line.equals("2")) {
-                    out.println();
-                    out.println("From now on, you won't be able to refresh the players in the game!");
-                    notQuit = false;
-                }
-
-            }
-            out.println("do you wish to create a game or join one?");
-            out.println("1 - create \n2 - join");
-            line = in.readLine();
+        while (notQuit) {
+            //out.println("If you wish to see the players that already joined, press 1");
+            //out.println("Press 2 to quit this menu");
+            //line = in.readLine();
+            line = sc.nextLine();
             if (line.equals("1")) {
-                Game game = new Game(playerList);
-                Frame frame = new Frame(game);
-                frame.start();
-            }
-            if (line.equals("2")) {
-                out.println("please wait for a game to start");
+                //out.println();
+                //out.println("Players that joined: ");
+                System.out.println("joined players");
+                for (int i = 0; i < playerList.size(); i++) {
+                    System.out.println(playerList.get(i).getName());
+                    // out.println(playerList.get(i).getName());
+                }
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (line.equals("2")) {
+                //out.println();
+                //out.println("From now on, you won't be able to refresh the players in the game!");
+                System.out.println("From now on, you won't be able to refresh the players in the game!");
+                notQuit = false;
+            }
+
         }
+        //out.println("do you wish to create a game or join one?");
+        //out.println("1 - create \n2 - join");
+        //line = in.readLine();
+        System.out.println("create game or join?");
+        System.out.println("1 - create \n2 - join");
+        line = sc.nextLine();
+        if (line.equals("1")) {
+            Game game = new Game(playerList);
+            Frame frame = new Frame(game);
+            frame.start();
+        }
+        if (line.equals("2")) {
+            //out.println("please wait for a game to start");
+            System.out.println("please wait for a game to start");
+        }
+
+        // } catch (IOException e) {
+        //   e.printStackTrace();
+        // }
     }
 
     public List<Player> getFourRandomPlayers() {
