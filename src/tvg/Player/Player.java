@@ -14,6 +14,7 @@ public class Player {
     private int money;
     private int order;
     private List<Tile> listOfOwnedTiles = new ArrayList<>();
+    private int position;
 
     public Player(String name) {
         this.money = 800;
@@ -58,5 +59,9 @@ public class Player {
 
     public void setListOfOwnedTiles(List<Tile> listOfOwnedTiles) {
         this.listOfOwnedTiles = listOfOwnedTiles;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

@@ -10,6 +10,7 @@ public class Game {
 
     private List<Player> playerList;
     private int round;
+    private List<Tile> openTiles = new ArrayList<>();
 
 
     public Game(List<Player> playerList) {
@@ -26,10 +27,8 @@ public class Game {
         for (Player i : playerList) {
             System.out.println(i.getName() + Messages.PLAYER_TURN);
 
-
             refreshScreen(i);
         }
-
 
     }
 
@@ -101,6 +100,16 @@ public class Game {
     public void longVersionGameMode() {
         while (checkGameStatus()) {
             turn();
+        }
+    }
+
+    public void playerTurnDecision(Player player, Tile tile){
+        Scanner sc = new Scanner(System.in);
+        ConsoleUI.printTurnOption();
+        if(sc.nextInt() == 1){
+            if(tile.isBuyable()){
+                player.setMoney(player.getMoney() - tile.getPrice());
+            }
         }
     }
 
