@@ -84,9 +84,11 @@ public class Tile extends JPanel {
             setBackground(new Color(255,114,111));
         }
         if (this.number == 12) {
-
+            setBackground(new Color(153,255,153));
         }
-        //if(this.number ==
+        if(this.number == 6) {
+            setBackground(new Color(255,178,102));
+        }
         if (this.number == 7 || this.number == 9 || this.number == 10 || this.number == 11) {
             g.drawRect(0, 0, 20, this.getHeight());
             g.setColor(new Color(224,100,168));
@@ -99,7 +101,7 @@ public class Tile extends JPanel {
         }
         if (this.number == 19 || this.number == 20 || this.number == 22 || this.number == 23) {
             g.drawRect(this.getWidth() - 20, 0, 20, this.getHeight());
-            g.setColor(new Color(75,122,71));
+            g.setColor(new Color(0,180,0));
             g.fillRect(this.getWidth() - 20, 0, 20, this.getHeight());
         }
 
