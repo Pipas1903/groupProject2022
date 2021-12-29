@@ -2,7 +2,6 @@ package tvg.game;
 
 import tvg.ConsoleUI;
 import tvg.board.Board;
-import tvg.board.Tile;
 import tvg.player.Player;
 
 import java.awt.*;
@@ -21,8 +20,8 @@ public class Game {
     public Game(List<Player> playerList) {
         this.playerList = playerList;
 
-        gameBoard = new Board(6,6,612,612);
-        gameBoard.setBackground(new Color(192,192,192));
+        gameBoard = new Board(6, 6, 612, 612);
+        gameBoard.setBackground(new Color(192, 192, 192));
     }
 
     public Board getGameBoard() {
@@ -63,8 +62,8 @@ public class Game {
 
     }
 
-    public boolean checkIfPlayerOwnsTile(Player player) {
-        return false;
+    public boolean doesPlayerOwnTile(Player player) {
+        return Player.getPlayerOwnedTiles().containsValue(player);
     }
 
     // this method refreshes the screen for the rest of the players
