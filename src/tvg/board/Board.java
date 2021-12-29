@@ -9,45 +9,45 @@ import java.util.ArrayList;
 
 public class Board extends JPanel implements MouseListener {
 
-    private ArrayList<Square> allSquares = new ArrayList<Square>();
-    private ArrayList<Square> unbuyableSquares = new ArrayList<Square>(); // squares like "Go", "Chances" etc...
+    private ArrayList<Tile> allTiles = new ArrayList<Tile>();
+    private ArrayList<Tile> unbuyableTiles = new ArrayList<Tile>(); // tiles like "Go", "Chances" etc...
 
-    public ArrayList<Square> getUnbuyableSquares() {
-        return unbuyableSquares;
+    public ArrayList<Tile> getUnbuyableTiles() {
+        return unbuyableTiles;
     }
 
-    public ArrayList<Square> getAllSquares() {
-        return allSquares;
+    public ArrayList<Tile> getAllTiles() {
+        return allTiles;
     }
 
-    public Square getSquareAtIndex(int location) {
-        return allSquares.get(location);
+    public Tile getTileAtIndex(int location) {
+        return allTiles.get(location);
     }
 
-    Square square00;
-    Square square01;
-    Square square02;
-    Square square03;
-    Square square04;
-    Square square05;
-    Square square06;
-    Square square07;
-    Square square08;
-    Square square09;
-    Square square10;
-    Square square11;
-    Square square12;
-    Square square13;
-    Square square14;
-    Square square15;
-    Square square16;
-    Square square17;
-    Square square18;
-    Square square19;
-    Square square20;
-    Square square21;
-    Square square22;
-    Square square23;
+    Tile tile00;
+    Tile tile01;
+    Tile tile02;
+    Tile tile03;
+    Tile tile04;
+    Tile tile05;
+    Tile tile06;
+    Tile tile07;
+    Tile tile08;
+    Tile tile09;
+    Tile tile10;
+    Tile tile11;
+    Tile tile12;
+    Tile tile13;
+    Tile tile14;
+    Tile tile15;
+    Tile tile16;
+    Tile tile17;
+    Tile tile18;
+    Tile tile19;
+    Tile tile20;
+    Tile tile21;
+    Tile tile22;
+    Tile tile23;
 
 
     public Board(int xCoord, int yCoord, int width, int height) {
@@ -84,181 +84,181 @@ public class Board extends JPanel implements MouseListener {
 
 
         // squares on the top
-        square00 = new Square(6, 6, 100, 100, squareNames[0], 135);
-        this.add(square00);
-        allSquares.add(square00);
-        unbuyableSquares.add(square00);
-        square00.addMouseListener(this);
+        tile00 = new Tile(6, 6, 100, 100, squareNames[0], 135,true);
+        this.add(tile00);
+        allTiles.add(tile00);
+        unbuyableTiles.add(tile00);
+        tile00.addMouseListener(this);
 
-        square01 = new Square(106, 6, 100, 100, squareNames[1], 180);
-        this.add(square01);
-        allSquares.add(square01);
-        square01.addMouseListener(this);
+        tile01 = new Tile(106, 6, 100, 100, squareNames[1], 180,true);
+        this.add(tile01);
+        allTiles.add(tile01);
+        tile01.addMouseListener(this);
 
-        square02 = new Square(206, 6, 100, 100, squareNames[2], 180);
-        this.add(square02);
-        allSquares.add(square02);
-        unbuyableSquares.add(square02);
-        square02.addMouseListener(this);
+        tile02 = new Tile(206, 6, 100, 100, squareNames[2], 180,true);
+        this.add(tile02);
+        allTiles.add(tile02);
+        unbuyableTiles.add(tile02);
+        tile02.addMouseListener(this);
 
-        square03 = new Square(306, 6, 100, 100, squareNames[3], 180);
-        this.add(square03);
-        allSquares.add(square03);
-        square03.addMouseListener(this);
+        tile03 = new Tile(306, 6, 100, 100, squareNames[3], 180,true);
+        this.add(tile03);
+        allTiles.add(tile03);
+        tile03.addMouseListener(this);
 
-        square04 = new Square(406, 6, 100, 100, squareNames[4], 180);
-        this.add(square04);
-        allSquares.add(square04);
-        square04.addMouseListener(this);
+        tile04 = new Tile(406, 6, 100, 100, squareNames[4], 180,true);
+        this.add(tile04);
+        allTiles.add(tile04);
+        tile04.addMouseListener(this);
 
-        square05 = new Square(506, 6, 100, 100, squareNames[5], 180);
-        this.add(square05);
-        allSquares.add(square05);
-        unbuyableSquares.add(square05);
-        square05.addMouseListener(this);
+        tile05 = new Tile(506, 6, 100, 100, squareNames[5], 180,true);
+        this.add(tile05);
+        allTiles.add(tile05);
+        unbuyableTiles.add(tile05);
+        tile05.addMouseListener(this);
 
-        square06 = new Square(606, 6, 100, 100, squareNames[6], -135);
-        this.add(square06);
-        allSquares.add(square06);
-        unbuyableSquares.add(square06);
-        square06.addMouseListener(this);
+        tile06 = new Tile(606, 6, 100, 100, squareNames[6], -135,true);
+        this.add(tile06);
+        allTiles.add(tile06);
+        unbuyableTiles.add(tile06);
+        tile06.addMouseListener(this);
 
         // squares on the right
-        square07 = new Square(606, 106, 100, 100, squareNames[6], -90);
-        this.add(square07);
-        allSquares.add(square07);
-        square07.addMouseListener(this);
+        tile07 = new Tile(606, 106, 100, 100, squareNames[6], -90,true);
+        this.add(tile07);
+        allTiles.add(tile07);
+        tile07.addMouseListener(this);
 
-        square08 = new Square(606, 206, 100, 100, squareNames[7], -90);
-        this.add(square08);
-        allSquares.add(square08);
-        unbuyableSquares.add(square08);
-        square08.addMouseListener(this);
+        tile08 = new Tile(606, 206, 100, 100, squareNames[7], -90,true);
+        this.add(tile08);
+        allTiles.add(tile08);
+        unbuyableTiles.add(tile08);
+        tile08.addMouseListener(this);
 
-        square09 = new Square(606, 306, 100, 100, squareNames[8], -90);
-        this.add(square09);
-        allSquares.add(square09);
-        square09.addMouseListener(this);
+        tile09 = new Tile(606, 306, 100, 100, squareNames[8], -90,true);
+        this.add(tile09);
+        allTiles.add(tile09);
+        tile09.addMouseListener(this);
 
-        square10 = new Square(606, 406, 100, 100, squareNames[9], -90);
-        this.add(square10);
-        allSquares.add(square10);
-        square10.addMouseListener(this);
+        tile10 = new Tile(606, 406, 100, 100, squareNames[9], -90,true);
+        this.add(tile10);
+        allTiles.add(tile10);
+        tile10.addMouseListener(this);
 
-        square11 = new Square(606, 506, 100, 100, squareNames[10], -90);
-        this.add(square11);
-        allSquares.add(square11);
-        unbuyableSquares.add(square11);
-        square11.addMouseListener(this);
+        tile11 = new Tile(606, 506, 100, 100, squareNames[10], -90,true);
+        this.add(tile11);
+        allTiles.add(tile11);
+        unbuyableTiles.add(tile11);
+        tile11.addMouseListener(this);
 
-        square12 = new Square(606, 606, 100, 100, squareNames[10], -45);
-        this.add(square12);
-        allSquares.add(square12);
-        unbuyableSquares.add(square12);
-        square12.addMouseListener(this);
+        tile12 = new Tile(606, 606, 100, 100, squareNames[10], -45,true);
+        this.add(tile12);
+        allTiles.add(tile12);
+        unbuyableTiles.add(tile12);
+        tile12.addMouseListener(this);
 
 
         // squares on the bottom
-        square13 = new Square(506, 606, 100, 100, squareNames[11], 0);
-        this.add(square13);
-        allSquares.add(square13);
-        square13.addMouseListener(this);
+        tile13 = new Tile(506, 606, 100, 100, squareNames[11], 0,true);
+        this.add(tile13);
+        allTiles.add(tile13);
+        tile13.addMouseListener(this);
 
-        square14 = new Square(406, 606, 100, 100, squareNames[12], 0);
-        this.add(square14);
-        allSquares.add(square14);
-        unbuyableSquares.add(square14);
-        square14.addMouseListener(this);
+        tile14 = new Tile(406, 606, 100, 100, squareNames[12], 0,true);
+        this.add(tile14);
+        allTiles.add(tile14);
+        unbuyableTiles.add(tile14);
+        tile14.addMouseListener(this);
 
-        square15 = new Square(306, 606, 100, 100, squareNames[13], 0);
-        this.add(square15);
-        allSquares.add(square15);
-        square15.addMouseListener(this);
+        tile15 = new Tile(306, 606, 100, 100, squareNames[13], 0,true);
+        this.add(tile15);
+        allTiles.add(tile15);
+        tile15.addMouseListener(this);
 
-        square16 = new Square(206, 606, 100, 100, squareNames[14], 0);
-        this.add(square16);
-        allSquares.add(square16);
-        square16.addMouseListener(this);
+        tile16 = new Tile(206, 606, 100, 100, squareNames[14], 0,true);
+        this.add(tile16);
+        allTiles.add(tile16);
+        tile16.addMouseListener(this);
 
-        square17 = new Square(106, 606, 100, 100, squareNames[15], 0);
-        this.add(square17);
-        allSquares.add(square17);
-        unbuyableSquares.add(square17);
-        square17.addMouseListener(this);
+        tile17 = new Tile(106, 606, 100, 100, squareNames[15], 0,true);
+        this.add(tile17);
+        allTiles.add(tile17);
+        unbuyableTiles.add(tile17);
+        tile17.addMouseListener(this);
 
-        square18 = new Square(6, 606, 100, 100, squareNames[15], 45);
-        this.add(square18);
-        allSquares.add(square18);
-        unbuyableSquares.add(square18);
-        square18.addMouseListener(this);
+        tile18 = new Tile(6, 606, 100, 100, squareNames[15], 45,true);
+        this.add(tile18);
+        allTiles.add(tile18);
+        unbuyableTiles.add(tile18);
+        tile18.addMouseListener(this);
 
 
         // squares on the left
-        square19 = new Square(6, 506, 100, 100, squareNames[16], 90);
-        this.add(square19);
-        allSquares.add(square19);
-        square19.addMouseListener(this);
+        tile19 = new Tile(6, 506, 100, 100, squareNames[16], 90,true);
+        this.add(tile19);
+        allTiles.add(tile19);
+        tile19.addMouseListener(this);
 
-        square20 = new Square(6, 406, 100, 100, squareNames[17], 90);
-        this.add(square20);
-        allSquares.add(square20);
-        square20.addMouseListener(this);
+        tile20 = new Tile(6, 406, 100, 100, squareNames[17], 90,true);
+        this.add(tile20);
+        allTiles.add(tile20);
+        tile20.addMouseListener(this);
 
-        square21 = new Square(6, 306, 100, 100, squareNames[18], 90);
-        this.add(square21);
-        allSquares.add(square21);
-        unbuyableSquares.add(square21);
-        square21.addMouseListener(this);
+        tile21 = new Tile(6, 306, 100, 100, squareNames[18], 90,true);
+        this.add(tile21);
+        allTiles.add(tile21);
+        unbuyableTiles.add(tile21);
+        tile21.addMouseListener(this);
 
-        square22 = new Square(6, 206, 100, 100, squareNames[19], 90);
-        this.add(square22);
-        allSquares.add(square22);
-        square22.addMouseListener(this);
+        tile22 = new Tile(6, 206, 100, 100, squareNames[19], 90,true);
+        this.add(tile22);
+        allTiles.add(tile22);
+        tile22.addMouseListener(this);
 
-        square23 = new Square(6, 106, 100, 100, squareNames[19], 90);
-        this.add(square23);
-        allSquares.add(square23);
-        square23.addMouseListener(this);
+        tile23 = new Tile(6, 106, 100, 100, squareNames[19], 90,true);
+        this.add(tile23);
+        allTiles.add(tile23);
+        tile23.addMouseListener(this);
 
 
         // setting prices
-        square01.setPrice(100);
-        square03.setPrice(100);
-        square04.setPrice(120);
+        tile01.setPrice(100);
+        tile03.setPrice(100);
+        tile04.setPrice(120);
 
-        square06.setPrice(140);
-        square08.setPrice(140);
-        square09.setPrice(160);
+        tile06.setPrice(140);
+        tile08.setPrice(140);
+        tile09.setPrice(160);
 
-        square11.setPrice(180);
-        square13.setPrice(180);
-        square14.setPrice(200);
+        tile11.setPrice(180);
+        tile13.setPrice(180);
+        tile14.setPrice(200);
 
-        square16.setPrice(300);
-        square17.setPrice(300);
-        square19.setPrice(320);
+        tile16.setPrice(300);
+        tile17.setPrice(300);
+        tile19.setPrice(320);
 
-        // setting rent prcies
-        square01.setRentPrice(6);
-        square03.setRentPrice(6);
-        square04.setRentPrice(8);
+        // setting rent prices
+        tile01.setDamageDealt(6);
+        tile03.setDamageDealt(6);
+        tile04.setDamageDealt(8);
 
-        square06.setRentPrice(10);
-        square08.setRentPrice(10);
-        square09.setRentPrice(12);
+        tile06.setDamageDealt(10);
+        tile08.setDamageDealt(10);
+        tile09.setDamageDealt(12);
 
-        square11.setRentPrice(14);
-        square13.setRentPrice(14);
-        square14.setRentPrice(16);
+        tile11.setDamageDealt(14);
+        tile13.setDamageDealt(14);
+        tile14.setDamageDealt(16);
 
-        square16.setRentPrice(26);
-        square17.setRentPrice(26);
-        square19.setRentPrice(28);
+        tile16.setDamageDealt(26);
+        tile17.setDamageDealt(26);
+        tile19.setDamageDealt(28);
     }
 
         @Override
         public void mouseClicked (MouseEvent e){
-            for (Square list: allSquares) {
+            for (Tile list: allTiles) {
                 if(e.getSource()==list){
                     System.out.println(list.getPrice());
                 }

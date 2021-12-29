@@ -12,6 +12,7 @@ public class Game {
     private List<Player> playerList;
     private int round;
     private List<Tile> openTiles = new ArrayList<>();
+    Player winner;
 
 
     public Game(List<Player> playerList) {
@@ -24,7 +25,11 @@ public class Game {
 
     public void rounds() {
         for (Player i : playerList) {
-            turn(i);
+            removeFaintedPlayer();
+            if (checkGameStatus()) {
+                turn(i);
+                break;
+            }
         }
     }
 
@@ -34,6 +39,9 @@ public class Game {
         sc.nextLine();
         int move = Dice.throwDice();
         System.out.println(Messages.DICE_FACE + move);
+
+    }
+    public void playerMoveOnBoard() {
 
     }
 
@@ -85,7 +93,8 @@ public class Game {
     public boolean checkGameStatus() {
         removeFaintedPlayer();
         if (playerList.size() == 1) {
-            System.out.println("Game over player" + playerList.get(0).getName());
+            winner = playerList.get(0);
+            System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
             return false;
         }
         return true;
@@ -96,7 +105,7 @@ public class Game {
     }
 
     public void tenRoundsGameMode() {
-        while (round < 10 & checkGameStatus()) {
+        while (round <= 10 & checkGameStatus()) {
             start();
             round++;
         }
@@ -104,7 +113,7 @@ public class Game {
 
     public void longVersionGameMode() {
         playingOrder();
-        while (checkGameStatus()) {
+        while (winner == null) {
             rounds();
         }
     }

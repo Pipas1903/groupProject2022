@@ -1,7 +1,6 @@
 package tvg;
 
 import tvg.game.Game;
-import tvg.board.Tile;
 import tvg.player.Player;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class Main {
         lista.add(new Player("flepa"));
 
         Player jpo = new Player("joao");
-        Tile jk= new Tile(200, "tile1");
 
         new Game(lista).playingOrder();
     }
