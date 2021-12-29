@@ -1,5 +1,7 @@
 package tvg.player;
 
+import tvg.board.Tile;
+
 import java.net.Socket;
 import java.util.HashMap;
 
@@ -20,8 +22,8 @@ public class Player {
         playerOwnedTiles.put(tileNumber,playerName);
     }
 
-    public static void removeTileFromPlayer(){
-
+    public static void removeTileFromPlayer(Integer tileNumber, String playerName){
+        playerOwnedTiles.remove(tileNumber,playerName);
     }
 
     public Player(String name) {

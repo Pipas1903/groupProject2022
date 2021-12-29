@@ -59,11 +59,8 @@ public class Game {
 
     }
 
-    public void playerMoveOnBoard() {
-
-    }
-
     // this method refreshes the screen for the rest of the players
+
     public void refreshScreen(Player currentPlayer) {
         for (Player i : playerList) {
             if (i != currentPlayer) {
@@ -119,7 +116,7 @@ public class Game {
     }
 
     public void removeFaintedPlayer() {
-        playerList.removeIf(player -> player.getLifePoints() <= 0 & player.getListOfOwnedTiles().size() == 0);
+        playerList.removeIf(player -> player.getLifePoints() <= 0 & !Player.getPlayerOwnedTiles().containsValue(player.getName()));
     }
 
     public void tenRoundsGameMode() {
