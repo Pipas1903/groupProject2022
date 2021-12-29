@@ -27,12 +27,12 @@ public class Client {
 
     public void speak() throws IOException {
         while(clientSocket.isBound()){
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            System.out.println(in.readLine());
+
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             String message = scan.nextLine();
             out.println(message);
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            System.out.println(in.readLine());
         }
     }
 

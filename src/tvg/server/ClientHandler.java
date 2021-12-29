@@ -57,29 +57,20 @@ public class ClientHandler extends Thread {
             boolean notQuit = true;
 
             while (notQuit) {
-                out.println("If you wish to see the players that already joined, press 1");
-                out.println("Press 2 to quit this menu");
+                out.println("If you wish to see the players that already joined, press 1\n\"Press 2 to quit this menu");
                 line = in.readLine();
 
                 if (line.equals("1")) {
-                    out.println();
-                    out.println("Players that joined: ");
-
-                    for (int i = 0; i < playerList.size(); i++) {
-
-                        out.println(playerList.get(i).getName());
-                    }
+                    out.println("\nPlayers that joined: " + playerList.iterator().next());
                 }
 
                 if (line.equals("2")) {
-                    out.println();
-                    out.println("From now on, you won't be able to refresh the players in the game!");
+                    out.println("\nFrom now on, you won't be able to refresh the players in the game!");
                     notQuit = false;
                 }
 
             }
-            out.println("do you wish to create a game or join one?");
-            out.println("1 - create \n2 - join");
+            out.println("do you wish to create a game or join one? \n1 - create \n2 - join");
             line = in.readLine();
 
             if (line.equals("1")) {
@@ -89,7 +80,6 @@ public class ClientHandler extends Thread {
             }
             if (line.equals("2")) {
                 out.println("please wait for a game to start");
-
             }
 
         } catch (IOException e) {
