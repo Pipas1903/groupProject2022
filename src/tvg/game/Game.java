@@ -43,20 +43,28 @@ public class Game {
         }
     }
 
-    public void turn(Player i) {
-        System.out.println(i.getName() + Messages.THROW_DICE);
+    public void turn(Player player) {
+        System.out.println(player.getName() + Messages.THROW_DICE);
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
         int diceRoll = Dice.throwDice();
         System.out.println(Messages.DICE_FACE + diceRoll);
 
-        if (diceRoll + i.getPosition() < gameBoard.getAllTiles().size()) {
-            i.setPosition(i.getPosition() + diceRoll);
+        if (diceRoll + player.getPosition() < gameBoard.getAllTiles().size()) {
+            player.setPosition(player.getPosition() + diceRoll);
 
             return;
         }
-        i.setPosition(i.getPosition() + diceRoll - gameBoard.getAllTiles().size());
+        player.setPosition(player.getPosition() + diceRoll - gameBoard.getAllTiles().size());
 
+    }
+
+    public void playerTurnDecision(Player player) {
+
+    }
+
+    public boolean checkIfPlayerOwnsTile(Player player) {
+        return false;
     }
 
     // this method refreshes the screen for the rest of the players
@@ -130,16 +138,6 @@ public class Game {
         playingOrder();
         while (winner == null) {
             rounds();
-        }
-    }
-
-    public void playerTurnDecision(Player player, Tile tile) {
-        Scanner sc = new Scanner(System.in);
-        ConsoleUI.printTurnOption();
-        if (sc.nextInt() == 1) {
-            if (tile.isBuyable()) {
-                player.setLifePoints(player.getLifePoints() - tile.getPrice());
-            }
         }
     }
 
