@@ -1,25 +1,23 @@
 package tvg.board;
 
 import tvg.board.Board;
+import tvg.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Frame extends JFrame  {
-    Board gameBoard;
+    private Game jogo;
 
-    Frame(){
+    public Frame(Game jogo){
 
-
-
-        gameBoard = new Board(6,6,612,612);
-        gameBoard.setBackground(new Color(192,192,192));
+       this.jogo=jogo;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800,800);
         this.setLayout(null);
         this.setVisible(true);
-        this.add(gameBoard, new Integer(0));
+        this.add(jogo.getGameBoard(), new Integer(0));
 
     }
 

@@ -1,10 +1,7 @@
 package tvg.player;
 
-import tvg.board.Tile;
-
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Player {
 
@@ -12,8 +9,20 @@ public class Player {
     private String name;
     private int lifePoints;
     private int order;
-    private List<Tile> listOfOwnedTiles = new ArrayList<>();
+    private static HashMap<Integer, String> playerOwnedTiles;
     private int position;
+
+    public static HashMap<Integer, String> getPlayerOwnedTiles() {
+        return playerOwnedTiles;
+    }
+
+    public static void playerBuyTile(Integer tileNumber, String playerName) {
+        playerOwnedTiles.put(tileNumber,playerName);
+    }
+
+    public static void removeTileFromPlayer(){
+
+    }
 
     public Player(String name) {
         this.lifePoints = 800;
@@ -52,23 +61,12 @@ public class Player {
         this.socket = socket;
     }
 
-    public List<Tile> getListOfOwnedTiles() {
-        return listOfOwnedTiles;
-    }
-
-    public void setListOfOwnedTiles(List<Tile> listOfOwnedTiles) {
-        this.listOfOwnedTiles = listOfOwnedTiles;
-    }
-
     public int getPosition() {
         return position;
     }
 
-    public void addTilesToList(Tile e) {
-        listOfOwnedTiles.add(e);
+    public void setPosition(int position) {
+        this.position = position;
     }
 
-    public void removeTilesFromList(Tile e){
-        listOfOwnedTiles.remove(e);
-    }
 }

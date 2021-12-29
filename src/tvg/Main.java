@@ -1,5 +1,6 @@
 package tvg;
 
+import tvg.board.Frame;
 import tvg.game.Game;
 import tvg.player.Player;
 
@@ -15,7 +16,9 @@ public class Main {
         lista.add(new Player("flepa"));
 
         Player jpo = new Player("joao");
+        Game jogo = new Game(lista);
 
-        new Game(lista).playingOrder();
+        Frame frame = new Frame(jogo);
+
     }
 }

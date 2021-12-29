@@ -1,22 +1,32 @@
 package tvg.game;
 
 import tvg.ConsoleUI;
+import tvg.board.Board;
 import tvg.board.Tile;
 import tvg.player.Player;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
 
     private List<Player> playerList;
+    private Board gameBoard;
     private int round;
-    private List<Tile> openTiles = new ArrayList<>();
     Player winner;
 
 
     public Game(List<Player> playerList) {
         this.playerList = playerList;
+
+        gameBoard = new Board(6,6,612,612);
+        gameBoard.setBackground(new Color(192,192,192));
+    }
+
+    public Board getGameBoard() {
+        return gameBoard;
     }
 
     public void start() {
@@ -37,10 +47,18 @@ public class Game {
         System.out.println(i.getName() + Messages.THROW_DICE);
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
-        int move = Dice.throwDice();
-        System.out.println(Messages.DICE_FACE + move);
+        int diceRoll = Dice.throwDice();
+        System.out.println(Messages.DICE_FACE + diceRoll);
+
+        if (diceRoll + i.getPosition() < gameBoard.getAllTiles().size()) {
+            i.setPosition(i.getPosition() + diceRoll);
+
+            return;
+        }
+        i.setPosition(i.getPosition() + diceRoll - gameBoard.getAllTiles().size());
 
     }
+
     public void playerMoveOnBoard() {
 
     }

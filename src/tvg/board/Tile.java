@@ -16,11 +16,11 @@ public class Tile extends JPanel {
     private boolean armed;
     private boolean upgraded;
     JLabel nameLabel;
-    static int totalSquares = 0;
+    static int totalTiles = 0;
 
     public Tile(int xCoord, int yCoord, int width, int height, String labelString, int rotationDegrees, boolean buyable) {
-        number = totalSquares;
-        totalSquares++;
+        number = totalTiles;
+        totalTiles++;
         setBorder(new LineBorder(new Color(0, 0, 0)));
         setBounds(xCoord, yCoord, width, height);
         name = labelString;

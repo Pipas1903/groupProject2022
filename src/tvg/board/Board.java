@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class Board extends JPanel implements MouseListener {
 
-    private ArrayList<Tile> allTiles = new ArrayList<Tile>();
-    private ArrayList<Tile> unbuyableTiles = new ArrayList<Tile>(); // tiles like "Go", "Chances" etc...
+    private ArrayList<Tile> allTiles = new ArrayList<>();
+    private ArrayList<Tile> unbuyableTiles = new ArrayList<>(); // tiles like "Go", "Chances" etc...
 
     public ArrayList<Tile> getUnbuyableTiles() {
         return unbuyableTiles;
@@ -239,7 +239,7 @@ public class Board extends JPanel implements MouseListener {
         tile17.setPrice(300);
         tile19.setPrice(320);
 
-        // setting rent prices
+        // setting damage points
         tile01.setDamageDealt(6);
         tile03.setDamageDealt(6);
         tile04.setDamageDealt(8);
