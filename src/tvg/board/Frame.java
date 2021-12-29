@@ -6,18 +6,18 @@ import tvg.game.Game;
 import javax.swing.*;
 import java.awt.*;
 
-public class Frame extends JFrame  {
+public class Frame extends JFrame {
     private Game jogo;
 
-    public Frame(Game jogo){
+    public Frame(Game jogo) {
 
-       this.jogo=jogo;
-
+        this.jogo = jogo;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800,800);
+        this.setSize(1110, 750);
         this.setLayout(null);
-        this.setVisible(true);
         this.add(jogo.getGameBoard(), new Integer(0));
+        this.setResizable(false);
+        this.setVisible(true);
 
     }
 

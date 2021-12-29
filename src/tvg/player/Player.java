@@ -13,6 +13,15 @@ public class Player {
     private int order;
     private static HashMap<Integer, String> playerOwnedTiles;
     private int position;
+    private int diceRoll;
+
+    public int getDiceRoll() {
+        return diceRoll;
+    }
+
+    public void setDiceRoll(int diceRoll) {
+        this.diceRoll = diceRoll;
+    }
 
     public static HashMap<Integer, String> getPlayerOwnedTiles() {
         return playerOwnedTiles;

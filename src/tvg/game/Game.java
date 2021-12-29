@@ -2,7 +2,6 @@ package tvg.game;
 
 import tvg.ConsoleUI;
 import tvg.board.Board;
-import tvg.board.Tile;
 import tvg.player.Player;
 
 import java.awt.*;
@@ -15,14 +14,15 @@ public class Game {
     private List<Player> playerList;
     private Board gameBoard;
     private int round;
+    private final int lifeRestoration = 80;
     Player winner;
 
 
     public Game(List<Player> playerList) {
         this.playerList = playerList;
 
-        gameBoard = new Board(6,6,612,612);
-        gameBoard.setBackground(new Color(192,192,192));
+        gameBoard = new Board(6, 6, 612, 612);
+        gameBoard.setBackground(new Color(192, 192, 192));
     }
 
     public Board getGameBoard() {
@@ -43,20 +43,42 @@ public class Game {
         }
     }
 
-    public void turn(Player i) {
-        System.out.println(i.getName() + Messages.THROW_DICE);
+    public void turn(Player player) {
+        System.out.println(player.getName() + Messages.THROW_DICE);
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
-        int diceRoll = Dice.throwDice();
-        System.out.println(Messages.DICE_FACE + diceRoll);
+        player.setDiceRoll(Dice.throwDice());
+        System.out.println(Messages.DICE_FACE + player.getDiceRoll());
 
-        if (diceRoll + i.getPosition() < gameBoard.getAllTiles().size()) {
-            i.setPosition(i.getPosition() + diceRoll);
-
+        if (player.getDiceRoll() + player.getPosition() < gameBoard.getAllTiles().size()) {
+            player.setPosition(player.getPosition() + player.getDiceRoll());
             return;
         }
-        i.setPosition(i.getPosition() + diceRoll - gameBoard.getAllTiles().size());
+        player.setPosition(player.getPosition() + player.getDiceRoll() - gameBoard.getAllTiles().size());
 
+    }
+
+    public void playerTurnDecision(Player player) {
+        if (!gameBoard.getAllTiles().get(player.getPosition()).isBuyable()) {
+            // EVENT HAPPENS
+            if () {
+                player.setLifePoints(player.getLifePoints() + lifeRestoration);
+            }
+
+            gameBoard.passTurn.setEnabled(true);
+            gameBoard.armTrap.setEnabled(false);
+            gameBoard.stealTrap.setEnabled(false);
+            gameBoard.upgradeTrap.setEnabled(false);
+            return;
+        }
+
+        if (false) {
+
+        }
+    }
+
+    public boolean doesPlayerOwnTile(Player player) {
+        return Player.getPlayerOwnedTiles().containsValue(player);
     }
 
     // this method refreshes the screen for the rest of the players
@@ -130,16 +152,6 @@ public class Game {
         playingOrder();
         while (winner == null) {
             rounds();
-        }
-    }
-
-    public void playerTurnDecision(Player player, Tile tile) {
-        Scanner sc = new Scanner(System.in);
-        ConsoleUI.printTurnOption();
-        if (sc.nextInt() == 1) {
-            if (tile.isBuyable()) {
-                player.setLifePoints(player.getLifePoints() - tile.getPrice());
-            }
         }
     }
 
