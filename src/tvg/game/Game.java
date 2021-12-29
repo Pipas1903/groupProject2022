@@ -52,18 +52,19 @@ public class Game {
 
         if (player.getDiceRoll() + player.getPosition() < gameBoard.getAllTiles().size()) {
             player.setPosition(player.getPosition() + player.getDiceRoll());
+            playerTurnDecision(player);
             return;
         }
-        player.setPosition(player.getPosition() + player.getDiceRoll() - gameBoard.getAllTiles().size());
 
+        player.setPosition(player.getPosition() + player.getDiceRoll() - gameBoard.getAllTiles().size());
+        player.setLifePoints(player.getLifePoints() + lifeRestoration);
     }
 
     public void playerTurnDecision(Player player) {
+        // checking if tile is buyable, if it isn't, player can't do anything
         if (!gameBoard.getAllTiles().get(player.getPosition()).isBuyable()) {
+
             // EVENT HAPPENS
-            if () {
-                player.setLifePoints(player.getLifePoints() + lifeRestoration);
-            }
 
             gameBoard.passTurn.setEnabled(true);
             gameBoard.armTrap.setEnabled(false);
@@ -72,13 +73,16 @@ public class Game {
             return;
         }
 
-        if (false) {
+        // checking if tile has owner
+        if (gameBoard.getTileAtIndex(player.getPosition()).isArmed()) {
+            if (playerOwnsTile(player)) {
 
+            }
         }
     }
 
-    public boolean doesPlayerOwnTile(Player player) {
-        return Player.getPlayerOwnedTiles().containsValue(player);
+    public boolean playerOwnsTile(Player player) {
+        return Player.getPlayerOwnedTiles().get(player.getPosition()).equals(player.getName());
     }
 
     // this method refreshes the screen for the rest of the players
