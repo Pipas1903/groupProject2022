@@ -72,6 +72,7 @@ public class Tile extends JPanel {
 
     }
 
+    // NEEDS CHANGES, GROUPS OF TWO, NOT THREE
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.number == 1 || this.number == 3 || this.number == 4) {

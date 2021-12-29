@@ -47,7 +47,7 @@ public class Board extends JPanel implements MouseListener {
     Tile tile20;
     Tile tile21;
     Tile tile22;
-    Tile square23;
+    Tile tile23;
 
 
     public Board(int xCoord, int yCoord, int width, int height) {
@@ -57,29 +57,30 @@ public class Board extends JPanel implements MouseListener {
         initializeSquares();
     }
 
+    // ISTO TBM TÁ UMA PIXA, MAIS VALE CAGAR PARA O ARRAY E METER O NOME DIRETO.
     private void initializeSquares() {
         // TODO Auto-generated method stub
         String[] squareNames = {
                 "Start",
-                "Oriental Ave",
+                "TRAP1",
                 "event",
-                "Vermont Ave",
-                "Connecticut Ave",
+                "TRAP2",
+                "TRAP3",
                 "event",
-                "St. Charles Place",
+                "TRAP4",
                 "Chance",
-                "States Ave",
-                "Virginia Ave",
+                "TRAP5",
+                "TRAP6",
                 "good luck",
                 "St. James Place",
                 "Community Chest",
-                "Tennessee Ave",
-                "New York Ave",
+                "TRAP7",
+                "TRAP8",
                 "bad luck",
-                "Pacific Ave",
-                "North Carolina Ave",
+                "TRAP9",
+                "TRAP10",
                 "Chance",
-                "Pennsylvania Ave"
+                "TRAP11"
         };
 
 
@@ -215,10 +216,10 @@ public class Board extends JPanel implements MouseListener {
         allTiles.add(tile22);
         tile22.addMouseListener(this);
 
-        square23 = new Tile(6, 106, 100, 100, squareNames[19], 90,true);
-        this.add(square23);
-        allTiles.add(square23);
-        square23.addMouseListener(this);
+        tile23 = new Tile(6, 106, 100, 100, squareNames[19], 90,true);
+        this.add(tile23);
+        allTiles.add(tile23);
+        tile23.addMouseListener(this);
 
 
         // setting prices
