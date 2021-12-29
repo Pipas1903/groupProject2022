@@ -14,6 +14,7 @@ public class Game {
     private List<Player> playerList;
     private Board gameBoard;
     private int round;
+    private final int lifeRestoration = 80;
     Player winner;
 
 
@@ -50,6 +51,7 @@ public class Game {
         System.out.println(Messages.DICE_FACE + diceRoll);
 
         if (diceRoll + player.getPosition() < gameBoard.getAllTiles().size()) {
+            player.setLastPosition(player.getPosition());
             player.setPosition(player.getPosition() + diceRoll);
 
             return;
@@ -59,7 +61,22 @@ public class Game {
     }
 
     public void playerTurnDecision(Player player) {
+        if (!gameBoard.getAllTiles().get(player.getPosition()).isBuyable()) {
+            // EVENT HAPPENS
+            if (true) {
+                player.setLifePoints(player.getLifePoints() + lifeRestoration);
+            }
 
+            gameBoard.passTurn.setEnabled(true);
+            gameBoard.armTrap.setEnabled(false);
+            gameBoard.stealTrap.setEnabled(false);
+            gameBoard.upgradeTrap.setEnabled(false);
+            return;
+        }
+
+        if (false) {
+
+        }
     }
 
     public boolean doesPlayerOwnTile(Player player) {

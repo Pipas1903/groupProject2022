@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class Board extends JPanel implements MouseListener, ActionListener {
 
 
-    JButton armTrap;
-    JButton upgradeTrap;
-    JButton passTrap;
-    JButton stealTrap;
+    public JButton armTrap;
+    public JButton upgradeTrap;
+    public JButton passTurn;
+    public JButton stealTrap;
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();

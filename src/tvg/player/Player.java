@@ -13,6 +13,15 @@ public class Player {
     private int order;
     private static HashMap<Integer, String> playerOwnedTiles;
     private int position;
+    private int lastPosition;
+
+    public int getLastPosition() {
+        return lastPosition;
+    }
+
+    public void setLastPosition(int lastPosition) {
+        this.lastPosition = lastPosition;
+    }
 
     public static HashMap<Integer, String> getPlayerOwnedTiles() {
         return playerOwnedTiles;
