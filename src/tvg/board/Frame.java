@@ -1,4 +1,6 @@
-package tvg.game;
+package tvg.board;
+
+import tvg.board.Board;
 
 import javax.swing.*;
 import java.awt.*;

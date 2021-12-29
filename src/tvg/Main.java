@@ -1,7 +1,7 @@
 package tvg;
 
 import tvg.game.Game;
-import tvg.game.Tile;
+import tvg.board.Tile;
 import tvg.player.Player;
 
 import java.util.ArrayList;

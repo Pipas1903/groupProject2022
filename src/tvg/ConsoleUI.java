@@ -8,7 +8,6 @@ public class ConsoleUI {
     }
 
     public static void printTurnOption() {
-
         System.out.println("Press 1 - To buy this trap");
         System.out.println("Press 2 - To end your turn");
     }

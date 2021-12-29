@@ -1,6 +1,7 @@
 package tvg.game;
 
 import tvg.ConsoleUI;
+import tvg.board.Tile;
 import tvg.player.Player;
 
 import java.util.*;
@@ -19,16 +20,20 @@ public class Game {
 
     public void start() {
         playingOrder();
-
     }
 
-    public void turn() {
-
+    public void rounds() {
         for (Player i : playerList) {
-            System.out.println(i.getName() + Messages.PLAYER_TURN);
-
-            refreshScreen(i);
+            turn(i);
         }
+    }
+
+    public void turn(Player i) {
+        System.out.println(i.getName() + Messages.THROW_DICE);
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+        int move = Dice.throwDice();
+        System.out.println(Messages.DICE_FACE + move);
 
     }
 
@@ -52,7 +57,7 @@ public class Game {
 
         if (sc.nextInt() == 1) {
             tenRoundsGameMode();
-            
+
         } else if (sc.nextInt() == 2) {
             longVersionGameMode();
         }
@@ -87,7 +92,7 @@ public class Game {
     }
 
     public void removeFaintedPlayer() {
-        playerList.removeIf(player -> player.getMoney() <= 0 & player.getListOfOwnedTiles().size() == 0);
+        playerList.removeIf(player -> player.getLifePoints() <= 0 & player.getListOfOwnedTiles().size() == 0);
     }
 
     public void tenRoundsGameMode() {
@@ -98,17 +103,18 @@ public class Game {
     }
 
     public void longVersionGameMode() {
+        playingOrder();
         while (checkGameStatus()) {
-            turn();
+            rounds();
         }
     }
 
-    public void playerTurnDecision(Player player, Tile tile){
+    public void playerTurnDecision(Player player, Tile tile) {
         Scanner sc = new Scanner(System.in);
         ConsoleUI.printTurnOption();
-        if(sc.nextInt() == 1){
-            if(tile.isBuyable()){
-                player.setMoney(player.getMoney() - tile.getPrice());
+        if (sc.nextInt() == 1) {
+            if (tile.isBuyable()) {
+                player.setLifePoints(player.getLifePoints() - tile.getPrice());
             }
         }
     }

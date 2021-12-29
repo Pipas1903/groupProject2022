@@ -1,6 +1,6 @@
 package tvg.player;
 
-import tvg.game.Tile;
+import tvg.board.Tile;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,13 +10,13 @@ public class Player {
 
     private Socket socket;
     private String name;
-    private int money;
+    private int lifePoints;
     private int order;
     private List<Tile> listOfOwnedTiles = new ArrayList<>();
     private int position;
 
     public Player(String name) {
-        this.money = 800;
+        this.lifePoints = 800;
         this.name = name;
     }
 
@@ -36,12 +36,12 @@ public class Player {
         this.name = name;
     }
 
-    public int getMoney() {
-        return money;
+    public int getLifePoints() {
+        return lifePoints;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void setLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
     }
 
     public Socket getSocket() {

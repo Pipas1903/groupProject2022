@@ -1,4 +1,4 @@
-package tvg.game;
+package tvg.board;
 
 public class Tile {
 

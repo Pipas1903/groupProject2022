@@ -1,4 +1,4 @@
-package tvg.game;
+package tvg.board;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
