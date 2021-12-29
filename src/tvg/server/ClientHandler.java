@@ -1,5 +1,7 @@
 package tvg.server;
 
+import tvg.board.Frame;
+import tvg.game.Game;
 import tvg.player.Player;
 
 import java.io.BufferedReader;
@@ -9,6 +11,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class ClientHandler extends Thread {
 
@@ -66,10 +70,38 @@ public class ClientHandler extends Thread {
                 }
 
             }
+            out.println("do you wish to create a game or join one?");
+            out.println("1 - create \n2 - join");
+            line = in.readLine();
+            if (line.equals("1")) {
+                Game game = new Game(playerList);
+                Frame frame = new Frame(game);
+                frame.start();
+            }
+            if (line.equals("2")) {
+                out.println("please wait for a game to start");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Player> getFourRandomPlayers() {
+        Random random = new Random();
+
+        List<Player> chosenPlayers = new ArrayList<>();
+        ArrayList<Integer> number = random.ints(0, playerList.size()).
+                distinct().
+                limit(4).
+                boxed().
+                collect(Collectors.toCollection(ArrayList<Integer>::new));
+
+        for (int i = 0; i < 4; i++) {
+            chosenPlayers.add(playerList.get(number.get(i)));
+        }
+
+        return chosenPlayers;
     }
 
 }

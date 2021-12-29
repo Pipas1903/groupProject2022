@@ -3,6 +3,7 @@ package tvg;
 import tvg.board.Frame;
 import tvg.game.Game;
 import tvg.player.Player;
+import tvg.server.Server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,9 @@ public class Main {
         lista.add(new Player("parra"));
         lista.add(new Player("flepa"));
 
-        Game jogo = new Game(lista);
+        /*Game jogo = new Game(lista);
 
         Frame frame = new Frame(jogo);
-        frame.start();
+        frame.start();*/
     }
 }
