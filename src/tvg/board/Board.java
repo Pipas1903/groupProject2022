@@ -41,7 +41,7 @@ public class Board extends JPanel implements MouseListener, ActionListener {
         this.setLayout(null);
 
         this.add(stealTrap);
-        this.add(passTrap);
+        this.add(passTurn);
         this.add(upgradeTrap);
         this.add(armTrap);
         initializeSquares();
@@ -247,10 +247,10 @@ public class Board extends JPanel implements MouseListener, ActionListener {
         upgradeTrap.setText("Upgrade Trap");
         upgradeTrap.setVisible(true);
 
-        passTrap = new JButton();
-        passTrap.setBounds(800,125, 100,80);
-        passTrap.setText("Pass Trap");
-        passTrap.setVisible(true);
+        passTurn = new JButton();
+        passTurn.setBounds(800,125, 100,80);
+        passTurn.setText("Pass Trap");
+        passTurn.setVisible(true);
 
         stealTrap = new JButton();
         stealTrap.setBounds(900,125,100,80);
