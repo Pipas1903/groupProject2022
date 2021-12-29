@@ -31,7 +31,7 @@ public class Tile extends JPanel {
             nameLabel = new JLabel(labelString);
             nameLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
             nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            nameLabel.setBounds(0, 20, this.getWidth(), 20);
+            nameLabel.setBounds(0, 20, this.getWidth(), 40);
             this.add(nameLabel);
         } else {
 
@@ -75,24 +75,31 @@ public class Tile extends JPanel {
     // NEEDS CHANGES, GROUPS OF TWO, NOT THREE
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (this.number == 1 || this.number == 3 || this.number == 4) {
+        if (this.number == 1 || this.number == 3 || this.number == 4 || this.number == 5) {
             g.drawRect(0, this.getHeight() - 20, this.getWidth(), 20);
             g.setColor(Color.BLUE);
             g.fillRect(0, this.getHeight() - 20, this.getWidth(), 20);
         }
-        if (this.number == 6 || this.number == 8 || this.number == 9) {
+        if(this.number == 18) {
+            setBackground(new Color(255,114,111));
+        }
+        if (this.number == 12) {
+
+        }
+        //if(this.number ==
+        if (this.number == 7 || this.number == 9 || this.number == 10 || this.number == 11) {
             g.drawRect(0, 0, 20, this.getHeight());
-            g.setColor(Color.PINK);
+            g.setColor(new Color(224,100,168));
             g.fillRect(0, 0, 20, this.getHeight());
         }
-        if (this.number == 11 || this.number == 13 || this.number == 14) {
+        if (this.number == 13 || this.number == 15 || this.number == 16 || this.number == 17) {
             g.drawRect(0, 0, this.getWidth(), 20);
             g.setColor(Color.ORANGE);
             g.fillRect(0, 0, this.getWidth(), 20);
         }
-        if (this.number == 16 || this.number == 17 || this.number == 19) {
+        if (this.number == 19 || this.number == 20 || this.number == 22 || this.number == 23) {
             g.drawRect(this.getWidth() - 20, 0, 20, this.getHeight());
-            g.setColor(Color.GREEN);
+            g.setColor(new Color(75,122,71));
             g.fillRect(this.getWidth() - 20, 0, 20, this.getHeight());
         }
 
