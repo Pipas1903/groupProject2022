@@ -47,23 +47,21 @@ public class Game {
         System.out.println(player.getName() + Messages.THROW_DICE);
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
-        int diceRoll = Dice.throwDice();
-        System.out.println(Messages.DICE_FACE + diceRoll);
+        player.setDiceRoll(Dice.throwDice());
+        System.out.println(Messages.DICE_FACE + player.getDiceRoll());
 
-        if (diceRoll + player.getPosition() < gameBoard.getAllTiles().size()) {
-            player.setLastPosition(player.getPosition());
-            player.setPosition(player.getPosition() + diceRoll);
-
+        if (player.getDiceRoll() + player.getPosition() < gameBoard.getAllTiles().size()) {
+            player.setPosition(player.getPosition() + player.getDiceRoll());
             return;
         }
-        player.setPosition(player.getPosition() + diceRoll - gameBoard.getAllTiles().size());
+        player.setPosition(player.getPosition() + player.getDiceRoll() - gameBoard.getAllTiles().size());
 
     }
 
     public void playerTurnDecision(Player player) {
         if (!gameBoard.getAllTiles().get(player.getPosition()).isBuyable()) {
             // EVENT HAPPENS
-            if (true) {
+            if () {
                 player.setLifePoints(player.getLifePoints() + lifeRestoration);
             }
 
