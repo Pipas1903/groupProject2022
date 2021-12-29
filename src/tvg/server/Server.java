@@ -1,9 +1,10 @@
-package tvg;
+package tvg.server;
+
+import tvg.server.ClientHandler;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Server {

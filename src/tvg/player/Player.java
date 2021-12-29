@@ -1,8 +1,7 @@
-package tvg.Player;
+package tvg.player;
 
-import tvg.Game.Tile;
+import tvg.game.Tile;
 
-import java.awt.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +62,13 @@ public class Player {
 
     public int getPosition() {
         return position;
+    }
+
+    public void addTilesToList(Tile e) {
+        listOfOwnedTiles.add(e);
+    }
+
+    public void removeTilesFromList(Tile e){
+        listOfOwnedTiles.remove(e);
     }
 }

@@ -1,4 +1,4 @@
-package tvg.Game;
+package tvg.game;
 
 public class Dice {
 

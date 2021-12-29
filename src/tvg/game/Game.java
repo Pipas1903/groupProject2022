@@ -1,7 +1,7 @@
-package tvg.Game;
+package tvg.game;
 
 import tvg.ConsoleUI;
-import tvg.Player.Player;
+import tvg.player.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;
