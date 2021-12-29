@@ -1,6 +1,7 @@
 package tvg.server;
 
 import tvg.player.Player;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,6 +39,7 @@ public class ClientHandler extends Thread {
 
             line = in.readLine();
             Player player = new Player(line);
+            player.setSocket(clientSocket);
             playerList.add(player);
 
             System.out.println("Client " + line + " wrote their name");

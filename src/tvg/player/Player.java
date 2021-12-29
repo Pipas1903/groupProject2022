@@ -11,7 +11,7 @@ public class Player {
     private String name;
     private int lifePoints;
     private int order;
-    private static HashMap<Integer, String> playerOwnedTiles;
+    private static HashMap<Integer, String> playerOwnedTiles = new HashMap<>();
     private int position;
     private int diceRoll;
 
