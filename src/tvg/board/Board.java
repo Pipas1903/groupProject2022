@@ -77,28 +77,7 @@ public class Board extends JPanel implements MouseListener, ActionListener {
     // ISTO TBM TÁ UMA PIXA, MAIS VALE CAGAR PARA O ARRAY E METER O NOME DIRETO.
     private void initializeSquares() {
         // TODO Auto-generated method stub
-        String[] squareNames = {
-                "Start",
-                "TRAP1",
-                "event",
-                "TRAP2",
-                "TRAP3",
-                "event",
-                "TRAP4",
-                "Chance",
-                "TRAP5",
-                "TRAP6",
-                "good luck",
-                "St. James Place",
-                "Community Chest",
-                "TRAP7",
-                "TRAP8",
-                "bad luck",
-                "TRAP9",
-                "TRAP10",
-                "Chance",
-                "TRAP11"
-        };
+        String[] squareNames = {"Start", "TRAP1", "event", "TRAP2", "TRAP3", "event", "TRAP4", "Chance", "TRAP5", "TRAP6", "good luck", "St. James Place", "Community Chest", "TRAP7", "TRAP8", "bad luck", "TRAP9", "TRAP10", "Chance", "TRAP11"};
 
 
         // squares on the top
@@ -281,6 +260,10 @@ public class Board extends JPanel implements MouseListener, ActionListener {
                 System.out.println(list.getPrice());
             }
         }
+    }
+
+    public void Buttons(){
+
     }
 
     @Override
