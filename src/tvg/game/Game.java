@@ -207,6 +207,7 @@ public class Game implements ActionListener {
     }
 
     public void armTrap() {
+
         gameBoard.armTrap.setEnabled(false);
         Player.playerBuyTile(currentPlayer.getPosition(), currentPlayer.getName());
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getPrice());
