@@ -1,5 +1,6 @@
 package tvg.server;
 
+import tvg.board.Frame;
 import tvg.game.Game;
 
 import java.io.BufferedReader;
@@ -16,7 +17,7 @@ public class Client {
     InetAddress hostName;
     int portNumber;
     Socket clientSocket;
-
+    Game game;
 
     public void getServerInfo() throws IOException {
         System.out.print("Server IP: ");
@@ -25,11 +26,11 @@ public class Client {
         System.out.print("Port: ");
         portNumber = scan.nextInt();
         scan.nextLine();
-        clientSocket =  new Socket(hostName, portNumber);
+        clientSocket = new Socket(hostName, portNumber);
     }
 
     public void speak() throws IOException {
-        while(clientSocket.isBound()){
+        while (clientSocket.isBound()) {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             System.out.println(in.readLine());
 
@@ -37,7 +38,7 @@ public class Client {
             String message = scan.nextLine();
             out.println(message);
 
-
+            Frame frame = new Frame(game);
         }
     }
 
