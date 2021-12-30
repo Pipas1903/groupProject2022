@@ -232,6 +232,7 @@ public class Game implements ActionListener {
             playerIndex = 0;
             round++;
         }
+
         currentPlayer = playerList.get(playerIndex);
 
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
