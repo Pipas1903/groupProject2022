@@ -33,6 +33,7 @@ public class Client {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             String message = scan.nextLine();
             out.println(message);
+
         }
     }
 

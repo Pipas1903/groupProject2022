@@ -14,7 +14,7 @@ public class Server {
     private static Socket clientSocket;
     private static int port = 930;
     private static List<ClientHandler> threadsList = new ArrayList<>();
-    private static List<Player> playerList = new ArrayList<>();
+
 
     public static void main(String[] args) {
         initializerServer();
