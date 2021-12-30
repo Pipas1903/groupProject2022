@@ -1,5 +1,7 @@
 package tvg.server;
 
+import tvg.game.Game;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +16,7 @@ public class Client {
     InetAddress hostName;
     int portNumber;
     Socket clientSocket;
+
 
     public void getServerInfo() throws IOException {
         System.out.print("Server IP: ");
@@ -33,6 +36,7 @@ public class Client {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             String message = scan.nextLine();
             out.println(message);
+
 
         }
     }

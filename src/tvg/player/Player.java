@@ -1,6 +1,8 @@
 package tvg.player;
 
+import tvg.board.Frame;
 import tvg.board.Tile;
+import tvg.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +20,7 @@ public class Player {
     private int diceRoll;
     private boolean isHost;
     JLabel playerSymbol;
+    Frame frame;
 
     public static HashMap<Integer, String> getPlayerOwnedTiles() {
         return playerOwnedTiles;
@@ -31,12 +34,14 @@ public class Player {
         playerOwnedTiles.remove(tileNumber, playerName);
     }
 
-    public Player(String name) {
+    public Player(String name, Game game) {
         this.lifePoints = 800;
         this.name = name;
         playerSymbol = new JLabel();
         playerSymbol.setOpaque(true);
         playerSymbol.setText(name);
+        frame = new Frame(game);
+
     }
 
     public void putSymbolInTile(int x, int y) {
