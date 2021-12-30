@@ -76,13 +76,14 @@ public class ClientHandler extends Thread {
             out.println("do you wish to create a game or join one?    1 - create       2 - join");
             line = in.readLine();
 
+            Game game = new Game(playerList);
+            Frame frame = new Frame(game);
             if (line.equals("1")) {
-                Game game = new Game(playerList);
-                Frame frame = new Frame(game);
                 frame.start();
             }
             if (line.equals("2")) {
                 out.println("please wait for a game to start");
+                frame.start();
             }
 
         } catch (IOException e) {
