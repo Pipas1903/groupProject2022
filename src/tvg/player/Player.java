@@ -1,9 +1,4 @@
 package tvg.player;
-
-import tvg.board.Frame;
-import tvg.board.Tile;
-import tvg.game.Game;
-
 import javax.swing.*;
 import java.awt.*;
 import java.net.Socket;
