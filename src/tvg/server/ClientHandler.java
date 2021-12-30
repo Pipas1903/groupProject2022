@@ -61,15 +61,18 @@ public class ClientHandler extends Thread {
                 line = in.readLine();
 
                 if (line.equals("1")) {
-                    out.println("    Players that joined: " + playerList.iterator().next());
+                    out.println("    Players that joined: " + playerList.iterator().next().getName());
+                    line = in.readLine();
                 }
 
                 if (line.equals("2")) {
                     out.println("     From now on, you won't be able to refresh the players in the game!");
                     notQuit = false;
+                    line = in.readLine();
                 }
 
             }
+
             out.println("do you wish to create a game or join one?    1 - create       2 - join");
             line = in.readLine();
 
