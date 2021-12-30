@@ -20,6 +20,7 @@ public class ClientHandler extends Thread {
     private final Socket clientSocket;
     private static List<Player> playerList = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
+    Game game = new Game(playerList);
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -48,7 +49,7 @@ public class ClientHandler extends Thread {
             String line;
 
             line = in.readLine();
-            Player player = new Player(line);
+            Player player = new Player(line, game);
             player.setSocket(clientSocket);
             playerList.add(player);
 
@@ -76,14 +77,8 @@ public class ClientHandler extends Thread {
             out.println("do you wish to create a game or join one?    1 - create       2 - join");
             line = in.readLine();
 
-            Game game = new Game(playerList);
-            Frame frame = new Frame(game);
-            if (line.equals("1")) {
-                frame.start();
-            }
-            if (line.equals("2")) {
-                out.println("please wait for a game to start");
-                frame.start();
+            if (line.equals("start")) {
+
             }
 
         } catch (IOException e) {
