@@ -20,7 +20,8 @@ public class ClientHandler extends Thread {
     private final Socket clientSocket;
     private static List<Player> playerList = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
-    Game game = new Game(playerList);
+    Game game;
+    Frame frame;
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -49,7 +50,7 @@ public class ClientHandler extends Thread {
             String line;
 
             line = in.readLine();
-            Player player = new Player(line, game);
+            Player player = new Player(line);
             player.setSocket(clientSocket);
             playerList.add(player);
 
@@ -57,29 +58,12 @@ public class ClientHandler extends Thread {
 
             boolean notQuit = true;
 
-            while (notQuit) {
-                out.println("If you wish to see the players that already joined, press 1            Press 2 to quit this menu");
-                line = in.readLine();
-
-                if (line.equals("1")) {
-                    out.println("    Players that joined: " + playerList.iterator().next().getName());
-                    line = in.readLine();
-                }
-
-                if (line.equals("2")) {
-                    out.println("     From now on, you won't be able to refresh the players in the game!");
-                    notQuit = false;
-                    line = in.readLine();
-                }
-
+            while (playerList.size() != 2) {
+                out.println("waiting for other clients");
+                game = new Game(playerList);
             }
-
-            out.println("do you wish to create a game or join one?    1 - create       2 - join");
-            line = in.readLine();
-
-            if (line.equals("start")) {
-
-            }
+            frame = new Frame(game);
+            frame.start();
 
         } catch (IOException e) {
             e.printStackTrace();

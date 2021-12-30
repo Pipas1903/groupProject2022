@@ -20,7 +20,6 @@ public class Player {
     private int diceRoll;
     private boolean isHost;
     JLabel playerSymbol;
-    Frame frame;
 
     public static HashMap<Integer, String> getPlayerOwnedTiles() {
         return playerOwnedTiles;
@@ -34,13 +33,12 @@ public class Player {
         playerOwnedTiles.remove(tileNumber, playerName);
     }
 
-    public Player(String name, Game game) {
+    public Player(String name) {
         this.lifePoints = 800;
         this.name = name;
         playerSymbol = new JLabel();
         playerSymbol.setOpaque(true);
         playerSymbol.setText(name);
-        frame = new Frame(game);
 
     }
 
