@@ -284,13 +284,39 @@ public class Board extends JPanel implements MouseListener, ActionListener {
 
     }
 
+    public void panel(Tile tile){
+
+        JLabel  label = new JLabel();
+        //label.setBounds;
+
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
         for (Tile tile : allTiles) {
             if (e.getSource() == tile) {
-                System.out.println(tile.getPrice());
+
             }
         }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 
     public void textBoxes() {
@@ -340,28 +366,9 @@ public class Board extends JPanel implements MouseListener, ActionListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
     public void actionPerformed(ActionEvent e) {
 
-
     }
+
+
 }

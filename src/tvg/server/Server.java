@@ -23,31 +23,20 @@ public class Server {
     public static void initializerServer() {
 
         try {
-
             serverSocket = new ServerSocket(port);
             System.out.println("waiting for client to connect");
 
             while (true) {
-
                 clientSocket = serverSocket.accept();
-
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
-
                 clientHandler.start();
-
                 System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
-
                 threadsList.add(clientHandler);
-
             }
 
-
         } catch (Exception e) {
-
             System.out.println(e.getMessage());
-
         }
-
 
     }
 

@@ -78,6 +78,7 @@ public class ClientHandler extends Thread {
 
             Game game = new Game(playerList);
             Frame frame = new Frame(game);
+
             if (line.equals("1")) {
                 frame.start();
             }

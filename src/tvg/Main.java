@@ -17,9 +17,9 @@ public class Main {
         lista.add(new Player("parra"));
         lista.add(new Player("flepa"));
 
-        /*Game jogo = new Game(lista);
+        Game jogo = new Game(lista);
 
         Frame frame = new Frame(jogo);
-        frame.start();*/
+        frame.start();
     }
 }
