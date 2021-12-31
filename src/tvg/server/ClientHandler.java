@@ -23,6 +23,7 @@ public class ClientHandler extends Thread {
     Game game;
     Frame frame;
 
+
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
     }
