@@ -55,16 +55,15 @@ public class ClientHandler extends Thread {
 
             boolean notQuit = true;
 
-            while (playerList.size() != 2) {
+            if (playerList.size() == 2) {
 
+                game = new Game(playerList);
+
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                objectOutputStream.writeObject(game);
+                objectOutputStream.flush();
+                objectOutputStream.close();
             }
-
-            game = new Game(playerList);
-
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-            objectOutputStream.writeObject(game);
-            objectOutputStream.flush();
-            objectOutputStream.close();
 
         } catch (IOException e) {
             e.printStackTrace();
