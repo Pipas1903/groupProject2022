@@ -2,10 +2,13 @@ package tvg.server;
 
 import tvg.board.Frame;
 import tvg.game.Game;
+import tvg.player.Player;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
@@ -35,20 +38,18 @@ public class Client {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             String message = scan.nextLine();
             out.println(message);
-            String received = in.readLine();
-            /*while (!received.equals("start")) {
-                ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-                Object object = objectInputStream.readObject();
-                if (object instanceof Game) {
-                    game = (Game) object;
-                }
-*/
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            Object object = objectInputStream.readObject();
+            if (object instanceof Game) {
+                game = (Game) object;
+            }
+
             Frame frame = new Frame(game);
             frame.start();
-            // received = in.readLine();
-            // }
 
         }
+
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

@@ -56,10 +56,8 @@ public class ClientHandler extends Thread {
             boolean notQuit = true;
 
             while (playerList.size() != 2) {
-                System.out.println("...");
-            }
 
-            out.println("start");
+            }
 
             game = new Game(playerList);
 
