@@ -145,6 +145,7 @@ public class Game implements ActionListener, Serializable {
 
     public void throwDice() {
 
+
         currentPlayer.setDiceRoll(Dice.throwDice());
 
         gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
@@ -230,7 +231,7 @@ public class Game implements ActionListener, Serializable {
 
         playerIndex++;
 
-        if (playerIndex > 3) {
+        if (playerIndex > 2) {
             playerIndex = 0;
             round++;
         }

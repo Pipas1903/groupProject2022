@@ -16,7 +16,16 @@ public class Player implements Serializable {
     private int position;
     private int diceRoll;
     private boolean isHost;
+    private boolean yourTurn;
     JLabel playerSymbol;
+
+    public boolean isYourTurn() {
+        return yourTurn;
+    }
+
+    public void setYourTurn(boolean yourTurn) {
+        this.yourTurn = yourTurn;
+    }
 
     public static HashMap<Integer, String> getPlayerOwnedTiles() {
         return playerOwnedTiles;

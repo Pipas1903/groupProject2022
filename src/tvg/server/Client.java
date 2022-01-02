@@ -39,23 +39,39 @@ public class Client {
             String message = scan.nextLine();
             out.println(message);
 
-            ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-            Object object = objectInputStream.readObject();
-            if (object instanceof Game) {
-                game = (Game) object;
-            }
+            receiveGame();
+
             System.out.println(game);
             Frame frame = new Frame(game);
             frame.start();
 
         }
+    }
+
+    public void sendGameAfterTurn() throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+        objectOutputStream.writeObject(game);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
+
+    public void receiveGame() throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+        Object object = objectInputStream.readObject();
+
+        if (object instanceof Game) {
+            game = (Game) object;
+        }
 
     }
+
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client cliente = new Client();
         cliente.getServerInfo();
         cliente.speak();
+
+
     }
 }
 
