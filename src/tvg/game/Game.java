@@ -34,7 +34,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
 
-        playingOrder();
+       // playingOrder();
 
     }
 
@@ -76,7 +76,7 @@ public class Game implements ActionListener, Serializable {
 
     }
 
-    public void playingOrder() {
+    public synchronized void playingOrder() {
 
         Random random = new Random();
 
