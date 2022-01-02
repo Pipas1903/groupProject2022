@@ -6,17 +6,15 @@ import tvg.player.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClientHandler extends Thread {
 
     private final Socket clientSocket;
-    private static List<Player> playerList = new ArrayList<>();
+    private static HashMap<Socket, Player> playerList = new HashMap();
     private static List<Socket> SocketList = new ArrayList<>();
+    private static List<Player> players = new ArrayList<>();
 
     Scanner sc = new Scanner(System.in);
     Game game;
@@ -51,8 +49,8 @@ public class ClientHandler extends Thread {
 
             line = in.readLine();
             Player player = new Player(line);
-            player.setSocket(clientSocket);
-            playerList.add(player);
+            playerList.put(clientSocket, player);
+            players.add(player);
 
             System.out.println("Client " + line + " wrote their name");
 
@@ -60,7 +58,7 @@ public class ClientHandler extends Thread {
 
             if (SocketList.size() == 2) {
 
-                game = new Game(playerList);
+                game = new Game(players);
 
                 for (Socket socket : SocketList) {
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());

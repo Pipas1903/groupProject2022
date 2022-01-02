@@ -19,7 +19,6 @@ public class Server {
 
     public static void main(String[] args) {
         initializerServer();
-
     }
 
     public static void initializerServer() {

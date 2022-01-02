@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 public class Player implements Serializable {
 
-    private Socket socket = new Socket();
     private String name;
     private int lifePoints;
     private int order;
@@ -29,14 +28,6 @@ public class Player implements Serializable {
 
     public static void removeTileFromPlayer(Integer tileNumber, String playerName) {
         playerOwnedTiles.remove(tileNumber, playerName);
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
     }
 
     public Player(String name) {
