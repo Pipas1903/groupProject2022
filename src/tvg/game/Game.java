@@ -7,11 +7,12 @@ import tvg.player.Player;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Game implements ActionListener {
+public class Game implements ActionListener, Serializable {
 
     private List<Player> playerList;
     private Board gameBoard;

@@ -59,6 +59,8 @@ public class ClientHandler extends Thread {
                 System.out.println("...");
             }
 
+            out.println("start");
+
             game = new Game(playerList);
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
