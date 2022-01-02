@@ -16,12 +16,15 @@ public class ClientHandler extends Thread {
 
     private final Socket clientSocket;
     private static List<Player> playerList = new ArrayList<>();
+    private static List<Socket> SocketList = new ArrayList<>();
+
     Scanner sc = new Scanner(System.in);
     Game game;
     Frame frame;
 
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket, List<Socket> list) {
         this.clientSocket = socket;
+        this.SocketList = list;
     }
 
     @Override
@@ -55,14 +58,17 @@ public class ClientHandler extends Thread {
 
             boolean notQuit = true;
 
-            if (playerList.size() == 2) {
+            if (SocketList.size() == 2) {
 
                 game = new Game(playerList);
 
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-                objectOutputStream.writeObject(game);
-                objectOutputStream.flush();
-                objectOutputStream.close();
+                for (Socket socket : SocketList) {
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    objectOutputStream.writeObject(game);
+                    objectOutputStream.flush();
+                    objectOutputStream.close();
+                }
+
             }
 
         } catch (IOException e) {

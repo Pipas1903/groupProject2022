@@ -44,7 +44,7 @@ public class Client {
             if (object instanceof Game) {
                 game = (Game) object;
             }
-
+            System.out.println(game);
             Frame frame = new Frame(game);
             frame.start();
 

@@ -15,6 +15,8 @@ public class Server {
     private static List<ClientHandler> threadsList = new ArrayList<>();
     private static List<Player> playerList = new ArrayList<>();
 
+    private static List<Socket> list = new ArrayList<>();
+
     public static void main(String[] args) {
         initializerServer();
 
@@ -31,13 +33,14 @@ public class Server {
 
                 clientSocket = serverSocket.accept();
 
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                ClientHandler clientHandler = new ClientHandler(clientSocket, list);
 
                 clientHandler.start();
 
                 System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
 
                 threadsList.add(clientHandler);
+                list.add(clientSocket);
             }
 
 
