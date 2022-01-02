@@ -4,10 +4,7 @@ import tvg.board.Frame;
 import tvg.game.Game;
 import tvg.player.Player;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +56,15 @@ public class ClientHandler extends Thread {
             boolean notQuit = true;
 
             while (playerList.size() != 2) {
-                out.println("waiting for other clients");
-                game = new Game(playerList);
+                System.out.println("...");
             }
-            frame = new Frame(game);
-            frame.start();
+
+            game = new Game(playerList);
+
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            objectOutputStream.writeObject(game);
+            objectOutputStream.flush();
+            objectOutputStream.close();
 
         } catch (IOException e) {
             e.printStackTrace();
