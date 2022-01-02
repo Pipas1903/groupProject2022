@@ -48,7 +48,7 @@ public class ClientHandler extends Thread {
 
             line = in.readLine();
             Player player = new Player(line);
-            player.setSocket(clientSocket);
+            //player.setSocket(clientSocket);
             playerList.add(player);
 
             System.out.println("Client " + line + " wrote their name");

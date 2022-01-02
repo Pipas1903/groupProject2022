@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Player implements Serializable {
 
-    private Socket socket;
+    // private Socket socket;
     private String name;
     private int lifePoints;
     private int order;
@@ -80,14 +80,14 @@ public class Player implements Serializable {
         this.lifePoints = lifePoints;
     }
 
-    public Socket getSocket() {
+    /*public Socket getSocket() {
         return socket;
     }
 
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
-
+*/
     public int getPosition() {
         return position;
     }
