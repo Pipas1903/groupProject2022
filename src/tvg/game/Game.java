@@ -231,7 +231,7 @@ public class Game implements ActionListener, Serializable {
 
         playerIndex++;
 
-        if (playerIndex > 2) {
+        if (playerIndex > 1) {
             playerIndex = 0;
             round++;
         }

@@ -1,25 +1,28 @@
 package tvg.server;
 
-import tvg.board.Frame;
 import tvg.game.Game;
-import tvg.player.Player;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
-import java.util.stream.Collectors;
 
+/*
+* client handler
+*/
 public class ClientHandler extends Thread {
 
     public final Socket clientSocket;
+    private List<ClientHandler> allClientsList;
 
     Scanner sc = new Scanner(System.in);
     Game game;
 
-    public String line;
+    private String line;
+    private String name;
 
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket, List<ClientHandler> list) {
         this.clientSocket = socket;
+        this.allClientsList = list;
     }
 
     @Override
@@ -42,18 +45,19 @@ public class ClientHandler extends Thread {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             out.println("Insert your name: ");
+            name = in.readLine();
+            System.out.println("Client " + name + " wrote their name");
 
-
-            line = in.readLine();
-
-
-            System.out.println("Client " + line + " wrote their name");
 
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setAllClientsList(List<ClientHandler> allClientsList) {
+        this.allClientsList = allClientsList;
     }
 
 }
