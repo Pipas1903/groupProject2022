@@ -15,7 +15,7 @@ public class Server {
     private static Socket clientSocket;
     private static int port = 930;
 
-    private static List<ClientHandler> clientHandlers = new ArrayList<>();
+    private static volatile List<ClientHandler> clientHandlers = new ArrayList<>();
 
     public static void main(String[] args) {
         initializerServer();
@@ -29,24 +29,22 @@ public class Server {
             System.out.println("waiting for client to connect");
 
             while (true) {
-                sendActualizedList();
 
                 clientSocket = serverSocket.accept();
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket, clientHandlers);
 
-                sendActualizedList();
-
                 clientHandler.start();
 
                 System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
 
-                clientHandlers.add(clientHandler);
-
                 sendActualizedList();
+
+                clientHandlers.add(clientHandler);
 
                 System.out.println("waiting for client to connect");
 
+                sendActualizedList();
             }
 
         } catch (Exception e) {

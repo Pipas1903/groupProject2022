@@ -14,7 +14,7 @@ public class Client {
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
     int portNumber;
-    Socket clientSocket;
+    Socket serverSocket;
     Game game;
 
 
@@ -25,14 +25,14 @@ public class Client {
         System.out.print("Port: ");
         portNumber = scan.nextInt();
         scan.nextLine();
-        clientSocket = new Socket(hostName, portNumber);
+        serverSocket = new Socket(hostName, portNumber);
     }
 
     public void speak() throws IOException, ClassNotFoundException {
 
-        while (clientSocket.isBound()) {
+        while (serverSocket.isBound()) {
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
             String line = "";
             String received = "";
@@ -43,31 +43,31 @@ public class Client {
 
             if (received.equals("start")) {
                 receiveGame();
+                System.out.println("you joined a game!");
 
-                System.out.println(game);
                 Frame frame = new Frame(game);
                 frame.start();
             }
 
             System.out.println(received);
 
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
             String message = scan.nextLine();
-            out.println(message);
 
+            out.println(message);
         }
     }
 
 
     public void sendGameAfterTurn() throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
         objectOutputStream.writeObject(game);
         objectOutputStream.flush();
         objectOutputStream.close();
     }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+        ObjectInputStream objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
         Object object = objectInputStream.readObject();
 
         if (object instanceof Game) {
