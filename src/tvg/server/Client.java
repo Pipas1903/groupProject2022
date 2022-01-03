@@ -31,20 +31,29 @@ public class Client {
     }
 
     public void speak() throws IOException, ClassNotFoundException {
+
         while (clientSocket.isBound()) {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            System.out.println(in.readLine());
+            String line;
+            String received = "";
+
+            while ((line = in.readLine()) != null) {
+                received += line + "\n";
+            }
+
+            System.out.println(received);
 
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             String message = scan.nextLine();
             out.println(message);
 
-            receiveGame();
+            if (received.equals("start")) {
+                receiveGame();
 
-            System.out.println(game);
-            Frame frame = new Frame(game);
-            frame.start();
-
+                System.out.println(game);
+                Frame frame = new Frame(game);
+                frame.start();
+            }
         }
     }
 

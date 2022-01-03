@@ -50,10 +50,18 @@ public class ClientHandler extends Thread {
             name = in.readLine();
             System.out.println("Client " + name + " wrote their name");
 
-            out.println("Do you wish to: 1 - create a game || 2 - join a game");
+            out.println("Do you wish to create or join a game? \n1 - create a game \n2 - join a game");
             line = in.readLine();
 
-            if (line.equals("1")) allGames.add(new GameManager());
+            if (line.equals("1")) {
+
+                GameManager gameManager = new GameManager();
+                allGames.add(gameManager);
+                out.println("Insert a name for your game: ");
+                line = in.readLine();
+                gameManager.setGameName(line);
+
+            }
 
             if (line.equals("2")) {
                 int id = 1;
@@ -62,6 +70,7 @@ public class ClientHandler extends Thread {
                     out.println(id + " " + games.getGameName());
                     id++;
                 }
+                line = in.readLine();
 
             }
 

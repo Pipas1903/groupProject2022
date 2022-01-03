@@ -1,6 +1,11 @@
 package tvg.server;
 
+import java.net.Socket;
+import java.util.List;
+
 public class GameManager {
+
+    private List<Socket> players;
     private String gameName;
 
     public String getGameName() {
@@ -9,6 +14,10 @@ public class GameManager {
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
+    }
+
+    public void addPlayerSocket(Socket e) {
+        players.add(e);
     }
 
     /*

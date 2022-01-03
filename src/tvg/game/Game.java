@@ -216,6 +216,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.getTileAtIndex(currentPlayer.getPosition()).setArmed(true);
         gameBoard.textinho.setText("you bought " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
         gameBoard.passTurn.setEnabled(true);
+
     }
 
     public void upgradeTrap() {
