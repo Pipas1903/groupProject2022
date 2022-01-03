@@ -1,7 +1,17 @@
 package tvg.server;
 
 public class GameManager {
-/*
+    private String gameName;
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    /*
     public synchronized static void sendGame() throws IOException {
         if (playerSocket.size() == 2) {
 

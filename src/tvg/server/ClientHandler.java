@@ -13,6 +13,7 @@ public class ClientHandler extends Thread {
 
     public final Socket clientSocket;
     private List<ClientHandler> allClientsList;
+    private static List<GameManager> allGames;
 
     Scanner sc = new Scanner(System.in);
     Game game;
@@ -38,6 +39,7 @@ public class ClientHandler extends Thread {
 
         PrintWriter out = null;
         BufferedReader in = null;
+        allGames = new ArrayList<>();
 
         try {
 
@@ -48,6 +50,20 @@ public class ClientHandler extends Thread {
             name = in.readLine();
             System.out.println("Client " + name + " wrote their name");
 
+            out.println("Do you wish to: 1 - create a game || 2 - join a game");
+            line = in.readLine();
+
+            if (line.equals("1")) allGames.add(new GameManager());
+
+            if (line.equals("2")) {
+                int id = 1;
+
+                for (GameManager games : allGames) {
+                    out.println(id + " " + games.getGameName());
+                    id++;
+                }
+
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
