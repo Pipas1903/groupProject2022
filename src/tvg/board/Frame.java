@@ -14,6 +14,7 @@ public class Frame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1110, 750);
         this.setLayout(null);
+
         this.add(jogo.getGameBoard(), new Integer(0));
         this.setResizable(false);
         this.setVisible(true);

@@ -7,11 +7,12 @@ import tvg.player.Player;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Game implements ActionListener {
+public class Game implements ActionListener, Serializable {
 
     private List<Player> playerList;
     private Board gameBoard;
@@ -33,7 +34,7 @@ public class Game implements ActionListener {
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
 
-        playingOrder();
+       // playingOrder();
 
     }
 
@@ -75,7 +76,7 @@ public class Game implements ActionListener {
 
     }
 
-    public void playingOrder() {
+    public synchronized void playingOrder() {
 
         Random random = new Random();
 
@@ -143,6 +144,7 @@ public class Game implements ActionListener {
 
 
     public void throwDice() {
+
 
         currentPlayer.setDiceRoll(Dice.throwDice());
 
@@ -229,7 +231,7 @@ public class Game implements ActionListener {
 
         playerIndex++;
 
-        if (playerIndex > 3) {
+        if (playerIndex > 1) {
             playerIndex = 0;
             round++;
         }

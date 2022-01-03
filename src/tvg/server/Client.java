@@ -2,13 +2,13 @@ package tvg.server;
 
 import tvg.board.Frame;
 import tvg.game.Game;
+import tvg.player.Player;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
@@ -30,7 +30,7 @@ public class Client {
         clientSocket = new Socket(hostName, portNumber);
     }
 
-    public void speak() throws IOException {
+    public void speak() throws IOException, ClassNotFoundException {
         while (clientSocket.isBound()) {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             System.out.println(in.readLine());
@@ -39,12 +39,34 @@ public class Client {
             String message = scan.nextLine();
             out.println(message);
 
+            receiveGame();
+
+            System.out.println(game);
             Frame frame = new Frame(game);
+            frame.start();
 
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public void sendGameAfterTurn() throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+        objectOutputStream.writeObject(game);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
+
+    public void receiveGame() throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+        Object object = objectInputStream.readObject();
+
+        if (object instanceof Game) {
+            game = (Game) object;
+        }
+
+    }
+
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client cliente = new Client();
         cliente.getServerInfo();
         cliente.speak();

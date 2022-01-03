@@ -3,12 +3,12 @@ package tvg.player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class Player {
+public class Player implements Serializable {
 
-    private Socket socket;
     private String name;
     private int lifePoints;
     private int order;
@@ -16,7 +16,16 @@ public class Player {
     private int position;
     private int diceRoll;
     private boolean isHost;
+    private boolean yourTurn;
     JLabel playerSymbol;
+
+    public boolean isYourTurn() {
+        return yourTurn;
+    }
+
+    public void setYourTurn(boolean yourTurn) {
+        this.yourTurn = yourTurn;
+    }
 
     public static HashMap<Integer, String> getPlayerOwnedTiles() {
         return playerOwnedTiles;
@@ -79,14 +88,14 @@ public class Player {
         this.lifePoints = lifePoints;
     }
 
-    public Socket getSocket() {
+    /*public Socket getSocket() {
         return socket;
     }
 
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
-
+*/
     public int getPosition() {
         return position;
     }
