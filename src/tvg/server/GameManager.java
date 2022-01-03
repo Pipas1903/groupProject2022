@@ -17,7 +17,7 @@ import static java.lang.Thread.sleep;
 
 public class GameManager {
 
-    private static List<Socket> clients = new ArrayList<>();
+    private volatile List<Socket> clients = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
     private Game game;
     private String gameName;
