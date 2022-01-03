@@ -14,15 +14,15 @@ public class ClientHandler extends Thread {
 
     public final Socket clientSocket;
     private volatile List<ClientHandler> allClientsList;
-    private static volatile List<GameManager> allGames = new ArrayList<>();
-    private static volatile List<Player> players = new ArrayList<>();
+    public static volatile List<GameManager> allGames = new ArrayList<>();
+    public static volatile List<Player> players = new ArrayList<>();
 
     private Player player;
 
     private String line;
     private String name;
 
-    private static volatile Boolean ready = false;
+    public static volatile Boolean ready = false;
 
     public ClientHandler(Socket socket, List<ClientHandler> list) {
         this.clientSocket = socket;
@@ -44,7 +44,6 @@ public class ClientHandler extends Thread {
 
         try {
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
-
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             out.println("Insert your name: ");
