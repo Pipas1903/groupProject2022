@@ -44,7 +44,7 @@ public class Player implements Serializable {
     }
 
     public static void removeTileFromPlayer(Integer tileNumber) {
-        playerOwnedTiles.remove(tileNumber,playerOwnedTiles.get(tileNumber));
+        playerOwnedTiles.remove(tileNumber);
     }
 
     public Player(String name) {
