@@ -29,9 +29,13 @@ public class Server {
             System.out.println("waiting for client to connect");
 
             while (true) {
+                sendActualizedList();
+
                 clientSocket = serverSocket.accept();
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket, clientHandlers);
+
+                sendActualizedList();
 
                 clientHandler.start();
 

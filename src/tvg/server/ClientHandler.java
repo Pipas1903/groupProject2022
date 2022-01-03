@@ -70,12 +70,14 @@ public class ClientHandler extends Thread {
 
                 gameManager.addClientSocket(clientSocket);
                 gameManager.addPlayer(player);
+
                 player.setHost(true);
+
                 out.println("Game created successfully!");
                 out.println("stop");
 
                 while (allClientsList.size() < 1) {
-                    wait();
+
                 }
 
                 gameManager.startGame();
@@ -92,12 +94,16 @@ public class ClientHandler extends Thread {
                 out.println("stop");
 
                 line = in.readLine();
+                int index = Integer.parseInt(line);
+                allGames.get(index).addClientSocket(clientSocket);
+                allGames.get(index).addPlayer(player);
 
-                allGames.get(Integer.parseInt(line)).addClientSocket(clientSocket);
-                allGames.get(Integer.parseInt(line)).addPlayer(player);
+                System.out.println(name + " joined game " + allGames.get(index).getGameName());
+                out.println("Welcome to " + allGames.get(index).getHost().getName() + "'s game!");
+                out.println("stop");
             }
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

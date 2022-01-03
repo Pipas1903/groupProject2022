@@ -41,12 +41,6 @@ public class Client {
                 received += line + "\n";
             }
 
-            System.out.println(received);
-
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            String message = scan.nextLine();
-            out.println(message);
-
             if (received.equals("start")) {
                 receiveGame();
 
@@ -54,6 +48,13 @@ public class Client {
                 Frame frame = new Frame(game);
                 frame.start();
             }
+
+            System.out.println(received);
+
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            String message = scan.nextLine();
+            out.println(message);
+
         }
     }
 

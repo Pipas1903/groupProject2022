@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class GameManager {
 
-    private List<Socket> clients = new ArrayList<>();
+    private static List<Socket> clients = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
     private Game game;
     private String gameName;
@@ -80,6 +80,7 @@ public class GameManager {
 
             out = new PrintWriter(client.getOutputStream(), true);
             out.println("start");
+            out.println("stop");
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
             objectOutputStream.writeObject(game);
