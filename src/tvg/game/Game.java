@@ -202,7 +202,6 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void armTrap() {
-
         gameBoard.armTrap.setEnabled(false);
         Player.playerBuyTile(currentPlayer.getPosition(), currentPlayer.getName());
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getPrice());
@@ -266,5 +265,12 @@ public class Game implements ActionListener, Serializable {
             }
         }
         gameBoard.stealTrap.setEnabled(false);
+    }
+
+    public void stealTrap(){
+        gameBoard.stealTrap.setEnabled(false);
+        currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getUpgradePrice());
+        gameBoard.getTileAtIndex(currentPlayer.getPosition()).setUpgraded(true);
+        gameBoard.textinho.setText("you upgraded: " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
     }
 }
