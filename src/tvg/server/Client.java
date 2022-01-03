@@ -2,16 +2,14 @@ package tvg.server;
 
 import tvg.board.Frame;
 import tvg.game.Game;
-import tvg.player.Player;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Client {
+
     // OPEN A CLIENT SOCKET
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
@@ -33,11 +31,13 @@ public class Client {
     public void speak() throws IOException, ClassNotFoundException {
 
         while (clientSocket.isBound()) {
+
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String line;
+
+            String line = "";
             String received = "";
 
-            while ((line = in.readLine()) != null) {
+            while (!(line = in.readLine()).equals("stop")) {
                 received += line + "\n";
             }
 
@@ -56,6 +56,7 @@ public class Client {
             }
         }
     }
+
 
     public void sendGameAfterTurn() throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());

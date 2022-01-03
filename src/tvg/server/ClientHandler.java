@@ -14,7 +14,7 @@ public class ClientHandler extends Thread {
 
     public final Socket clientSocket;
     private List<ClientHandler> allClientsList;
-    private static List<GameManager> allGames;
+    private static List<GameManager> allGames = new ArrayList<>();
 
     private Player player;
 
@@ -48,11 +48,14 @@ public class ClientHandler extends Thread {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             out.println("Insert your name: ");
+            out.println("stop");
+
             name = in.readLine();
             System.out.println("Client " + name + " wrote their name");
             player = new Player(name);
 
             out.println("Do you wish to create or join a game? \n1 - create a game \n2 - join a game");
+            out.println("stop");
             line = in.readLine();
 
             if (line.equals("1")) {
@@ -60,6 +63,7 @@ public class ClientHandler extends Thread {
                 GameManager gameManager = new GameManager();
                 allGames.add(gameManager);
                 out.println("Insert a name for your game: ");
+                out.println("stop");
 
                 line = in.readLine();
                 gameManager.setGameName(line);
@@ -68,6 +72,7 @@ public class ClientHandler extends Thread {
                 gameManager.addPlayer(player);
                 player.setHost(true);
                 out.println("Game created successfully!");
+                out.println("stop");
 
                 while (allClientsList.size() < 1) {
                     wait();
@@ -84,6 +89,8 @@ public class ClientHandler extends Thread {
                     out.println(id + " " + games.getGameName());
                     id++;
                 }
+                out.println("stop");
+
                 line = in.readLine();
 
                 allGames.get(Integer.parseInt(line)).addClientSocket(clientSocket);

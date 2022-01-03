@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class GameManager {
 
-    private List<Socket> clients;
+    private List<Socket> clients = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
     private Game game;
     private String gameName;
