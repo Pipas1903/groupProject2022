@@ -138,7 +138,7 @@ public class Game implements ActionListener, Serializable {
             passTurn();
         }
         if (e.getSource() == gameBoard.stealTrap) {
-
+            stealTrap();
         }
     }
 
@@ -270,8 +270,9 @@ public class Game implements ActionListener, Serializable {
 
     public void stealTrap(){
         gameBoard.stealTrap.setEnabled(false);
+        Player.removeTileFromPlayer(currentPlayer.getPosition());
+        Player.playerBuyTile(currentPlayer.getPosition(),currentPlayer.getName());
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getUpgradePrice());
-        gameBoard.getTileAtIndex(currentPlayer.getPosition()).setUpgraded(true);
-        gameBoard.textinho.setText("you upgraded: " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
+        gameBoard.textinho.setText("you stealed: " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
     }
 }
