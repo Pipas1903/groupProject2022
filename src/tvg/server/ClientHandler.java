@@ -1,6 +1,7 @@
 package tvg.server;
 
 import tvg.game.Game;
+import tvg.player.Player;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,8 +16,7 @@ public class ClientHandler extends Thread {
     private List<ClientHandler> allClientsList;
     private static List<GameManager> allGames;
 
-    Scanner sc = new Scanner(System.in);
-    Game game;
+    private Player player;
 
     private String line;
     private String name;
@@ -41,6 +41,7 @@ public class ClientHandler extends Thread {
         BufferedReader in = null;
         allGames = new ArrayList<>();
 
+
         try {
 
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
@@ -49,6 +50,7 @@ public class ClientHandler extends Thread {
             out.println("Insert your name: ");
             name = in.readLine();
             System.out.println("Client " + name + " wrote their name");
+            player = new Player(name);
 
             out.println("Do you wish to create or join a game? \n1 - create a game \n2 - join a game");
             line = in.readLine();
@@ -58,13 +60,25 @@ public class ClientHandler extends Thread {
                 GameManager gameManager = new GameManager();
                 allGames.add(gameManager);
                 out.println("Insert a name for your game: ");
+
                 line = in.readLine();
                 gameManager.setGameName(line);
 
+                gameManager.addClientSocket(clientSocket);
+                gameManager.addPlayer(player);
+                player.setHost(true);
+                out.println("Game created successfully!");
+
+                while (allClientsList.size() < 1) {
+                    wait();
+                }
+
+                gameManager.startGame();
             }
 
             if (line.equals("2")) {
-                int id = 1;
+                player.setHost(false);
+                int id = 0;
 
                 for (GameManager games : allGames) {
                     out.println(id + " " + games.getGameName());
@@ -72,9 +86,11 @@ public class ClientHandler extends Thread {
                 }
                 line = in.readLine();
 
+                allGames.get(Integer.parseInt(line)).addClientSocket(clientSocket);
+                allGames.get(Integer.parseInt(line)).addPlayer(player);
             }
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

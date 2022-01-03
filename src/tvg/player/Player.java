@@ -19,6 +19,14 @@ public class Player implements Serializable {
     private boolean yourTurn;
     JLabel playerSymbol;
 
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setHost(boolean host) {
+        isHost = host;
+    }
+
     public boolean isYourTurn() {
         return yourTurn;
     }
