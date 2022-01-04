@@ -1,5 +1,7 @@
 package tvg.board;
 
+import tvg.player.Player;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -16,6 +18,14 @@ public class Board extends JPanel implements MouseListener, ActionListener {
     public JButton throwDice;
     public JLabel textinho;
     public JLabel rounds;
+    public JPanel info;
+    public JLabel name;
+    public JLabel price;
+    public JLabel upgradePrice;
+    public JLabel printPlayer1;
+
+
+
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
@@ -47,11 +57,15 @@ public class Board extends JPanel implements MouseListener, ActionListener {
         this.add(textinho);
         this.add(rounds);
 
+
         this.add(stealTrap);
         this.add(passTurn);
         this.add(upgradeTrap);
         this.add(armTrap);
         this.add(throwDice);
+        this.add(info);
+
+
 
         buttonsList.add(stealTrap);
         buttonsList.add(passTurn);
@@ -284,16 +298,19 @@ public class Board extends JPanel implements MouseListener, ActionListener {
 
     }
 
-    public void panel(Tile tile){
+    public void panel(Tile tile) {
 
-        JLabel  label = new JLabel();
-        //label.setBounds;
+        name.setText(tile.getName());
+        price.setText("Price: "+ tile.getPrice());
+        upgradePrice.setText("Upgrade Price: " + tile.getUpgradePrice());
+        info.updateUI();
 
     }
     @Override
     public void mouseClicked(MouseEvent e) {
         for (Tile tile : allTiles) {
             if (e.getSource() == tile) {
+                 panel(tile);
 
             }
         }
@@ -319,30 +336,57 @@ public class Board extends JPanel implements MouseListener, ActionListener {
 
     }
 
+
     public void textBoxes() {
         textinho = new JLabel();
-        textinho.setBounds(800, 320, 200, 50);
+        textinho.setBounds(800, 320, 200, 30);
         textinho.setVisible(true);
         textinho.setOpaque(true);
 
         rounds = new JLabel();
-        rounds.setBounds(800, 400, 100, 50);
+        rounds.setBounds(873, 15, 100, 30);
+        rounds.setForeground(Color.RED);
         rounds.setVisible(true);
-        rounds.setOpaque(true);
+        //rounds.setOpaque(true);
+
+        info = new JPanel();
+        info.setBounds(800,400,250,250);
+        info.setPreferredSize(new Dimension(250,250));
+        info.setLayout(new GridLayout(5,1,0,20));
+        info.setVisible(true);
+        info.setOpaque(true);
+
+
+        name = new JLabel();
+        name.setHorizontalAlignment(JLabel.CENTER);
+        info.add(name);
+
+        price = new JLabel();
+        info.add(price);
+
+        upgradePrice = new JLabel();
+        info.add(upgradePrice);
+
+        printPlayer1 = new JLabel();
+        printPlayer1.setVisible(true);
+        printPlayer1.setOpaque(true);
+        info.add(printPlayer1);
+
 
     }
 
     public void Buttons() {
 
         armTrap = new JButton();
-        armTrap.setBounds(800, 25, 100, 80);
+        armTrap.setBounds(800, 45, 100, 80);
         armTrap.setText("Arm Trap");
         armTrap.setVisible(true);
         armTrap.setEnabled(false);
 
 
+
         upgradeTrap = new JButton();
-        upgradeTrap.setBounds(900, 25, 100, 80);
+        upgradeTrap.setBounds(900, 45, 100, 80);
         upgradeTrap.setText("Upgrade Trap");
         upgradeTrap.setVisible(true);
         upgradeTrap.setEnabled(false);
@@ -365,10 +409,41 @@ public class Board extends JPanel implements MouseListener, ActionListener {
         throwDice.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+
+
+
+    public void printPlayer(Player player){
+            System.out.println(player.getPosition());
+            printPlayer1.setText("34gergegergergergreger");
+            printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()],yLocationsOfPlayer1[player.getPosition()],10,10);
+            printPlayer1.updateUI();
+
 
     }
 
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {}
+
+    int[] xLocationsOfPlayer1 = {31, 131, 231, 331, 431, 531,
+            531, 531, 531, 531, 531,
+            431, 331, 231, 131, 31,
+            31, 31, 31, 31};
+
+    int[] yLocationsOfPlayer1 = {33, 33, 33, 33, 33, 33,
+            133, 233, 333, 433, 533,
+            533, 533, 533, 533, 533,
+            433, 333, 233, 133};
+
+    int[] xLocationsOfPlayer2 = {61, 191, 291, 361, 461, 561,
+            561, 561, 561, 561, 561,
+            461, 361, 261, 161, 61,
+            61, 61, 61, 61};
+
+    int[] yLocationsOfPlayer2 = {33, 33, 33, 33, 33, 33,
+            133, 233, 333, 433, 533,
+            533, 533, 533, 533, 533,
+            433, 333, 233, 133};
 
 }
