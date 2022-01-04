@@ -45,24 +45,19 @@ public class Client {
 
             System.out.println(received);
 
-            // if (received.contains("init")) {
+            if (received.contains("init")) {
+                System.out.println("entrou");
+                receiveGame();
+                System.out.println("you joined a game!");
 
-            System.out.println("entrou");
-
-            receiveGame();
-
-            System.out.println("you joined a game!");
-
-            Frame frame = new Frame(game);
-            frame.start();
-
-/*
-
+                Frame frame = new Frame(game);
+                frame.start();
+            }
 
             PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
             String message = scan.nextLine();
 
-            out.println(message);*/
+            out.println(message);
         }
     }
 

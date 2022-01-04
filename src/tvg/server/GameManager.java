@@ -4,6 +4,7 @@ import tvg.game.Game;
 import tvg.player.Player;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class GameManager {
 
-    private volatile List<Socket> clients = new ArrayList<>();
+    public volatile List<Socket> clients = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
     private Game game;
     private String gameName;
@@ -51,9 +52,9 @@ public class GameManager {
 
         System.out.println("entrou aqui no cenas");
         game = new Game(players);
-       /* while (players.size() < 1) {
+        while (players.size() < 1) {
             System.out.println(".");
-        }*/
+        }
         send();
     }
 
@@ -65,12 +66,12 @@ public class GameManager {
         for (Socket client : clients) {
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 
-           /* out = new PrintWriter(new PrintWriter(client.getOutputStream()), true);
+            out = new PrintWriter(new PrintWriter(client.getOutputStream()), true);
 
             System.out.println(client.getInetAddress());
 
             out.println("init");
-            out.println("stop");*/
+            out.println("stop");
             String batatas = new String("batatas");
             objectOutputStream.writeChars(batatas);
 
@@ -78,17 +79,17 @@ public class GameManager {
             objectOutputStream.flush();
         }
     }
-    /*
-    public synchronized static void sendGame() throws IOException {
-        if (playerSocket.size() == 2) {
 
-            playingOrder();
-            game = new Game(players);
-            send();
-        }
+    public void sendGame() throws IOException {
+        //if (playerSocket.size() == 2) {
+
+        playingOrder();
+        game = new Game(players);
+        send();
+        // }
     }
 
-    public static void receive(Socket clientSocket) throws IOException, ClassNotFoundException {
+    public void receive(Socket clientSocket) throws IOException, ClassNotFoundException {
 
         ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
         Object object = objectInputStream.readObject();
@@ -98,7 +99,6 @@ public class GameManager {
         }
 
     }
-*/
 
 
     public void playingOrder() {

@@ -50,14 +50,6 @@ public class ClientHandler extends Thread {
             out.println("Insert your name: ");
             out.println("stop");
 
-
-            GameManager gameManager = new GameManager();
-            Player player = new Player("jogador");
-            gameManager.addPlayer(player);
-            gameManager.addClientSocket(clientSocket);
-            gameManager.startGame();
-
-/*
             name = in.readLine();
             System.out.println("Client " + name + " wrote their name");
             player = new Player(name);
@@ -88,8 +80,16 @@ public class ClientHandler extends Thread {
                 out.println("Game created successfully!");
                 out.println("stop");
 
-                while (!ready) {
+                while (gameManager.clients.size() < 1) {
+                    System.out.println("waiting");
+                    wait(100);
                 }
+                for (Socket client : gameManager.clients) {
+                    PrintWriter start = new PrintWriter(client.getOutputStream());
+                    start.println("init");
+                    start.println("stop");
+                }
+
                 gameManager.startGame();
             }
 
@@ -128,11 +128,9 @@ public class ClientHandler extends Thread {
                 out.println("stop");
 
                 players.add(player);
-                ready = true;
                 in.readLine();
-                System.out.println(ready);
             }
-*/
+
         } catch (Exception e) {
             e.printStackTrace();
         }
