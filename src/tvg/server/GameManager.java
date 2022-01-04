@@ -46,15 +46,38 @@ public class GameManager {
     }
 
     public void startGame() throws IOException, InterruptedException {
+
         playingOrder();
+
         System.out.println("entrou aqui no cenas");
         game = new Game(players);
-        while (players.size() < 1) {
+       /* while (players.size() < 1) {
             System.out.println(".");
-        }
+        }*/
         send();
     }
 
+    public void send() throws IOException {
+
+        PrintWriter out = null;
+        ObjectOutputStream objectOutputStream;
+
+        for (Socket client : clients) {
+            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+
+           /* out = new PrintWriter(new PrintWriter(client.getOutputStream()), true);
+
+            System.out.println(client.getInetAddress());
+
+            out.println("init");
+            out.println("stop");*/
+            String batatas = new String("batatas");
+            objectOutputStream.writeChars(batatas);
+
+            objectOutputStream.writeObject(game);
+            objectOutputStream.flush();
+        }
+    }
     /*
     public synchronized static void sendGame() throws IOException {
         if (playerSocket.size() == 2) {
@@ -76,24 +99,7 @@ public class GameManager {
 
     }
 */
-    public void send() throws IOException {
 
-        PrintWriter out = null;
-        ObjectOutputStream objectOutputStream;
-
-        for (Socket client : clients) {
-
-            out = new PrintWriter(new PrintWriter(client.getOutputStream()), true);
-            System.out.println(client.getInetAddress());
-            out.println("init");
-            out.println("stop");
-
-            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-
-            objectOutputStream.writeObject(game);
-            objectOutputStream.flush();
-        }
-    }
 
     public void playingOrder() {
 

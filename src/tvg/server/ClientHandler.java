@@ -15,6 +15,7 @@ public class ClientHandler extends Thread {
     public final Socket clientSocket;
     private volatile List<ClientHandler> allClientsList;
     public static volatile List<GameManager> allGames = new ArrayList<>();
+
     public static volatile List<Player> players = new ArrayList<>();
 
     private Player player;
@@ -49,6 +50,14 @@ public class ClientHandler extends Thread {
             out.println("Insert your name: ");
             out.println("stop");
 
+
+            GameManager gameManager = new GameManager();
+            Player player = new Player("jogador");
+            gameManager.addPlayer(player);
+            gameManager.addClientSocket(clientSocket);
+            gameManager.startGame();
+
+/*
             name = in.readLine();
             System.out.println("Client " + name + " wrote their name");
             player = new Player(name);
@@ -114,6 +123,7 @@ public class ClientHandler extends Thread {
                 allGames.get(index).addPlayer(player);
 
                 System.out.println(name + " joined game " + allGames.get(index).getGameName());
+
                 out.println("Welcome to " + allGames.get(index).getHost().getName() + "'s game!");
                 out.println("stop");
 
@@ -122,8 +132,8 @@ public class ClientHandler extends Thread {
                 in.readLine();
                 System.out.println(ready);
             }
-
-        } catch (IOException | InterruptedException e) {
+*/
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

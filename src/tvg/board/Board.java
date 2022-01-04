@@ -6,10 +6,10 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Board extends JPanel implements MouseListener, ActionListener {
-
+public class Board extends JPanel implements MouseListener, ActionListener, Serializable {
 
     public JButton armTrap;
     public JButton upgradeTrap;
@@ -23,9 +23,6 @@ public class Board extends JPanel implements MouseListener, ActionListener {
     public JLabel price;
     public JLabel upgradePrice;
     public JLabel printPlayer1;
-
-
-
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();

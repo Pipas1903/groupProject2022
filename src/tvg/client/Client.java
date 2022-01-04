@@ -1,4 +1,4 @@
-package tvg.server;
+package tvg.client;
 
 import tvg.board.Frame;
 import tvg.game.Game;
@@ -43,34 +43,29 @@ public class Client {
                 received += line + "\n";
             }
 
-
-            if (received.contains("init")) {
-
-                System.out.println("entrou");
-                receiveGame();
-                System.out.println("you joined a game!");
-
-                Frame frame = new Frame(game);
-                frame.start();
-            }
-
             System.out.println(received);
+
+            // if (received.contains("init")) {
+
+            System.out.println("entrou");
+
+            receiveGame();
+
+            System.out.println("you joined a game!");
+
+            Frame frame = new Frame(game);
+            frame.start();
+
+/*
+
 
             PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
             String message = scan.nextLine();
 
-            out.println(message);
+            out.println(message);*/
         }
     }
 
-
-    public void sendGameAfterTurn() throws IOException {
-
-        objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
-        objectOutputStream.writeObject(game);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-    }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
 
@@ -84,6 +79,14 @@ public class Client {
 
     }
 
+    public void sendGameAfterTurn() throws IOException {
+
+        objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
+
+        objectOutputStream.writeObject(game);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client cliente = new Client();
