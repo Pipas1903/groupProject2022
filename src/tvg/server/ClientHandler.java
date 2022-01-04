@@ -95,7 +95,7 @@ public class ClientHandler extends Thread {
         in.readLine();
 
         while (!ready) {
-            System.out.println("waiting");
+
         }
 
         for (Socket client : gameManager.clients) {
