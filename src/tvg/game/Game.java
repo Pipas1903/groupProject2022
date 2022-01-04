@@ -21,10 +21,7 @@ public class Game implements ActionListener, Serializable {
     Player winner;
     Player currentPlayer;
     private int playerIndex = 0;
-    Graphics2D player1Print;
-    Graphics2D player2Print;
-    Graphics2D player3Print;
-    Graphics2D player4Print;
+
 
     public Game(List<Player> playerList) {
         this.playerList = playerList;
@@ -38,7 +35,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
 
-        // playingOrder();
+
 
     }
 
@@ -158,6 +155,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
 
         System.out.println("PLAYER ROLLED DICE");
+        System.out.println(currentPlayer.getPosition());
+        showPlayer();
 
         if (currentPlayer.getDiceRoll() + currentPlayer.getPosition() < gameBoard.getAllTiles().size()) {
             currentPlayer.setPosition(currentPlayer.getPosition() + currentPlayer.getDiceRoll());
@@ -167,8 +166,8 @@ public class Game implements ActionListener, Serializable {
 
         currentPlayer.setPosition(currentPlayer.getPosition() + currentPlayer.getDiceRoll() - gameBoard.getAllTiles().size());
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() + lifeRestoration);
-        System.out.println(currentPlayer.getPosition());
-        showPlayer();
+
+
         changeButtonsState();
 
 

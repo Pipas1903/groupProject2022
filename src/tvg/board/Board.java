@@ -369,8 +369,7 @@ public class Board extends JPanel implements MouseListener, ActionListener {
 
         printPlayer1 = new JLabel();
         printPlayer1.setVisible(true);
-        printPlayer1.setOpaque(true);
-        info.add(printPlayer1);
+        this.add(printPlayer1);
 
 
     }
@@ -414,8 +413,9 @@ public class Board extends JPanel implements MouseListener, ActionListener {
 
     public void printPlayer(Player player){
             System.out.println(player.getPosition());
-            printPlayer1.setText("34gergegergergergreger");
-            printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()],yLocationsOfPlayer1[player.getPosition()],10,10);
+            ImageIcon redCircle = new ImageIcon("src/tvg/redcircle.png");
+            printPlayer1.setIcon(redCircle);
+            printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()],yLocationsOfPlayer1[player.getPosition()],40,40);
             printPlayer1.updateUI();
 
 
