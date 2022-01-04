@@ -6,7 +6,6 @@ import tvg.player.Player;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -46,35 +45,26 @@ public class GameManager {
         return null;
     }
 
-    public void startGame() throws IOException, InterruptedException {
+    public void startGame() throws IOException {
 
         playingOrder();
 
-        System.out.println("entrou aqui no cenas");
+        System.out.println("initializing game");
+
         game = new Game(players);
-        while (players.size() < 1) {
-            System.out.println(".");
-        }
+
         send();
     }
 
     public void send() throws IOException {
 
-        PrintWriter out = null;
-        ObjectOutputStream objectOutputStream;
+        ObjectOutputStream objectOutputStream = null;
 
         for (Socket client : clients) {
+
+            System.out.println("sending game to client " + client.getInetAddress());
+
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-
-            out = new PrintWriter(new PrintWriter(client.getOutputStream()), true);
-
-            System.out.println(client.getInetAddress());
-
-            out.println("init");
-            out.println("stop");
-            String batatas = new String("batatas");
-            objectOutputStream.writeChars(batatas);
-
             objectOutputStream.writeObject(game);
             objectOutputStream.flush();
         }

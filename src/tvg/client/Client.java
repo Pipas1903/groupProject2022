@@ -32,9 +32,10 @@ public class Client {
 
     public void speak() throws IOException, ClassNotFoundException {
 
-        while (serverSocket.isBound()) {
+        BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+        while (serverSocket.isBound()) {
 
             String line = "";
             String received = "";
@@ -43,20 +44,24 @@ public class Client {
                 received += line + "\n";
             }
 
-            System.out.println(received);
+            System.out.println(received.contains("init"));
 
             if (received.contains("init")) {
-                System.out.println("entrou");
+
+                System.out.println("receiving game ...");
+
                 receiveGame();
-                System.out.println("you joined a game!");
+
+                System.out.println("You joined a game!");
 
                 Frame frame = new Frame(game);
+
                 frame.start();
             }
 
-            PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
-            String message = scan.nextLine();
+            System.out.println(received);
 
+            String message = scan.nextLine();
             out.println(message);
         }
     }
@@ -77,10 +82,10 @@ public class Client {
     public void sendGameAfterTurn() throws IOException {
 
         objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
-
         objectOutputStream.writeObject(game);
         objectOutputStream.flush();
         objectOutputStream.close();
+
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
