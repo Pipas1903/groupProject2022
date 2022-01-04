@@ -38,11 +38,11 @@ public class Player implements Serializable{
         return playerOwnedTiles;
     }
 
-    public static void playerBuyTile(Integer tileNumber, String playerName) {
+    public static void playerOwnTile(Integer tileNumber, String playerName) {
         playerOwnedTiles.put(tileNumber, playerName);
     }
 
-    public static void removeTileFromPlayer(Integer tileNumber) {
+    public static void removeCurrentTileOwner(Integer tileNumber) {
         playerOwnedTiles.remove(tileNumber);
     }
 
