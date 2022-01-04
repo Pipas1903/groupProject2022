@@ -67,16 +67,16 @@ public class GameManager {
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());
             objectOutputStream.writeObject(game);
             objectOutputStream.flush();
+
         }
     }
 
     public void sendGame() throws IOException {
-        //if (playerSocket.size() == 2) {
 
         playingOrder();
         game = new Game(players);
         send();
-        // }
+
     }
 
     public void receive(Socket clientSocket) throws IOException, ClassNotFoundException {

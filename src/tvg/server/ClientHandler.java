@@ -93,14 +93,17 @@ public class ClientHandler extends Thread {
         out.println("stop");
 
         in.readLine();
-        // while (!ready) {
-        //   System.out.println("waiting");
-        // }
+
+        while (!ready) {
+            System.out.println("waiting");
+        }
+
         for (Socket client : gameManager.clients) {
             out = new PrintWriter(client.getOutputStream());
 
             out.println("init");
             out.println("stop");
+            out.flush();
         }
 
         gameManager.startGame();
@@ -131,6 +134,7 @@ public class ClientHandler extends Thread {
         System.out.println(name + " joined game " + allGames.get(index).getGameName());
 
         out.println("Welcome to " + allGames.get(index).getHost().getName() + "'s game!");
+        out.println("press enter to continue");
         out.println("stop");
 
         in.readLine();

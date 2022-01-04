@@ -44,7 +44,6 @@ public class Client {
                 received += line + "\n";
             }
 
-            System.out.println(received.contains("init"));
 
             if (received.contains("init")) {
 
