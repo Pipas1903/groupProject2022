@@ -14,8 +14,8 @@ public class Main {
 
         lista.add(new Player("joao"));
         lista.add(new Player("rui"));
-        lista.add(new Player("parra"));
-        lista.add(new Player("flepa"));
+        //lista.add(new Player("parra"));
+        //lista.add(new Player("flepa"));
 
         Game jogo = new Game(lista);
 

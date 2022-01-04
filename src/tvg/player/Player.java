@@ -88,14 +88,6 @@ public class Player implements Serializable {
         this.lifePoints = lifePoints;
     }
 
-    /*public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-*/
     public int getPosition() {
         return position;
     }

@@ -21,6 +21,10 @@ public class Game implements ActionListener, Serializable {
     Player winner;
     Player currentPlayer;
     private int playerIndex = 0;
+    Graphics2D player1Print;
+    Graphics2D player2Print;
+    Graphics2D player3Print;
+    Graphics2D player4Print;
 
     public Game(List<Player> playerList) {
         this.playerList = playerList;
@@ -126,15 +130,20 @@ public class Game implements ActionListener, Serializable {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameBoard.throwDice) {
+            gameBoard.updateUI();
             throwDice();
-        }
-        if (e.getSource() == gameBoard.armTrap) {
-            armTrap();
-        }
-        if (e.getSource() == gameBoard.upgradeTrap) {
 
         }
+        if (e.getSource() == gameBoard.armTrap) {
+            gameBoard.updateUI();
+            armTrap();
+
+        }
+        if (e.getSource() == gameBoard.upgradeTrap) {
+            gameBoard.updateUI();
+        }
         if (e.getSource() == gameBoard.passTurn) {
+            gameBoard.updateUI();
             passTurn();
         }
         if (e.getSource() == gameBoard.stealTrap) {
@@ -144,6 +153,7 @@ public class Game implements ActionListener, Serializable {
 
 
     public void throwDice() {
+
 
 
         currentPlayer.setDiceRoll(Dice.throwDice());
@@ -160,8 +170,20 @@ public class Game implements ActionListener, Serializable {
 
         currentPlayer.setPosition(currentPlayer.getPosition() + currentPlayer.getDiceRoll() - gameBoard.getAllTiles().size());
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() + lifeRestoration);
+        System.out.println(currentPlayer.getPosition());
+        showPlayer();
         changeButtonsState();
+
+
     }
+
+    public void showPlayer(){
+        gameBoard.printPlayer(currentPlayer);
+    }
+
+
+
+
 
     public void changeButtonsState() {
 
