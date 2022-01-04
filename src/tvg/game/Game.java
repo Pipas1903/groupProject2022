@@ -51,12 +51,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
+        checkGameStatus();
     }
-
-    public void turn() {
-
-    }
-
 
     public boolean playerOwnsTile(Player player) {
         return Player.getPlayerOwnedTiles().get(player.getPosition()).equals(player.getName());
@@ -95,7 +91,7 @@ public class Game implements ActionListener, Serializable {
     }
 
     public boolean checkGameStatus() {
-        //removeFaintedPlayer();
+        removeFaintedPlayer();
         if (playerList.size() == 1) {
             winner = playerList.get(0);
             System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
@@ -105,7 +101,6 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void removeFaintedPlayer() {
-        if (playerList.isEmpty()) return;
         playerList.removeIf(player -> player.getLifePoints() <= 0 & !Player.getPlayerOwnedTiles().containsValue(player.getName()));
     }
 
@@ -174,23 +169,7 @@ public class Game implements ActionListener, Serializable {
             return;
         }
 
-        if (gameBoard.getTileAtIndex(currentPlayer.getPosition()).isArmed()) {
-
-            if (playerOwnsTile(currentPlayer)) {
-                upgradeTrapValidation();
-                gameBoard.passTurn.setEnabled(true);
-                gameBoard.armTrap.setEnabled(false);
-                gameBoard.stealTrap.setEnabled(false);
-                gameBoard.throwDice.setEnabled(false);
-
-                return;
-
-            }
-            gameBoard.upgradeTrap.setEnabled(false);
-            gameBoard.passTurn.setEnabled(true);
-            gameBoard.armTrap.setEnabled(false);
-            gameBoard.throwDice.setEnabled(false);
-            trapStatusValidation();
+        if (armedTrapSituation()) {
             return;
         }
 
@@ -268,11 +247,35 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.setEnabled(false);
     }
 
-    public void stealTrap(){
+    public void stealTrap() {
         gameBoard.stealTrap.setEnabled(false);
         Player.removeTileFromPlayer(currentPlayer.getPosition());
-        Player.playerBuyTile(currentPlayer.getPosition(),currentPlayer.getName());
+        Player.playerBuyTile(currentPlayer.getPosition(), currentPlayer.getName());
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getUpgradePrice());
         gameBoard.textinho.setText("you stealed: " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
+    }
+
+    public boolean armedTrapSituation() {
+        if (gameBoard.getTileAtIndex(currentPlayer.getPosition()).isArmed()) {
+
+            if (playerOwnsTile(currentPlayer)) {
+                upgradeTrapValidation();
+                gameBoard.passTurn.setEnabled(true);
+                gameBoard.armTrap.setEnabled(false);
+                gameBoard.stealTrap.setEnabled(false);
+                gameBoard.throwDice.setEnabled(false);
+
+                return true;
+
+            }
+            gameBoard.upgradeTrap.setEnabled(false);
+            gameBoard.passTurn.setEnabled(true);
+            gameBoard.armTrap.setEnabled(false);
+            gameBoard.throwDice.setEnabled(false);
+            trapStatusValidation();
+            return true;
+        }
+
+        return false;
     }
 }
