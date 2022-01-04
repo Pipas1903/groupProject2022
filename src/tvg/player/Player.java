@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class Player implements Serializable {
+public class Player implements Serializable{
 
     private String name;
     private int lifePoints;

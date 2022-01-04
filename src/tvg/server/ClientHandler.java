@@ -81,7 +81,6 @@ public class ClientHandler extends Thread {
 
                 while (!ready) {
                 }
-                System.out.println(ready);
                 gameManager.startGame();
             }
 
@@ -120,7 +119,7 @@ public class ClientHandler extends Thread {
 
                 players.add(player);
                 ready = true;
-
+                in.readLine();
                 System.out.println(ready);
             }
 

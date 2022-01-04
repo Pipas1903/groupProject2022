@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static java.lang.Thread.sleep;
-
 public class GameManager {
 
     private volatile List<Socket> clients = new ArrayList<>();
@@ -49,10 +47,10 @@ public class GameManager {
 
     public void startGame() throws IOException, InterruptedException {
         playingOrder();
+        System.out.println("entrou aqui no cenas");
         game = new Game(players);
         while (players.size() < 1) {
             System.out.println(".");
-            sleep(1000);
         }
         send();
     }
@@ -85,7 +83,8 @@ public class GameManager {
         for (Socket client : clients) {
 
             out = new PrintWriter(new PrintWriter(client.getOutputStream()), true);
-            out.println("start");
+            System.out.println(client.getInetAddress());
+            out.println("init");
             out.println("stop");
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());

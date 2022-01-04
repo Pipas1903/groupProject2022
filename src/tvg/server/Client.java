@@ -41,7 +41,9 @@ public class Client {
                 received += line + "\n";
             }
 
-            if (received.equals("start")) {
+
+            if (received.contains("init")) {
+                System.out.println("entrou");
                 receiveGame();
                 System.out.println("you joined a game!");
 
@@ -67,7 +69,7 @@ public class Client {
     }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
+        ObjectInputStream objectInputStream = new ObjectInputStream(new serverSocket.getInputStream());
         Object object = objectInputStream.readObject();
 
         if (object instanceof Game) {

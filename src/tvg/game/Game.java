@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Game implements ActionListener, Serializable {
+public class Game implements ActionListener, Serializable{
 
     private List<Player> playerList;
     private Board gameBoard;
