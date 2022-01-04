@@ -17,6 +17,7 @@ public class Server {
 
     private static volatile List<ClientHandler> clientHandlers = new ArrayList<>();
 
+
     public static void main(String[] args) {
         initializerServer();
     }
@@ -38,13 +39,10 @@ public class Server {
 
                 System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
 
-                sendActualizedList();
-
                 clientHandlers.add(clientHandler);
 
                 System.out.println("waiting for client to connect");
 
-                sendActualizedList();
             }
 
         } catch (Exception e) {

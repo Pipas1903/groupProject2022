@@ -4,10 +4,9 @@ package tvg.player;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
-import java.net.Socket;
 import java.util.HashMap;
 
-public class Player implements Serializable {
+public class Player implements Serializable{
 
     private String name;
     private int lifePoints;
@@ -39,11 +38,11 @@ public class Player implements Serializable {
         return playerOwnedTiles;
     }
 
-    public static void playerBuyTile(Integer tileNumber, String playerName) {
+    public static void playerOwnTile(Integer tileNumber, String playerName) {
         playerOwnedTiles.put(tileNumber, playerName);
     }
 
-    public static void removeTileFromPlayer(Integer tileNumber) {
+    public static void removeCurrentTileOwner(Integer tileNumber) {
         playerOwnedTiles.remove(tileNumber);
     }
 
