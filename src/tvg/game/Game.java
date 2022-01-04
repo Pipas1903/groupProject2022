@@ -98,7 +98,7 @@ public class Game implements ActionListener, Serializable {
     public boolean checkGameStatus() {
         removeFaintedPlayer();
         if (playerList.size() == 1) {
-            out.println("Game over \nThe winner is: " + playerList.get(0).getName());
+            System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
             return false;
         }
         return true;
