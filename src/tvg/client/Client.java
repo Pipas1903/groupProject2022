@@ -1,4 +1,4 @@
-package tvg.server;
+package tvg.client;
 
 import tvg.board.Frame;
 import tvg.game.Game;
@@ -16,6 +16,8 @@ public class Client {
     int portNumber;
     Socket serverSocket;
     Game game;
+    ObjectOutputStream objectOutputStream;
+    ObjectInputStream objectInputStream;
 
 
     public void getServerInfo() throws IOException {
@@ -30,9 +32,10 @@ public class Client {
 
     public void speak() throws IOException, ClassNotFoundException {
 
-        while (serverSocket.isBound()) {
+        BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+        while (serverSocket.isBound()) {
 
             String line = "";
             String received = "";
@@ -41,33 +44,32 @@ public class Client {
                 received += line + "\n";
             }
 
-            if (received.equals("start")) {
+
+            if (received.contains("init")) {
+
+                System.out.println("receiving game ...");
+
                 receiveGame();
-                System.out.println("you joined a game!");
+
+                System.out.println("You joined a game!");
 
                 Frame frame = new Frame(game);
+
                 frame.start();
             }
 
             System.out.println(received);
 
-            PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
             String message = scan.nextLine();
-
             out.println(message);
         }
     }
 
 
-    public void sendGameAfterTurn() throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
-        objectOutputStream.writeObject(game);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-    }
-
     public void receiveGame() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
+
+        objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
+
         Object object = objectInputStream.readObject();
 
         if (object instanceof Game) {
@@ -76,6 +78,14 @@ public class Client {
 
     }
 
+    public void sendGameAfterTurn() throws IOException {
+
+        objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
+        objectOutputStream.writeObject(game);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+
+    }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client cliente = new Client();

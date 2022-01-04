@@ -1,14 +1,11 @@
-package tvg.server;
+package tvg.client;
 
 import tvg.board.Frame;
 import tvg.game.Game;
-import tvg.player.Player;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Client2 {
