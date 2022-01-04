@@ -35,7 +35,7 @@ public class Tile extends JPanel {
             this.add(nameLabel);
         } else {
 
-            // rotating a Jlabel: https://www.daniweb.com/programming/software-development/threads/390060/rotate-jlabel-or-image-in-label
+
 
             nameLabel = new JLabel(labelString) {
                 protected void paintComponent(Graphics g) {
