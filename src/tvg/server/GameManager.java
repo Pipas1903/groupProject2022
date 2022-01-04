@@ -79,6 +79,7 @@ public class GameManager {
     public void send() throws IOException {
 
         PrintWriter out = null;
+        ObjectOutputStream objectOutputStream;
 
         for (Socket client : clients) {
 
@@ -87,7 +88,8 @@ public class GameManager {
             out.println("init");
             out.println("stop");
 
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+
             objectOutputStream.writeObject(game);
             objectOutputStream.flush();
         }

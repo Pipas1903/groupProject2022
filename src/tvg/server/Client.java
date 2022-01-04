@@ -16,6 +16,8 @@ public class Client {
     int portNumber;
     Socket serverSocket;
     Game game;
+    ObjectOutputStream objectOutputStream;
+    ObjectInputStream objectInputStream;
 
 
     public void getServerInfo() throws IOException {
@@ -43,6 +45,7 @@ public class Client {
 
 
             if (received.contains("init")) {
+
                 System.out.println("entrou");
                 receiveGame();
                 System.out.println("you joined a game!");
@@ -62,14 +65,17 @@ public class Client {
 
 
     public void sendGameAfterTurn() throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
+
+        objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
         objectOutputStream.writeObject(game);
         objectOutputStream.flush();
         objectOutputStream.close();
     }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new serverSocket.getInputStream());
+
+        objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
+
         Object object = objectInputStream.readObject();
 
         if (object instanceof Game) {

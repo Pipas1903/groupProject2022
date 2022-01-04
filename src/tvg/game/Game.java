@@ -21,10 +21,7 @@ public class Game implements ActionListener, Serializable {
     private final int lifeRestoration = 80;
     Player currentPlayer;
     private int playerIndex = 0;
-    Graphics2D player1Print;
-    Graphics2D player2Print;
-    Graphics2D player3Print;
-    Graphics2D player4Print;
+
 
     public Game(List<Player> playerList) {
         this.playerList = playerList;
@@ -97,7 +94,7 @@ public class Game implements ActionListener, Serializable {
     public boolean checkGameStatus() {
         removeFaintedPlayer();
         if (playerList.size() == 1) {
-            out.println("Game over \nThe winner is: " + playerList.get(0).getName());
+            System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
             return false;
         }
         return true;
@@ -156,7 +153,7 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
 
-        out.println("PLAYER ROLLED DICE");
+        System.out.println("PLAYER ROLLED DICE");
 
         if (currentPlayer.getDiceRoll() + currentPlayer.getPosition() < gameBoard.getAllTiles().size()) {
             currentPlayer.setPosition(currentPlayer.getPosition() + currentPlayer.getDiceRoll());
@@ -170,14 +167,11 @@ public class Game implements ActionListener, Serializable {
         showPlayer();
         changeButtonsState();
 
-
     }
 
     public void showPlayer(){
         gameBoard.printPlayer(currentPlayer);
     }
-
-
 
 
 
