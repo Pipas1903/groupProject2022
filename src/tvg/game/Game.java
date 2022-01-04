@@ -220,14 +220,15 @@ public class Game implements ActionListener, Serializable {
 
     public void trapStatusValidation() {
 
+        currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getDamageDealt());
+        System.out.println("PLAYER " + currentPlayer.getName() + " FELL ON A TRAP AND LOST " + gameBoard.getTileAtIndex(playerLocation).getDamageDealt() + " LIFE POINTS");
+
         if (!gameBoard.getTileAtIndex(playerLocation).isUpgraded()) {
             if (currentPlayer.getLifePoints() > gameBoard.getTileAtIndex(playerLocation).getUpgradePrice()) {
                 gameBoard.stealTrap.setEnabled(true);
                 return;
             }
         }
-        currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getDamageDealt());
-        System.out.println("PLAYER " + currentPlayer.getName() + " FELL ON A TRAP AND LOST " + gameBoard.getTileAtIndex(playerLocation).getDamageDealt() + " LIFE POINTS");
         gameBoard.stealTrap.setEnabled(false);
     }
 
