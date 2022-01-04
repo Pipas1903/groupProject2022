@@ -55,8 +55,8 @@ public class Game implements ActionListener, Serializable {
         checkGameStatus();
     }
 
-    public boolean playerOwnsTile(Player player) {
-        return Player.getPlayerOwnedTiles().get(player.getPosition()).equals(player.getName());
+    public boolean playerOwnsTile() {
+        return Player.getPlayerOwnedTiles().get(playerLocation).equals(currentPlayer.getName());
     }
 
     public void chooseGameMode() {
@@ -223,8 +223,11 @@ public class Game implements ActionListener, Serializable {
         if (!gameBoard.getTileAtIndex(playerLocation).isUpgraded()) {
             if (currentPlayer.getLifePoints() > gameBoard.getTileAtIndex(playerLocation).getUpgradePrice()) {
                 gameBoard.stealTrap.setEnabled(true);
+                return;
             }
         }
+        currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getDamageDealt());
+        System.out.println("PLAYER " + currentPlayer.getName() + " FELL ON A TRAP AND LOST " + gameBoard.getTileAtIndex(playerLocation).getDamageDealt() + " LIFE POINTS");
         gameBoard.stealTrap.setEnabled(false);
     }
 
@@ -232,7 +235,7 @@ public class Game implements ActionListener, Serializable {
 
         if (gameBoard.getTileAtIndex(playerLocation).isArmed()) {
 
-            if (playerOwnsTile(currentPlayer)) {
+            if (playerOwnsTile()) {
 
                 upgradeTrapValidation();
 

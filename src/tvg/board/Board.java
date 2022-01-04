@@ -54,15 +54,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(textinho);
         this.add(rounds);
 
-
         this.add(stealTrap);
         this.add(passTurn);
         this.add(upgradeTrap);
         this.add(armTrap);
         this.add(throwDice);
         this.add(info);
-
-
 
         buttonsList.add(stealTrap);
         buttonsList.add(passTurn);
@@ -244,6 +241,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
 
         // setting prices
+
         tile01.setPrice(80);
 
         tile03.setPrice(100);
@@ -268,7 +266,34 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         tile22.setPrice(120);
         tile23.setPrice(110);
 
+        // setting upgrade prices
+
+        tile01.setUpgradePrice(100);
+
+        tile03.setUpgradePrice(120);
+        tile04.setUpgradePrice(140);
+        tile05.setUpgradePrice(150);
+
+        tile07.setUpgradePrice(160);
+
+        tile09.setUpgradePrice(170);
+        tile10.setUpgradePrice(160);
+        tile11.setUpgradePrice(150);
+
+        tile13.setUpgradePrice(110);
+
+        tile15.setUpgradePrice(130);
+        tile16.setUpgradePrice(150);
+        tile17.setUpgradePrice(140);
+
+        tile19.setUpgradePrice(170);
+        tile20.setUpgradePrice(120);
+
+        tile22.setUpgradePrice(140);
+        tile23.setUpgradePrice(130);
+
         // setting damage points
+
         tile01.setDamageDealt(8);
 
         tile03.setDamageDealt(10);
@@ -298,16 +323,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void panel(Tile tile) {
 
         name.setText(tile.getName());
-        price.setText("Price: "+ tile.getPrice());
+        price.setText("Price: " + tile.getPrice());
         upgradePrice.setText("Upgrade Price: " + tile.getUpgradePrice());
         info.updateUI();
 
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         for (Tile tile : allTiles) {
             if (e.getSource() == tile) {
-                 panel(tile);
+                panel(tile);
 
             }
         }
@@ -333,7 +359,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     }
 
-
     public void textBoxes() {
         textinho = new JLabel();
         textinho.setBounds(800, 320, 200, 30);
@@ -347,9 +372,9 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         //rounds.setOpaque(true);
 
         info = new JPanel();
-        info.setBounds(800,400,250,250);
-        info.setPreferredSize(new Dimension(250,250));
-        info.setLayout(new GridLayout(5,1,0,20));
+        info.setBounds(800, 400, 250, 250);
+        info.setPreferredSize(new Dimension(250, 250));
+        info.setLayout(new GridLayout(5, 1, 0, 20));
         info.setVisible(true);
         info.setOpaque(true);
 
@@ -369,7 +394,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printPlayer1.setOpaque(true);
         info.add(printPlayer1);
 
-
     }
 
     public void Buttons() {
@@ -379,8 +403,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         armTrap.setText("Arm Trap");
         armTrap.setVisible(true);
         armTrap.setEnabled(false);
-
-
 
         upgradeTrap = new JButton();
         upgradeTrap.setBounds(900, 45, 100, 80);
@@ -406,22 +428,18 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         throwDice.setVisible(true);
     }
 
-
-
-
-    public void printPlayer(Player player){
-            System.out.println(player.getPosition());
-            printPlayer1.setText("34gergegergergergreger");
-            printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()],yLocationsOfPlayer1[player.getPosition()],10,10);
-            printPlayer1.updateUI();
+    public void printPlayer(Player player) {
+        System.out.println(player.getPosition());
+        printPlayer1.setText("34gergegergergergreger");
+        printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()], yLocationsOfPlayer1[player.getPosition()], 10, 10);
+        printPlayer1.updateUI();
 
 
     }
 
-
-
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+    }
 
     int[] xLocationsOfPlayer1 = {31, 131, 231, 331, 431, 531,
             531, 531, 531, 531, 531,
