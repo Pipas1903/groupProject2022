@@ -38,7 +38,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
 
-       // playingOrder();
+        // playingOrder();
 
     }
 
@@ -55,12 +55,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
+        checkGameStatus();
     }
-
-    public void turn() {
-
-    }
-
 
     public boolean playerOwnsTile(Player player) {
         return Player.getPlayerOwnedTiles().get(player.getPosition()).equals(player.getName());
@@ -99,7 +95,7 @@ public class Game implements ActionListener, Serializable {
     }
 
     public boolean checkGameStatus() {
-        //removeFaintedPlayer();
+        removeFaintedPlayer();
         if (playerList.size() == 1) {
             winner = playerList.get(0);
             System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
@@ -109,7 +105,6 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void removeFaintedPlayer() {
-        if (playerList.isEmpty()) return;
         playerList.removeIf(player -> player.getLifePoints() <= 0 & !Player.getPlayerOwnedTiles().containsValue(player.getName()));
     }
 
@@ -141,13 +136,15 @@ public class Game implements ActionListener, Serializable {
         }
         if (e.getSource() == gameBoard.upgradeTrap) {
             gameBoard.updateUI();
+            upgradeTrap();
+
         }
         if (e.getSource() == gameBoard.passTurn) {
             gameBoard.updateUI();
             passTurn();
         }
         if (e.getSource() == gameBoard.stealTrap) {
-
+            stealTrap();
         }
     }
 
@@ -196,52 +193,32 @@ public class Game implements ActionListener, Serializable {
             return;
         }
 
-        if (gameBoard.getTileAtIndex(currentPlayer.getPosition()).isArmed()) {
-
-            if (playerOwnsTile(currentPlayer)) {
-                gameBoard.upgradeTrap.setEnabled(false);
-                gameBoard.passTurn.setEnabled(true);
-                gameBoard.armTrap.setEnabled(false);
-                gameBoard.stealTrap.setEnabled(false);
-                gameBoard.throwDice.setEnabled(false);
-
-                if (!gameBoard.getTileAtIndex(currentPlayer.getPosition()).isUpgraded()) {
-                    gameBoard.upgradeTrap.setEnabled(true);
-                    gameBoard.passTurn.setEnabled(true);
-                }
-                return;
-
-            }
-            gameBoard.upgradeTrap.setEnabled(false);
-            gameBoard.passTurn.setEnabled(true);
-            gameBoard.armTrap.setEnabled(false);
-            gameBoard.throwDice.setEnabled(false);
-
-            if (!gameBoard.getTileAtIndex(currentPlayer.getPosition()).isUpgraded()) {
-                gameBoard.stealTrap.setEnabled(true);
-            }
+        if (armedTrapSituation()) {
             return;
         }
 
         gameBoard.throwDice.setEnabled(false);
         gameBoard.upgradeTrap.setEnabled(false);
         gameBoard.passTurn.setEnabled(true);
-        gameBoard.armTrap.setEnabled(true);
+        armTrapValidation();
         gameBoard.stealTrap.setEnabled(false);
     }
 
     public void armTrap() {
-
         gameBoard.armTrap.setEnabled(false);
         Player.playerBuyTile(currentPlayer.getPosition(), currentPlayer.getName());
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getPrice());
         gameBoard.getTileAtIndex(currentPlayer.getPosition()).setArmed(true);
-        gameBoard.textinho.setText("you bought " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
+        gameBoard.textinho.setText("you bought: " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
         gameBoard.passTurn.setEnabled(true);
+
     }
 
     public void upgradeTrap() {
-
+        gameBoard.upgradeTrap.setEnabled(false);
+        currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getUpgradePrice());
+        gameBoard.getTileAtIndex(currentPlayer.getPosition()).setUpgraded(true);
+        gameBoard.textinho.setText("you upgraded: " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
     }
 
     public void passTurn() {
@@ -264,6 +241,65 @@ public class Game implements ActionListener, Serializable {
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
     }
+
+    public void upgradeTrapValidation() {
+        if (!gameBoard.getTileAtIndex(currentPlayer.getPosition()).isUpgraded()) {
+            if (currentPlayer.getLifePoints() > gameBoard.getTileAtIndex(currentPlayer.getLifePoints()).getUpgradePrice()) {
+                gameBoard.upgradeTrap.setEnabled(true);
+                return;
+            }
+
+        }
+        gameBoard.upgradeTrap.setEnabled(false);
+
+    }
+
+    public void armTrapValidation() {
+        if (!(currentPlayer.getLifePoints() > gameBoard.getTileAtIndex(currentPlayer.getPosition()).getPrice())) {
+            gameBoard.armTrap.setEnabled(false);
+            return;
+        }
+        gameBoard.armTrap.setEnabled(true);
+    }
+
+    public void trapStatusValidation() {
+        if (!gameBoard.getTileAtIndex(currentPlayer.getPosition()).isUpgraded()) {
+            if (currentPlayer.getLifePoints() > gameBoard.getTileAtIndex(currentPlayer.getLifePoints()).getUpgradePrice()) {
+                gameBoard.stealTrap.setEnabled(true);
+            }
+        }
+        gameBoard.stealTrap.setEnabled(false);
+    }
+
+    public void stealTrap() {
+        gameBoard.stealTrap.setEnabled(false);
+        Player.removeTileFromPlayer(currentPlayer.getPosition());
+        Player.playerBuyTile(currentPlayer.getPosition(), currentPlayer.getName());
+        currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(currentPlayer.getPosition()).getUpgradePrice());
+        gameBoard.textinho.setText("you stealed: " + gameBoard.getTileAtIndex(currentPlayer.getPosition()).getName());
+    }
+
+    public boolean armedTrapSituation() {
+        if (gameBoard.getTileAtIndex(currentPlayer.getPosition()).isArmed()) {
+
+            if (playerOwnsTile(currentPlayer)) {
+                upgradeTrapValidation();
+                gameBoard.passTurn.setEnabled(true);
+                gameBoard.armTrap.setEnabled(false);
+                gameBoard.stealTrap.setEnabled(false);
+                gameBoard.throwDice.setEnabled(false);
+
+                return true;
+
+            }
+            gameBoard.upgradeTrap.setEnabled(false);
+            gameBoard.passTurn.setEnabled(true);
+            gameBoard.armTrap.setEnabled(false);
+            gameBoard.throwDice.setEnabled(false);
+            trapStatusValidation();
+            return true;
+        }
+
+        return false;
+    }
 }
-
-

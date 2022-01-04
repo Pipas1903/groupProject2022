@@ -247,54 +247,54 @@ public class Board extends JPanel implements MouseListener, ActionListener {
 
 
         // setting prices
-        tile01.setPrice(100);
+        tile01.setPrice(80);
 
         tile03.setPrice(100);
         tile04.setPrice(120);
-        tile05.setPrice(555);
+        tile05.setPrice(130);
 
         tile07.setPrice(140);
 
-        tile09.setPrice(160);
-        tile10.setPrice(555);
-        tile11.setPrice(180);
+        tile09.setPrice(150);
+        tile10.setPrice(140);
+        tile11.setPrice(130);
 
-        tile13.setPrice(200);
+        tile13.setPrice(90);
 
-        tile15.setPrice(300);
-        tile16.setPrice(555);
-        tile17.setPrice(320);
+        tile15.setPrice(110);
+        tile16.setPrice(130);
+        tile17.setPrice(120);
 
-        tile19.setPrice(320);
-        tile20.setPrice(555);
+        tile19.setPrice(150);
+        tile20.setPrice(100);
 
-        tile22.setPrice(555);
-        tile23.setPrice(555);
+        tile22.setPrice(120);
+        tile23.setPrice(110);
 
         // setting damage points
-        tile01.setDamageDealt(6);
+        tile01.setDamageDealt(8);
 
-        tile03.setDamageDealt(6);
-        tile04.setDamageDealt(8);
-        tile05.setDamageDealt(8);
+        tile03.setDamageDealt(10);
+        tile04.setDamageDealt(12);
+        tile05.setDamageDealt(14);
 
-        tile07.setDamageDealt(8);
+        tile07.setDamageDealt(18);
 
-        tile09.setDamageDealt(12);
-        tile10.setDamageDealt(14);
+        tile09.setDamageDealt(25);
+        tile10.setDamageDealt(18);
         tile11.setDamageDealt(14);
 
-        tile13.setDamageDealt(14);
+        tile13.setDamageDealt(9);
 
-        tile15.setDamageDealt(16);
-        tile16.setDamageDealt(26);
-        tile17.setDamageDealt(26);
+        tile15.setDamageDealt(11);
+        tile16.setDamageDealt(14);
+        tile17.setDamageDealt(12);
 
-        tile19.setDamageDealt(28);
-        tile20.setDamageDealt(28);
+        tile19.setDamageDealt(25);
+        tile20.setDamageDealt(10);
 
-        tile22.setDamageDealt(28);
-        tile23.setDamageDealt(28);
+        tile22.setDamageDealt(12);
+        tile23.setDamageDealt(11);
 
     }
 

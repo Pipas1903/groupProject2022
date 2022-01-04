@@ -19,6 +19,14 @@ public class Player implements Serializable {
     private boolean yourTurn;
     JLabel playerSymbol;
 
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setHost(boolean host) {
+        isHost = host;
+    }
+
     public boolean isYourTurn() {
         return yourTurn;
     }
@@ -35,8 +43,8 @@ public class Player implements Serializable {
         playerOwnedTiles.put(tileNumber, playerName);
     }
 
-    public static void removeTileFromPlayer(Integer tileNumber, String playerName) {
-        playerOwnedTiles.remove(tileNumber, playerName);
+    public static void removeTileFromPlayer(Integer tileNumber) {
+        playerOwnedTiles.remove(tileNumber);
     }
 
     public Player(String name) {
