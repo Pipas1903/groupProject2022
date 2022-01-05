@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board extends JPanel implements MouseListener, ActionListener, Serializable {
 
@@ -19,7 +20,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JButton throwDice;
     public JLabel textinho;
     public JLabel rounds;
-    public JPanel info;
     public JLabel name;
     public JLabel price;
     public JLabel upgradePrice;
@@ -31,8 +31,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel printPlayer3;
     public JLabel printPlayer4;
 
+    public JLabel printName1,printName2,printName3,printName4;
+
     public ImageIcon right;
     public ImageIcon x;
+    public JPanel info;
+    public JPanel printInfo1,printInfo2,printInfo3,printInfo4;
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
@@ -56,20 +60,20 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public Board(int xCoord, int yCoord, int width, int height) {
 
         setBorder(new LineBorder(new Color(0, 0, 0)));
-        setBounds(xCoord, yCoord, 1400, 710);
+        setBounds(xCoord, yCoord, 1400, 810);
         Buttons();
         textBoxes();
 
         this.setLayout(null);
         this.add(textinho);
         this.add(rounds);
-
         this.add(stealTrap);
         this.add(passTurn);
         this.add(upgradeTrap);
         this.add(armTrap);
         this.add(throwDice);
         this.add(info);
+
 
         buttonsList.add(stealTrap);
         buttonsList.add(passTurn);
@@ -337,6 +341,61 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void mouseExited(MouseEvent e) {
     }
 
+    public void panelInfo(List<Player> players){
+        printInfo1 = new JPanel();
+        printInfo1.setBounds(1100, 20,200,150);
+        printInfo1.setVisible(true);
+        printInfo1.setOpaque(true);
+        printInfo1.setPreferredSize(new Dimension(200,150));
+        printInfo1.setLayout(new GridLayout(3, 1, 0, 20));
+        printName1 = new JLabel();
+        printName1.setText(players.get(0).getName());
+        printName1.setHorizontalAlignment(JLabel.CENTER);
+        printInfo1.add(printName1);
+
+
+        printInfo2 = new JPanel();
+        printInfo2.setBounds(1100,220,200,150);
+        printInfo2.setVisible(true);
+        printInfo2.setOpaque(true);
+        printInfo2.setPreferredSize(new Dimension(200,150));
+        printInfo2.setLayout(new GridLayout(3,1,0,20));
+        printName2 = new JLabel();
+        printName2.setText(players.get(1).getName());
+        printName2.setHorizontalAlignment(JLabel.CENTER);
+        printInfo2.add(printName2);
+
+
+        printInfo3 = new JPanel();
+        printInfo3.setBounds(1100,420,200,150);
+        printInfo3.setVisible(true);
+        printInfo3.setOpaque(true);
+        printInfo3.setPreferredSize(new Dimension(200,150));
+        printInfo3.setLayout(new GridLayout(3,1,0,20));
+        printName3 = new JLabel();
+        printName3.setText(players.get(2).getName());
+        printName3.setHorizontalAlignment(JLabel.CENTER);
+        printInfo3.add(printName3);
+
+
+        printInfo4 = new JPanel();
+        printInfo4.setBounds(1100,620,200,150);
+        printInfo4.setVisible(true);
+        printInfo4.setOpaque(true);
+        printInfo4.setPreferredSize(new Dimension(200,150));
+        printInfo4.setLayout(new GridLayout(3,1,0,20));
+        printName4 = new JLabel();
+        printName4.setText(players.get(3).getName());
+        printName4.setHorizontalAlignment(JLabel.CENTER);
+        printInfo4.add(printName4);
+
+
+        this.add(printInfo1);
+        this.add(printInfo2);
+        this.add(printInfo3);
+        this.add(printInfo4);
+    }
+
 
     public void panel(Tile tile) {
 
@@ -374,7 +433,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         info.setBackground(Color.WHITE);
         info.setVisible(true);
         info.setOpaque(true);
-
 //name
         name = new JLabel();
         name.setHorizontalAlignment(JLabel.CENTER);
