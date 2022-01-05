@@ -89,15 +89,13 @@ public class ClientHandler extends Thread {
         // while (gameManager.getPlayerBySocket().size() <= Integer.parseInt(line)) {
         int number = Integer.parseInt(line);
         // }
-       out.println("great, there will be " + line + " players");
-       out.println("press enter");
-       out.println("stop");
+        out.println("great, there will be " + line + " players");
+        out.println("press enter");
+        out.println("stop");
 
-       in.readLine();
+        in.readLine();
 
         while (gameManager.getClientSocketList().size() < number) {
-            System.out.println("entrou"+ Thread.currentThread().getName());
-            System.out.println(gameManager.getClientSocketList().size());
             synchronized (allGames.get(0)) {
                 allGames.get(0).wait();
             }
