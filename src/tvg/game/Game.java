@@ -293,6 +293,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.passTurn.setEnabled(true);
         gameBoard.updateUI();
 
+        showPlayer();
+
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER ARMING TRAP");
     }
 
@@ -305,6 +307,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.textinho.setText("you upgraded: " + gameBoard.getTileAtIndex(playerLocation).getName());
         gameBoard.updateUI();
 
+        showPlayer();
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER UPGRADING TRAP");
     }
 
@@ -318,6 +321,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.textinho.setText("you stole: " + gameBoard.getTileAtIndex(playerLocation).getName());
         gameBoard.updateUI();
 
+        showPlayer();
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER STEALING TRAP");
     }
 
@@ -334,7 +338,7 @@ public class Game implements ActionListener, Serializable {
 
         playerIndex++;
 
-        if (playerIndex > playerList.size()) {
+        if (playerIndex >= playerList.size()) {
             playerIndex = 0;
             round++;
         }

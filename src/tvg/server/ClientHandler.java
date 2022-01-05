@@ -6,6 +6,7 @@ import tvg.player.Player;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /*
  * client handler
@@ -14,7 +15,7 @@ public class ClientHandler extends Thread {
 
     public final Socket clientSocket;
     private volatile List<ClientHandler> allClientsList;
-    public static volatile List<GameManager> allGames = new ArrayList<>();
+    public static volatile List<GameManager> allGames = new CopyOnWriteArrayList<>();
 
     private Player player;
 
@@ -87,17 +88,18 @@ public class ClientHandler extends Thread {
         player.setHost(true);
 
         out.println("Game created successfully!");
-
-        out.println("How many players do you wish to play with? 2 or 4");
+        out.println("press enter to continue");
         out.println("stop");
-        line = in.readLine();
+        in.readLine();
 
-        while (gameManager.getPlayerBySocket().size() < Integer.parseInt(line)) {
+        // while (gameManager.getPlayerBySocket().size() <= Integer.parseInt(line)) {
 
+        // }
+        while (!ready) {
+            System.out.println("waiting");
         }
 
         for (Map.Entry<Socket, Player> map : gameManager.getPlayerBySocket().entrySet()) {
-
             out = new PrintWriter(map.getKey().getOutputStream());
 
             out.println("init");
@@ -134,6 +136,7 @@ public class ClientHandler extends Thread {
 
         in.readLine();
         allGames.get(index).addPlayer(clientSocket, player);
+        ready = true;
     }
 
     public void setAllClientsList(List<ClientHandler> allClientsList) {

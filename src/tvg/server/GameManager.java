@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class GameManager {
 
-    private HashMap<Socket, Player> playerBySocket = new HashMap<>();
+    private volatile HashMap<Socket, Player> playerBySocket = new HashMap<>();
     private List<Player> playersList = new ArrayList<>();
 
     private Game game;
