@@ -408,11 +408,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             armed.setText("Armed");
             armed.setIcon(x);
         } else {
-<<<<<<<HEAD
-            armed.setText("Armed");
-=======
             armed.setText("Armed by: " + Player.getPlayerOwnedTiles().get(tile.getNumber()));
->>>>>>>master
             armed.setIcon(right);
         }
         info.updateUI();
