@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 
 public class Game implements ActionListener, Serializable {
 
+    public static List<Player> playerList;
     public List<Player> getPlayerList() {
         return playerList;
     }
 
-    private List<Player> playerList;
     private Board gameBoard;
     private int round = 1;
     private final int lifeRestoration = 80;
@@ -40,9 +40,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.passTurn.addActionListener(this);
         gameBoard.panelInfo(this.playerList);
 
+        start();
     }
-
-
 
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -211,7 +210,6 @@ public class Game implements ActionListener, Serializable {
 
         armTrapValidation();
         gameBoard.passTurn.setEnabled(true);
-
         gameBoard.throwDice.setEnabled(false);
         gameBoard.upgradeTrap.setEnabled(false);
         gameBoard.stealTrap.setEnabled(false);
@@ -270,9 +268,7 @@ public class Game implements ActionListener, Serializable {
             }
 
             trapStatusValidation();
-
             gameBoard.passTurn.setEnabled(true);
-
             gameBoard.upgradeTrap.setEnabled(false);
             gameBoard.armTrap.setEnabled(false);
             gameBoard.throwDice.setEnabled(false);
@@ -340,13 +336,13 @@ public class Game implements ActionListener, Serializable {
 
         playerIndex++;
 
+
         if (playerIndex >= playerList.size()) {
             playerIndex = 0;
             round++;
+
         }
-
         currentPlayer = playerList.get(playerIndex);
-
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
