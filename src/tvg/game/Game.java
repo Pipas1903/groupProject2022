@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
 
 public class Game implements ActionListener, Serializable {
 
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
     private List<Player> playerList;
     private Board gameBoard;
     private int round = 1;
@@ -23,19 +27,29 @@ public class Game implements ActionListener, Serializable {
     private int playerIndex = 0;
     int playerLocation;
 
-
     public Game(List<Player> playerList) {
+
         this.playerList = playerList;
 
         gameBoard = new Board(6, 6, 612, 612);
         gameBoard.setBackground(new Color(192, 192, 192));
-
         gameBoard.armTrap.addActionListener(this);
         gameBoard.throwDice.addActionListener(this);
         gameBoard.upgradeTrap.addActionListener(this);
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
+        gameBoard.panelInfo(this.playerList);
 
+    }
+
+
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public Board getGameBoard() {
@@ -149,6 +163,7 @@ public class Game implements ActionListener, Serializable {
 
     public void throwDice() {
 
+        resetEndOfTurn();
         currentPlayer.setDiceRoll(Dice.throwDice());
 
         gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
@@ -156,7 +171,7 @@ public class Game implements ActionListener, Serializable {
 
         System.out.println("PLAYER ROLLED DICE");
         System.out.println(currentPlayer.getPosition());
-       // showPlayer();
+        // showPlayer();
         System.out.println("PLAYER ROLLED " + currentPlayer.getDiceRoll());
 
 
@@ -277,6 +292,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.passTurn.setEnabled(true);
         gameBoard.updateUI();
 
+        showPlayer();
+
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER ARMING TRAP");
     }
 
@@ -289,6 +306,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.textinho.setText("you upgraded: " + gameBoard.getTileAtIndex(playerLocation).getName());
         gameBoard.updateUI();
 
+        showPlayer();
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER UPGRADING TRAP");
     }
 
@@ -302,12 +320,14 @@ public class Game implements ActionListener, Serializable {
         gameBoard.textinho.setText("you stole: " + gameBoard.getTileAtIndex(playerLocation).getName());
         gameBoard.updateUI();
 
+        showPlayer();
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER STEALING TRAP");
     }
 
     public void passTurn() {
         System.out.println(currentPlayer.getName() + " PASSED TURN");
 
+        currentPlayer.setEndOfTurn(true);
         gameBoard.throwDice.setEnabled(true);
 
         gameBoard.passTurn.setEnabled(false);
@@ -317,17 +337,31 @@ public class Game implements ActionListener, Serializable {
 
         playerIndex++;
 
-        if (playerIndex > 1) {
+        if (playerIndex >= playerList.size()) {
             playerIndex = 0;
             round++;
         }
 
         currentPlayer = playerList.get(playerIndex);
 
-
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
+        gameBoard.updateUI();
+    }
+
+    public void resetEndOfTurn() {
+        for (Player player : playerList) {
+            player.setEndOfTurn(false);
+        }
+    }
+
+    public void turnOffOtherPlayerButtons() {
+        gameBoard.upgradeTrap.setEnabled(false);
+        gameBoard.passTurn.setEnabled(false);
+        gameBoard.stealTrap.setEnabled(false);
+        gameBoard.throwDice.setEnabled(false);
+        gameBoard.armTrap.setEnabled(false);
         gameBoard.updateUI();
     }
 }
