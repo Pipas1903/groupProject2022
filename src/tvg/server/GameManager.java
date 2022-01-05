@@ -73,8 +73,10 @@ public class GameManager {
     }
 
     public void gameLoop() throws IOException, ClassNotFoundException {
+
         while (true) {
             for (Map.Entry<Socket, Player> map : playerBySocket.entrySet()) {
+
                 if (game.getCurrentPlayer().equals(map.getValue())) {
                     receive(map.getKey());
                 }
