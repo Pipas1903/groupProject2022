@@ -64,12 +64,11 @@ public class ClientHandler extends Thread {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("foda-se");
         }
 
     }
 
-    public void createGame() throws IOException {
+    public void createGame() throws IOException, ClassNotFoundException {
 
         out.println("Insert a name for your game: ");
         out.println("stop");
@@ -81,25 +80,25 @@ public class ClientHandler extends Thread {
 
         gameManager.setGameName(line);
 
-        gameManager.addClientSocket(clientSocket);
-        gameManager.addPlayer(player);
+        gameManager.addPlayer(clientSocket, player);
 
         System.out.println("Client " + name + " created a game called " + line);
 
         player.setHost(true);
 
         out.println("Game created successfully!");
-        out.println("press enter to continue");
+
+        out.println("How many players do you wish to play with? 2 or 4");
         out.println("stop");
+        line = in.readLine();
 
-        in.readLine();
-
-        while (!ready) {
+        while (gameManager.getPlayerBySocket().size() < Integer.parseInt(line)) {
 
         }
 
-        for (Socket client : gameManager.clients) {
-            out = new PrintWriter(client.getOutputStream());
+        for (Map.Entry<Socket, Player> map : gameManager.getPlayerBySocket().entrySet()) {
+
+            out = new PrintWriter(map.getKey().getOutputStream());
 
             out.println("init");
             out.println("stop");
@@ -125,11 +124,7 @@ public class ClientHandler extends Thread {
 
         } while (line.equals("a"));
 
-
         int index = Integer.parseInt(line);
-
-        allGames.get(index).addClientSocket(clientSocket);
-        allGames.get(index).addPlayer(player);
 
         System.out.println(name + " joined game " + allGames.get(index).getGameName());
 
@@ -138,7 +133,7 @@ public class ClientHandler extends Thread {
         out.println("stop");
 
         in.readLine();
-        ready = true;
+        allGames.get(index).addPlayer(clientSocket, player);
     }
 
     public void setAllClientsList(List<ClientHandler> allClientsList) {

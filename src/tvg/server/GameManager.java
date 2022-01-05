@@ -7,18 +7,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameManager {
 
-    public volatile List<Socket> clients = new ArrayList<>();
-    private List<Player> players = new ArrayList<>();
+    private HashMap<Socket, Player> playerBySocket = new HashMap<>();
+    private List<Player> playersList = new ArrayList<>();
+
     private Game game;
     private String gameName;
+
+    public void addPlayer(Socket socket, Player player) {
+        playerBySocket.put(socket, player);
+        playersList.add(player);
+    }
 
     public String getGameName() {
         return gameName;
@@ -28,55 +31,56 @@ public class GameManager {
         this.gameName = gameName;
     }
 
-    public void addClientSocket(Socket socket) {
-        clients.add(socket);
-    }
-
-    public void addPlayer(Player player) {
-        players.add(player);
+    public HashMap<Socket, Player> getPlayerBySocket() {
+        return playerBySocket;
     }
 
     public Player getHost() {
-        for (Player player : players) {
-            if (player.isHost()) {
-                return player;
+        for (Map.Entry<Socket, Player> map : getPlayerBySocket().entrySet()) {
+            if (map.getValue().isHost()) {
+                return map.getValue();
             }
         }
         return null;
     }
 
-    public void startGame() throws IOException {
+    public void startGame() throws IOException, ClassNotFoundException {
 
         playingOrder();
 
         System.out.println("initializing game");
 
-        game = new Game(players);
+        game = new Game(playersList);
 
         send();
+
+        gameLoop();
     }
 
     public void send() throws IOException {
 
         ObjectOutputStream objectOutputStream = null;
 
-        for (Socket client : clients) {
+        for (Map.Entry<Socket, Player> map : getPlayerBySocket().entrySet()) {
 
-            System.out.println("sending game to client " + client.getInetAddress());
+            System.out.println("sending game to client " + map.getKey().getInetAddress());
 
-            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+            objectOutputStream = new ObjectOutputStream(map.getKey().getOutputStream());
             objectOutputStream.writeObject(game);
             objectOutputStream.flush();
 
         }
     }
 
-    public void sendGame() throws IOException {
-
-        playingOrder();
-        game = new Game(players);
-        send();
-
+    public void gameLoop() throws IOException, ClassNotFoundException {
+        while (true) {
+            for (Map.Entry<Socket, Player> map : playerBySocket.entrySet()) {
+                if (game.getCurrentPlayer().equals(map.getValue())) {
+                    receive(map.getKey());
+                }
+            }
+            send();
+        }
     }
 
     public void receive(Socket clientSocket) throws IOException, ClassNotFoundException {
@@ -90,7 +94,6 @@ public class GameManager {
 
     }
 
-
     public void playingOrder() {
 
         Random random = new Random();
@@ -101,10 +104,10 @@ public class GameManager {
                 boxed().
                 collect(Collectors.toCollection(ArrayList<Integer>::new));
 
-        for (int i = 0; i < players.size(); i++) {
-            players.get(i).setOrder(number.get(i));
+        for (int i = 0; i < playersList.size(); i++) {
+            playersList.get(i).setOrder(number.get(i));
         }
 
-        players.sort(Comparator.comparing(Player::getOrder));
+        playersList.sort(Comparator.comparing(Player::getOrder));
     }
 }
