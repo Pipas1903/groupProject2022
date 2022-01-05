@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class Game implements ActionListener, Serializable {
 
-    private List<Player> playerList;
+    public static List<Player> playerList;
     private Board gameBoard;
     private int round = 1;
     private final int lifeRestoration = 80;
@@ -35,6 +35,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.upgradeTrap.addActionListener(this);
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
+
+        start();
 
     }
 
@@ -156,7 +158,7 @@ public class Game implements ActionListener, Serializable {
 
         System.out.println("PLAYER ROLLED DICE");
         System.out.println(currentPlayer.getPosition());
-       // showPlayer();
+        // showPlayer();
         System.out.println("PLAYER ROLLED " + currentPlayer.getDiceRoll());
 
 
@@ -320,17 +322,30 @@ public class Game implements ActionListener, Serializable {
 
         playerIndex++;
 
-        if (playerIndex > 1) {
+        try {
+            if (playerIndex > playerList.size() + 1) {
+                playerIndex = 0;
+                round++;
+            }
+
+            currentPlayer = playerList.get(playerIndex);
+
+
+            gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
+            gameBoard.rounds.setText(Messages.ROUND + round);
+            gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
+            gameBoard.updateUI();
+        } catch (IndexOutOfBoundsException e) {
             playerIndex = 0;
             round++;
+
+            currentPlayer = playerList.get(playerIndex);
+
+
+            gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
+            gameBoard.rounds.setText(Messages.ROUND + round);
+            gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
+            gameBoard.updateUI();
         }
-
-        currentPlayer = playerList.get(playerIndex);
-
-
-        gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
-        gameBoard.rounds.setText(Messages.ROUND + round);
-        gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
-        gameBoard.updateUI();
     }
 }

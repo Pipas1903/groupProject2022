@@ -1,6 +1,7 @@
 package tvg.board;
 
 import tvg.player.Player;
+import tvg.game.Game;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -24,7 +25,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel upgradePrice;
     public JLabel damageDealt;
     public JLabel armed;
+
     public JLabel printPlayer1;
+    public JLabel printPlayer2;
+    public JLabel printPlayer3;
+    public JLabel printPlayer4;
+
     public ImageIcon right;
     public ImageIcon x;
 
@@ -316,14 +322,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void mousePressed(MouseEvent e) {
 
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
+
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
+
     @Override
     public void mouseExited(MouseEvent e) {
     }
@@ -334,12 +343,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         name.setText(tile.getName());
         price.setText("Price: " + tile.getPrice());
         upgradePrice.setText("Upgrade Price: " + tile.getUpgradePrice());
-        damageDealt.setText("Damage Dealt: "+ tile.getDamageDealt());
+        damageDealt.setText("Damage Dealt: " + tile.getDamageDealt());
 
-        if(!tile.isArmed()){
+        if (!tile.isArmed()) {
             armed.setText("Armed");
             armed.setIcon(x);
-        }else{
+        } else {
             armed.setText("Armed");
             armed.setIcon(right);
         }
@@ -381,14 +390,25 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         info.add(damageDealt);
 //armed
         armed = new JLabel();
-        right = new ImageIcon("src/tvg/right.png");
-        x = new ImageIcon("src/tvg/x.png");
+        right = new ImageIcon("src/tvg/images/right.png");
+        x = new ImageIcon("src/tvg/images/x.png");
         info.add(armed);
 //printPlayer
         printPlayer1 = new JLabel();
         printPlayer1.setVisible(true);
         this.add(printPlayer1);
 
+        printPlayer2 = new JLabel();
+        printPlayer2.setVisible(true);
+        this.add(printPlayer2);
+
+        printPlayer3 = new JLabel();
+        printPlayer3.setVisible(true);
+        this.add(printPlayer3);
+
+        printPlayer4 = new JLabel();
+        printPlayer4.setVisible(true);
+        this.add(printPlayer4);
     }
 
     public void Buttons() {
@@ -424,41 +444,83 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
+    public void printPlayer(Player player) {
+        System.out.println("ordem do player" + player.getOrder());
+        System.out.println(player.getPosition());
+        ImageIcon redCircle = new ImageIcon("src/tvg/images/redcircle.png");
+        ImageIcon blueCircle = new ImageIcon("src/tvg/images/bluecircle.png");
+        ImageIcon yellowCircle = new ImageIcon("src/tvg/images/yellowcircle.png");
+        ImageIcon greenCircle = new ImageIcon("src/tvg/images/greencircle.png");
 
+        Player player1 = Game.playerList.get(0);
+        Player player2 = Game.playerList.get(1);
+        Player player3 = Game.playerList.get(2);
+        Player player4 = Game.playerList.get(3);
 
-
-    public void printPlayer(Player player){
-            System.out.println("ordem do player"+player.getOrder());
-            System.out.println(player.getPosition());
-            ImageIcon redCircle = new ImageIcon("src/tvg/redcircle.png");
+        if (player == player1) {
             printPlayer1.setIcon(redCircle);
-            printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()], yLocationsOfPlayer1[player.getPosition()],40 , 40);
+            printPlayer1.setBounds(xLocationsOfPlayer1[player1.getPosition()], yLocationsOfPlayer1[player1.getPosition()], 40, 40);
             printPlayer1.updateUI();
-
+        } else if (player == player2) {
+            printPlayer2.setIcon(blueCircle);
+            printPlayer2.setBounds(xLocationsOfPlayer2[player2.getPosition()], yLocationsOfPlayer2[player2.getPosition()], 40, 40);
+            printPlayer2.updateUI();
+        } else if (player == player3) {
+            printPlayer3.setIcon(yellowCircle);
+            printPlayer3.setBounds(xLocationsOfPlayer3[player3.getPosition()], yLocationsOfPlayer3[player3.getPosition()], 40, 40);
+            printPlayer3.updateUI();
+        } else if (player == player4) {
+            printPlayer4.setIcon(greenCircle);
+            printPlayer4.setBounds(xLocationsOfPlayer4[player4.getPosition()], yLocationsOfPlayer4[player4.getPosition()], 40, 40);
+            printPlayer4.updateUI();
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
     }
 
-    int[] xLocationsOfPlayer1 = {31, 131, 231, 331, 431, 531,
-            531, 531, 531, 531, 531,
-            431, 331, 231, 131, 31,
-            31, 31, 31, 31};
+    //todas a localizações dos círculos
 
-    int[] yLocationsOfPlayer1 = {33, 33, 33, 33, 33, 33,
-            133, 233, 333, 433, 533,
-            533, 533, 533, 533, 533,
-            433, 333, 233, 133};
+    int[] xLocationsOfPlayer1 = {10, 110, 210, 310, 410, 510, 610,
+            610, 610, 610, 610, 610, 610,
+            510, 410, 310, 210, 110, 10,
+            10, 10, 10, 10, 10, 10};
 
-    int[] xLocationsOfPlayer2 = {61, 191, 291, 361, 461, 561,
-            561, 561, 561, 561, 561,
-            461, 361, 261, 161, 61,
-            61, 61, 61, 61};
+    int[] yLocationsOfPlayer1 = {10, 10, 10, 10, 10, 10, 10,
+            110, 210, 310, 410, 510, 610,
+            610, 610, 610, 610, 610, 610,
+            510, 410, 310, 210, 110};
 
-    int[] yLocationsOfPlayer2 = {33, 33, 33, 33, 33, 33,
-            133, 233, 333, 433, 533,
-            533, 533, 533, 533, 533,
-            433, 333, 233, 133};
+    int[] xLocationsOfPlayer2 = {70, 170, 270, 370, 470, 570, 670,
+            670, 670, 670, 670, 670, 670,
+            570, 470, 370, 270, 170, 70,
+            70, 70, 70, 70, 70, 70};
+
+    int[] yLocationsOfPlayer2 = {70, 70, 70, 70, 70, 70, 70,
+            170, 270, 370, 470, 570, 670,
+            670, 670, 670, 670, 670, 670,
+            570, 470, 370, 270, 170};
+
+    int[] xLocationsOfPlayer3 = {10, 110, 210, 310, 410, 510, 610,
+            610, 610, 610, 610, 610, 610,
+            510, 410, 310, 210, 110, 10,
+            10, 10, 10, 10, 10, 10};
+
+    int[] yLocationsOfPlayer3 = {70, 70, 70, 70, 70, 70, 70,
+            170, 270, 370, 470, 570, 670,
+            670, 670, 670, 670, 670, 670,
+            570, 470, 370, 270, 170};
+
+    int[] xLocationsOfPlayer4 = {70, 170, 270, 370, 470, 570, 670,
+            670, 670, 670, 670, 670, 670,
+            570, 470, 370, 270, 170, 70,
+            70, 70, 70, 70, 70, 70};
+
+    int[] yLocationsOfPlayer4 = {10, 10, 10, 10, 10, 10, 10,
+            110, 210, 310, 410, 510, 610,
+            610, 610, 610, 610, 610, 610,
+            510, 410, 310, 210, 110};
+
 
 }
