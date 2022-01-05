@@ -210,7 +210,6 @@ public class Game implements ActionListener, Serializable {
 
         armTrapValidation();
         gameBoard.passTurn.setEnabled(true);
-
         gameBoard.throwDice.setEnabled(false);
         gameBoard.upgradeTrap.setEnabled(false);
         gameBoard.stealTrap.setEnabled(false);
@@ -269,9 +268,7 @@ public class Game implements ActionListener, Serializable {
             }
 
             trapStatusValidation();
-
             gameBoard.passTurn.setEnabled(true);
-
             gameBoard.upgradeTrap.setEnabled(false);
             gameBoard.armTrap.setEnabled(false);
             gameBoard.throwDice.setEnabled(false);

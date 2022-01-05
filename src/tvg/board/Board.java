@@ -31,12 +31,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel printPlayer3;
     public JLabel printPlayer4;
 
-    public JLabel printName1,printName2,printName3,printName4;
+    public JLabel printName1, printName2, printName3, printName4;
 
     public ImageIcon right;
     public ImageIcon x;
     public JPanel info;
-    public JPanel printInfo1,printInfo2,printInfo3,printInfo4;
+    public JPanel printInfo1, printInfo2, printInfo3, printInfo4;
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
@@ -341,12 +341,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void mouseExited(MouseEvent e) {
     }
 
-    public void panelInfo(List<Player> players){
+    public void panelInfo(List<Player> players) {
         printInfo1 = new JPanel();
-        printInfo1.setBounds(1100, 20,200,150);
+        printInfo1.setBounds(1100, 20, 200, 150);
         printInfo1.setVisible(true);
         printInfo1.setOpaque(true);
-        printInfo1.setPreferredSize(new Dimension(200,150));
+        printInfo1.setPreferredSize(new Dimension(200, 150));
         printInfo1.setLayout(new GridLayout(3, 1, 0, 20));
         printName1 = new JLabel();
         printName1.setText(players.get(0).getName());
@@ -355,11 +355,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
 
         printInfo2 = new JPanel();
-        printInfo2.setBounds(1100,220,200,150);
+        printInfo2.setBounds(1100, 220, 200, 150);
         printInfo2.setVisible(true);
         printInfo2.setOpaque(true);
-        printInfo2.setPreferredSize(new Dimension(200,150));
-        printInfo2.setLayout(new GridLayout(3,1,0,20));
+        printInfo2.setPreferredSize(new Dimension(200, 150));
+        printInfo2.setLayout(new GridLayout(3, 1, 0, 20));
         printName2 = new JLabel();
         printName2.setText(players.get(1).getName());
         printName2.setHorizontalAlignment(JLabel.CENTER);
@@ -367,11 +367,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
 
         printInfo3 = new JPanel();
-        printInfo3.setBounds(1100,420,200,150);
+        printInfo3.setBounds(1100, 420, 200, 150);
         printInfo3.setVisible(true);
         printInfo3.setOpaque(true);
-        printInfo3.setPreferredSize(new Dimension(200,150));
-        printInfo3.setLayout(new GridLayout(3,1,0,20));
+        printInfo3.setPreferredSize(new Dimension(200, 150));
+        printInfo3.setLayout(new GridLayout(3, 1, 0, 20));
         printName3 = new JLabel();
         printName3.setText(players.get(2).getName());
         printName3.setHorizontalAlignment(JLabel.CENTER);
@@ -379,11 +379,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
 
         printInfo4 = new JPanel();
-        printInfo4.setBounds(1100,620,200,150);
+        printInfo4.setBounds(1100, 620, 200, 150);
         printInfo4.setVisible(true);
         printInfo4.setOpaque(true);
-        printInfo4.setPreferredSize(new Dimension(200,150));
-        printInfo4.setLayout(new GridLayout(3,1,0,20));
+        printInfo4.setPreferredSize(new Dimension(200, 150));
+        printInfo4.setLayout(new GridLayout(3, 1, 0, 20));
         printName4 = new JLabel();
         printName4.setText(players.get(3).getName());
         printName4.setHorizontalAlignment(JLabel.CENTER);
@@ -408,7 +408,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             armed.setText("Armed");
             armed.setIcon(x);
         } else {
+<<<<<<<HEAD
             armed.setText("Armed");
+=======
+            armed.setText("Armed by: " + Player.getPlayerOwnedTiles().get(tile.getNumber()));
+>>>>>>>master
             armed.setIcon(right);
         }
         info.updateUI();
@@ -505,6 +509,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void printPlayer(Player player) {
         System.out.println("ordem do player" + player.getOrder());
         System.out.println(player.getPosition());
+
         ImageIcon redCircle = new ImageIcon("src/tvg/images/redcircle.png");
         ImageIcon blueCircle = new ImageIcon("src/tvg/images/bluecircle.png");
         ImageIcon yellowCircle = new ImageIcon("src/tvg/images/yellowcircle.png");

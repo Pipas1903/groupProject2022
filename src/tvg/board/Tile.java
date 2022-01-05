@@ -1,5 +1,7 @@
 package tvg.board;
 
+import tvg.player.Player;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -17,6 +19,7 @@ public class Tile extends JPanel {
     private boolean upgraded = false;
     JLabel nameLabel;
     static int totalTiles = 0;
+
 
     public Tile(int xCoord, int yCoord, int width, int height, String labelString, int rotationDegrees, boolean buyable) {
         number = totalTiles;
@@ -166,4 +169,5 @@ public class Tile extends JPanel {
     public boolean isBuyable() {
         return buyable;
     }
+
 }
