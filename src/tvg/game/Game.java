@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
 
 public class Game implements ActionListener, Serializable {
 
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
     private List<Player> playerList;
     private Board gameBoard;
     private int round = 1;
@@ -29,12 +33,12 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard = new Board(6, 6, 612, 612);
         gameBoard.setBackground(new Color(192, 192, 192));
-
         gameBoard.armTrap.addActionListener(this);
         gameBoard.throwDice.addActionListener(this);
         gameBoard.upgradeTrap.addActionListener(this);
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
+        gameBoard.panelInfo(this.playerList);
 
     }
 
