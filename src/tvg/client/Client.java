@@ -74,14 +74,15 @@ public class Client {
     }
 
     public void playingLoop() throws IOException, ClassNotFoundException {
+
         while (true) {
             if (!game.getCurrentPlayer().getName().equals(name)) {
                 game.turnOffOtherPlayerButtons();
             }
             if (game.getCurrentPlayer().getName().equals(name)) {
-                receiveGame();
                 if (game.getCurrentPlayer().isEndOfTurn()) {
                     sendGameAfterTurn();
+                    break;
                 }
             }
             receiveGame();
@@ -97,6 +98,7 @@ public class Client {
         if (object instanceof Game) {
             game = (Game) object;
         }
+        System.out.println("recebi um jogo " + game);
 
     }
 
@@ -107,6 +109,7 @@ public class Client {
         objectOutputStream.flush();
         objectOutputStream.close();
 
+        System.out.println("enviei um jogo " + game);
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

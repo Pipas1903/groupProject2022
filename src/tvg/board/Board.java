@@ -13,6 +13,8 @@ import java.util.List;
 
 public class Board extends JPanel implements MouseListener, ActionListener, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     public JButton armTrap;
     public JButton upgradeTrap;
     public JButton passTurn;
@@ -39,15 +41,21 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JPanel info;
     public JPanel printInfo1, printInfo2, printInfo3, printInfo4;
 
-
     private ArrayList<Tile> allTiles = new ArrayList<>();
     private ArrayList<Tile> unbuyableTiles = new ArrayList<>();
-
     public ArrayList<Tile> getUnbuyableTiles() {
         return unbuyableTiles;
     }
-
     public ArrayList<JButton> buttonsList = new ArrayList<>();
+    private List<Player> playerList;
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+    }
 
     public ArrayList<Tile> getAllTiles() {
         return allTiles;
@@ -116,7 +124,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
 
         // squares on the top
-        Tile tile00 = new Tile(6, 6, 100, 100, squareNames[0], -45, true);
+        Tile tile00 = new Tile(6, 6, 100, 100, squareNames[0], -45, false);
         this.add(tile00);
         allTiles.add(tile00);
         unbuyableTiles.add(tile00);
@@ -512,10 +520,10 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         ImageIcon yellowCircle = new ImageIcon("src/tvg/images/yellowcircle.png");
         ImageIcon greenCircle = new ImageIcon("src/tvg/images/greencircle.png");
 
-        Player player1 = Game.playerList.get(0);
-        Player player2 = Game.playerList.get(1);
-        Player player3 = Game.playerList.get(2);
-        Player player4 = Game.playerList.get(3);
+        Player player1 = playerList.get(0);
+        Player player2 = playerList.get(1);
+        // Player player3 = Game.playerList.get(2);
+        //Player player4 = Game.playerList.get(3);
 
         if (player == player1) {
             printPlayer1.setIcon(redCircle);
@@ -525,7 +533,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer2.setIcon(blueCircle);
             printPlayer2.setBounds(xLocationsOfPlayer2[player2.getPosition()], yLocationsOfPlayer2[player2.getPosition()], 40, 40);
             printPlayer2.updateUI();
-        } else if (player == player3) {
+        } /* else if (player == player3) {
             printPlayer3.setIcon(yellowCircle);
             printPlayer3.setBounds(xLocationsOfPlayer3[player3.getPosition()], yLocationsOfPlayer3[player3.getPosition()], 40, 40);
             printPlayer3.updateUI();
@@ -533,7 +541,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer4.setIcon(greenCircle);
             printPlayer4.setBounds(xLocationsOfPlayer4[player4.getPosition()], yLocationsOfPlayer4[player4.getPosition()], 40, 40);
             printPlayer4.updateUI();
-        }
+        }*/
     }
 
     @Override

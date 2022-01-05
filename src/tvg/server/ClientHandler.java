@@ -1,12 +1,10 @@
 package tvg.server;
 
-import tvg.game.Game;
 import tvg.player.Player;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /*
  * client handler
@@ -15,7 +13,8 @@ public class ClientHandler extends Thread {
 
     public final Socket clientSocket;
     private volatile List<ClientHandler> allClientsList;
-    public static volatile List<GameManager> allGames = new CopyOnWriteArrayList<>();
+
+    public static volatile List<GameManager> allGames = new ArrayList<>();
 
     private Player player;
 
@@ -39,10 +38,6 @@ public class ClientHandler extends Thread {
 
     public void clientJoin() {
 
-
-        allGames = new ArrayList<>();
-
-
         try {
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -59,7 +54,6 @@ public class ClientHandler extends Thread {
             line = in.readLine();
 
             if (line.equals("1")) createGame();
-
             if (line.equals("2")) joinGame();
 
 
@@ -69,7 +63,7 @@ public class ClientHandler extends Thread {
 
     }
 
-    public void createGame() throws IOException, ClassNotFoundException {
+    public void createGame() throws IOException, ClassNotFoundException, InterruptedException {
 
         out.println("Insert a name for your game: ");
         out.println("stop");
@@ -78,7 +72,6 @@ public class ClientHandler extends Thread {
 
         GameManager gameManager = new GameManager();
         allGames.add(gameManager);
-
         gameManager.setGameName(line);
 
         gameManager.addPlayer(clientSocket, player);
@@ -87,19 +80,31 @@ public class ClientHandler extends Thread {
 
         player.setHost(true);
 
+
         out.println("Game created successfully!");
-        out.println("press enter to continue");
+        out.println("how many players will there be? 2 or 4");
         out.println("stop");
-        in.readLine();
+        line = in.readLine();
 
         // while (gameManager.getPlayerBySocket().size() <= Integer.parseInt(line)) {
-
+        int number = Integer.parseInt(line);
         // }
-        while (!ready) {
-            System.out.println("waiting");
+       out.println("great, there will be " + line + " players");
+       out.println("press enter");
+       out.println("stop");
+
+       in.readLine();
+
+        while (gameManager.getClientSocketList().size() < number) {
+            System.out.println("entrou"+ Thread.currentThread().getName());
+            System.out.println(gameManager.getClientSocketList().size());
+            synchronized (allGames.get(0)) {
+                allGames.get(0).wait();
+            }
         }
 
-        for (Map.Entry<Socket, Player> map : gameManager.getPlayerBySocket().entrySet()) {
+        for (Map.Entry<Socket, Player> map : gameManager.getClientSocketList().entrySet()) {
+
             out = new PrintWriter(map.getKey().getOutputStream());
 
             out.println("init");
@@ -116,6 +121,7 @@ public class ClientHandler extends Thread {
 
         do {
             for (GameManager games : allGames) {
+                out.println(games);
                 out.println(id + " - " + games.getGameName());
                 id++;
             }
@@ -136,7 +142,10 @@ public class ClientHandler extends Thread {
 
         in.readLine();
         allGames.get(index).addPlayer(clientSocket, player);
-        ready = true;
+
+        synchronized (allGames.get(index)) {
+            allGames.get(index).notifyAll();
+        }
     }
 
     public void setAllClientsList(List<ClientHandler> allClientsList) {

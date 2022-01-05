@@ -12,14 +12,16 @@ import java.util.stream.Collectors;
 
 public class GameManager {
 
-    private volatile HashMap<Socket, Player> playerBySocket = new HashMap<>();
+    private HashMap<Socket, Player> clientSocketList = new HashMap<>();
     private List<Player> playersList = new ArrayList<>();
 
     private Game game;
     private String gameName;
 
+    ObjectInputStream objectInputStream = null;
+
     public void addPlayer(Socket socket, Player player) {
-        playerBySocket.put(socket, player);
+        clientSocketList.put(socket, player);
         playersList.add(player);
     }
 
@@ -31,12 +33,12 @@ public class GameManager {
         this.gameName = gameName;
     }
 
-    public HashMap<Socket, Player> getPlayerBySocket() {
-        return playerBySocket;
+    public HashMap<Socket, Player> getClientSocketList() {
+        return clientSocketList;
     }
 
     public Player getHost() {
-        for (Map.Entry<Socket, Player> map : getPlayerBySocket().entrySet()) {
+        for (Map.Entry<Socket, Player> map : getClientSocketList().entrySet()) {
             if (map.getValue().isHost()) {
                 return map.getValue();
             }
@@ -44,14 +46,14 @@ public class GameManager {
         return null;
     }
 
-    public void startGame() throws IOException, ClassNotFoundException {
+    public void startGame() throws IOException, ClassNotFoundException, InterruptedException {
 
         playingOrder();
 
         System.out.println("initializing game");
 
         game = new Game(playersList);
-
+        game.setCurrentPlayer(playersList.get(0));
         send();
 
         gameLoop();
@@ -61,7 +63,7 @@ public class GameManager {
 
         ObjectOutputStream objectOutputStream = null;
 
-        for (Map.Entry<Socket, Player> map : getPlayerBySocket().entrySet()) {
+        for (Map.Entry<Socket, Player> map : getClientSocketList().entrySet()) {
 
             System.out.println("sending game to client " + map.getKey().getInetAddress());
 
@@ -72,10 +74,11 @@ public class GameManager {
         }
     }
 
-    public void gameLoop() throws IOException, ClassNotFoundException {
+    public void gameLoop() throws IOException, ClassNotFoundException, InterruptedException {
 
         while (true) {
-            for (Map.Entry<Socket, Player> map : playerBySocket.entrySet()) {
+
+            for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
 
                 if (game.getCurrentPlayer().equals(map.getValue())) {
                     receive(map.getKey());
@@ -87,7 +90,7 @@ public class GameManager {
 
     public void receive(Socket clientSocket) throws IOException, ClassNotFoundException {
 
-        ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+        objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
         Object object = objectInputStream.readObject();
 
         if (object instanceof Game) {

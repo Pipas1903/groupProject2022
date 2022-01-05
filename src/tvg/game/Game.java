@@ -15,15 +15,14 @@ import java.util.stream.Collectors;
 
 public class Game implements ActionListener, Serializable {
 
-    public static List<Player> playerList;
-    public List<Player> getPlayerList() {
-        return playerList;
-    }
+    private static final long serialVersionUID = 1L;
+
+    public List<Player> playerList = new ArrayList<>();
 
     private Board gameBoard;
     private int round = 1;
     private final int lifeRestoration = 80;
-    Player currentPlayer;
+    Player currentPlayer = null;
     private int playerIndex = 0;
     int playerLocation;
 
@@ -39,8 +38,13 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
         gameBoard.panelInfo(this.playerList);
+        gameBoard.setPlayerList(playerList);
 
         start();
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
     }
 
     public Player getCurrentPlayer() {
@@ -61,6 +65,7 @@ public class Game implements ActionListener, Serializable {
 
     public void rounds() {
         currentPlayer = playerList.get(0);
+
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
@@ -133,26 +138,27 @@ public class Game implements ActionListener, Serializable {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameBoard.throwDice) {
-            gameBoard.updateUI();
             throwDice();
+            gameBoard.updateUI();
 
         }
         if (e.getSource() == gameBoard.armTrap) {
-            gameBoard.updateUI();
             armTrap();
+            gameBoard.updateUI();
 
         }
         if (e.getSource() == gameBoard.upgradeTrap) {
-            gameBoard.updateUI();
             upgradeTrap();
+            gameBoard.updateUI();
 
         }
         if (e.getSource() == gameBoard.passTurn) {
-            gameBoard.updateUI();
             passTurn();
+            gameBoard.updateUI();
         }
         if (e.getSource() == gameBoard.stealTrap) {
             stealTrap();
+            gameBoard.updateUI();
         }
     }
 
@@ -170,7 +176,7 @@ public class Game implements ActionListener, Serializable {
 
         System.out.println("PLAYER ROLLED DICE");
         System.out.println(currentPlayer.getPosition());
-        // showPlayer();
+        showPlayer();
         System.out.println("PLAYER ROLLED " + currentPlayer.getDiceRoll());
 
 
@@ -327,8 +333,8 @@ public class Game implements ActionListener, Serializable {
         System.out.println(currentPlayer.getName() + " PASSED TURN");
 
         currentPlayer.setEndOfTurn(true);
-        gameBoard.throwDice.setEnabled(true);
 
+        gameBoard.throwDice.setEnabled(false);
         gameBoard.passTurn.setEnabled(false);
         gameBoard.armTrap.setEnabled(false);
         gameBoard.upgradeTrap.setEnabled(false);
@@ -336,13 +342,14 @@ public class Game implements ActionListener, Serializable {
 
         playerIndex++;
 
-
         if (playerIndex >= playerList.size()) {
             playerIndex = 0;
             round++;
-
         }
+
         currentPlayer = playerList.get(playerIndex);
+
+
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
