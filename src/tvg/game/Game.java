@@ -36,8 +36,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
 
-
-
     }
 
     public Board getGameBoard() {
@@ -172,7 +170,7 @@ public class Game implements ActionListener, Serializable {
             currentPlayer.setLifePoints(currentPlayer.getLifePoints() + lifeRestoration);
         }
         System.out.println(currentPlayer.getName() + " AT TILE NUMBER " + currentPlayer.getPosition());
-        //showPlayer();
+        showPlayer();
         playerLocation = currentPlayer.getPosition();
         changeButtonsState();
 
