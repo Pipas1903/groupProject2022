@@ -12,7 +12,7 @@ public class Frame extends JFrame {
     public Frame(Game jogo) {
         this.jogo = jogo;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1110, 750);
+        this.setSize(1410, 750);
         this.setLayout(null);
 
         this.add(jogo.getGameBoard(), new Integer(0));

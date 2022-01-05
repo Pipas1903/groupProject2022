@@ -22,7 +22,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel name;
     public JLabel price;
     public JLabel upgradePrice;
+    public JLabel damageDealt;
+    public JLabel armed;
     public JLabel printPlayer1;
+    public ImageIcon right;
+    public ImageIcon x;
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
@@ -46,7 +50,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public Board(int xCoord, int yCoord, int width, int height) {
 
         setBorder(new LineBorder(new Color(0, 0, 0)));
-        setBounds(xCoord, yCoord, 1100, 710);
+        setBounds(xCoord, yCoord, 1400, 710);
         Buttons();
         textBoxes();
 
@@ -243,98 +247,67 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         // setting prices
 
         tile01.setPrice(80);
-
         tile03.setPrice(100);
         tile04.setPrice(120);
         tile05.setPrice(130);
-
         tile07.setPrice(140);
-
         tile09.setPrice(150);
         tile10.setPrice(140);
         tile11.setPrice(130);
-
         tile13.setPrice(90);
-
         tile15.setPrice(110);
         tile16.setPrice(130);
         tile17.setPrice(120);
-
         tile19.setPrice(150);
         tile20.setPrice(100);
-
         tile22.setPrice(120);
         tile23.setPrice(110);
 
         // setting upgrade prices
 
         tile01.setUpgradePrice(100);
-
         tile03.setUpgradePrice(120);
         tile04.setUpgradePrice(140);
         tile05.setUpgradePrice(150);
-
         tile07.setUpgradePrice(160);
-
         tile09.setUpgradePrice(170);
         tile10.setUpgradePrice(160);
         tile11.setUpgradePrice(150);
-
         tile13.setUpgradePrice(110);
-
         tile15.setUpgradePrice(130);
         tile16.setUpgradePrice(150);
         tile17.setUpgradePrice(140);
-
         tile19.setUpgradePrice(170);
         tile20.setUpgradePrice(120);
-
         tile22.setUpgradePrice(140);
         tile23.setUpgradePrice(130);
 
         // setting damage points
 
         tile01.setDamageDealt(8);
-
         tile03.setDamageDealt(10);
         tile04.setDamageDealt(12);
         tile05.setDamageDealt(14);
-
         tile07.setDamageDealt(18);
-
         tile09.setDamageDealt(25);
         tile10.setDamageDealt(18);
         tile11.setDamageDealt(14);
-
         tile13.setDamageDealt(9);
-
         tile15.setDamageDealt(11);
         tile16.setDamageDealt(14);
         tile17.setDamageDealt(12);
-
         tile19.setDamageDealt(25);
         tile20.setDamageDealt(10);
-
         tile22.setDamageDealt(12);
         tile23.setDamageDealt(11);
-
     }
 
-    public void panel(Tile tile) {
-
-        name.setText(tile.getName());
-        price.setText("Price: " + tile.getPrice());
-        upgradePrice.setText("Upgrade Price: " + tile.getUpgradePrice());
-        info.updateUI();
-
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         for (Tile tile : allTiles) {
             if (e.getSource() == tile) {
                 panel(tile);
-
             }
         }
     }
@@ -343,20 +316,34 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void mousePressed(MouseEvent e) {
 
     }
-
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
-
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
-
     @Override
     public void mouseExited(MouseEvent e) {
+    }
 
+
+    public void panel(Tile tile) {
+
+        name.setText(tile.getName());
+        price.setText("Price: " + tile.getPrice());
+        upgradePrice.setText("Upgrade Price: " + tile.getUpgradePrice());
+        damageDealt.setText("Damage Dealt: "+ tile.getDamageDealt());
+
+        if(!tile.isArmed()){
+            armed.setText("Armed");
+            armed.setIcon(x);
+        }else{
+            armed.setText("Armed");
+            armed.setIcon(right);
+        }
+        info.updateUI();
     }
 
     public void textBoxes() {
@@ -364,35 +351,43 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         textinho.setBounds(800, 320, 200, 30);
         textinho.setVisible(true);
         textinho.setOpaque(true);
-
+//rounds
         rounds = new JLabel();
         rounds.setBounds(873, 15, 100, 30);
         rounds.setForeground(Color.RED);
         rounds.setVisible(true);
         //rounds.setOpaque(true);
-
+//panel
         info = new JPanel();
         info.setBounds(800, 400, 250, 250);
         info.setPreferredSize(new Dimension(250, 250));
         info.setLayout(new GridLayout(5, 1, 0, 20));
+        info.setBackground(Color.WHITE);
         info.setVisible(true);
         info.setOpaque(true);
 
-
+//name
         name = new JLabel();
         name.setHorizontalAlignment(JLabel.CENTER);
         info.add(name);
-
+//price
         price = new JLabel();
         info.add(price);
-
+//upgradePrice
         upgradePrice = new JLabel();
         info.add(upgradePrice);
-
+//damageDealt
+        damageDealt = new JLabel();
+        info.add(damageDealt);
+//armed
+        armed = new JLabel();
+        right = new ImageIcon("src/tvg/right.png");
+        x = new ImageIcon("src/tvg/x.png");
+        info.add(armed);
+//printPlayer
         printPlayer1 = new JLabel();
         printPlayer1.setVisible(true);
-        printPlayer1.setOpaque(true);
-        info.add(printPlayer1);
+        this.add(printPlayer1);
 
     }
 
@@ -428,12 +423,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         throwDice.setVisible(true);
     }
 
-    public void printPlayer(Player player) {
-        System.out.println(player.getPosition());
-        printPlayer1.setText("34gergegergergergreger");
-        printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()], yLocationsOfPlayer1[player.getPosition()], 10, 10);
-        printPlayer1.updateUI();
 
+
+
+
+    public void printPlayer(Player player){
+            System.out.println("ordem do player"+player.getOrder());
+            System.out.println(player.getPosition());
+            ImageIcon redCircle = new ImageIcon("src/tvg/redcircle.png");
+            printPlayer1.setIcon(redCircle);
+            printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()], yLocationsOfPlayer1[player.getPosition()],40 , 40);
+            printPlayer1.updateUI();
 
     }
 
