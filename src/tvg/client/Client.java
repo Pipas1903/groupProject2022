@@ -18,6 +18,8 @@ public class Client {
     Game game;
     ObjectOutputStream objectOutputStream;
     ObjectInputStream objectInputStream;
+    private boolean firstIteration = true;
+    private String name = "";
 
 
     public void getServerInfo() throws IOException {
@@ -44,7 +46,6 @@ public class Client {
                 received += line + "\n";
             }
 
-
             if (received.contains("init")) {
 
                 System.out.println("receiving game ...");
@@ -56,15 +57,36 @@ public class Client {
                 Frame frame = new Frame(game);
 
                 frame.start();
+
+                playingLoop();
             }
 
             System.out.println(received);
 
             String message = scan.nextLine();
             out.println(message);
+
+            if (firstIteration) {
+                name = message;
+                firstIteration = false;
+            }
         }
     }
 
+    public void playingLoop() throws IOException, ClassNotFoundException {
+        while (true) {
+            if (!game.getCurrentPlayer().getName().equals(name)) {
+                game.turnOffOtherPlayerButtons();
+            }
+            if (game.getCurrentPlayer().getName().equals(name)) {
+                receiveGame();
+                if (game.getCurrentPlayer().isEndOfTurn()) {
+                    sendGameAfterTurn();
+                }
+            }
+            receiveGame();
+        }
+    }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
 

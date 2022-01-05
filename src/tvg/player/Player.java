@@ -17,6 +17,15 @@ public class Player implements Serializable{
     private boolean isHost;
     private boolean yourTurn;
     JLabel playerSymbol;
+    private boolean endOfTurn;
+
+    public boolean isEndOfTurn() {
+        return endOfTurn;
+    }
+
+    public void setEndOfTurn(boolean endOfTurn) {
+        this.endOfTurn = endOfTurn;
+    }
 
     public boolean isHost() {
         return isHost;
