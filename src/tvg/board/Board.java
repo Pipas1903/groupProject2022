@@ -29,6 +29,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public ImageIcon x;
 
 
+
     private ArrayList<Tile> allTiles = new ArrayList<>();
     private ArrayList<Tile> unbuyableTiles = new ArrayList<>();
 
@@ -316,14 +317,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void mousePressed(MouseEvent e) {
 
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
+
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
+
     @Override
     public void mouseExited(MouseEvent e) {
     }
@@ -334,13 +338,13 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         name.setText(tile.getName());
         price.setText("Price: " + tile.getPrice());
         upgradePrice.setText("Upgrade Price: " + tile.getUpgradePrice());
-        damageDealt.setText("Damage Dealt: "+ tile.getDamageDealt());
+        damageDealt.setText("Damage Dealt: " + tile.getDamageDealt());
 
-        if(!tile.isArmed()){
+        if (!tile.isArmed()) {
             armed.setText("Armed");
             armed.setIcon(x);
-        }else{
-            armed.setText("Armed");
+        } else {
+            armed.setText("Armed by: " + Player.getPlayerOwnedTiles().get(tile.getNumber()));
             armed.setIcon(right);
         }
         info.updateUI();
@@ -424,16 +428,13 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
-
-
-
-    public void printPlayer(Player player){
-            System.out.println("ordem do player"+player.getOrder());
-            System.out.println(player.getPosition());
-            ImageIcon redCircle = new ImageIcon("src/tvg/redcircle.png");
-            printPlayer1.setIcon(redCircle);
-            printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()], yLocationsOfPlayer1[player.getPosition()],40 , 40);
-            printPlayer1.updateUI();
+    public void printPlayer(Player player) {
+        System.out.println("ordem do player" + player.getOrder());
+        System.out.println(player.getPosition());
+        ImageIcon redCircle = new ImageIcon("src/tvg/redcircle.png");
+        printPlayer1.setIcon(redCircle);
+        printPlayer1.setBounds(xLocationsOfPlayer1[player.getPosition()], yLocationsOfPlayer1[player.getPosition()], 40, 40);
+        printPlayer1.updateUI();
 
     }
 
