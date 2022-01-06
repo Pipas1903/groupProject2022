@@ -9,12 +9,18 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client2 {
+
     // OPEN A CLIENT SOCKET
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
     int portNumber;
-    Socket clientSocket;
+    Socket serverSocket;
     Game game;
+    ObjectOutputStream objectOutputStream;
+    ObjectInputStream objectInputStream;
+    private boolean firstIteration = true;
+    private String name = "";
+    Frame frame;
 
 
     public void getServerInfo() throws IOException {
@@ -24,49 +30,91 @@ public class Client2 {
         System.out.print("Port: ");
         portNumber = scan.nextInt();
         scan.nextLine();
-        clientSocket = new Socket(hostName, portNumber);
+        serverSocket = new Socket(hostName, portNumber);
     }
 
     public void speak() throws IOException, ClassNotFoundException {
-        while (clientSocket.isBound()) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            System.out.println(in.readLine());
 
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
+
+        while (serverSocket.isBound()) {
+
+            String line = "";
+            String received = "";
+
+            while (!(line = in.readLine()).equals("stop")) {
+                received += line + "\n";
+            }
+
+            if (received.contains("init")) {
+
+                System.out.println("receiving game ...");
+
+                receiveGame();
+
+                System.out.println("You joined a game!");
+
+                frame = new Frame(game);
+
+                frame.start();
+
+                playingLoop();
+            }
+
+            System.out.println(received);
+
             String message = scan.nextLine();
             out.println(message);
 
-            receiveGame();
-
-            System.out.println(game);
-            Frame frame = new Frame(game);
-            frame.start();
-
+            if (firstIteration) {
+                name = message;
+                firstIteration = false;
+            }
         }
     }
 
-    public void sendGameAfterTurn() throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-        objectOutputStream.writeObject(game);
-        objectOutputStream.flush();
-        objectOutputStream.close();
+    public void playingLoop() throws IOException, ClassNotFoundException {
+        while (true) {
+            if (!game.getCurrentPlayer().getName().equals(name)) {
+                game.turnOffOtherPlayerButtons();
+            }
+            if (game.getCurrentPlayer().getName().equals(name)) {
+                receiveGame();
+                if (game.getCurrentPlayer().isEndOfTurn()) {
+                    sendGameAfterTurn();
+                }
+            }
+            receiveGame();
+        }
     }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+
+        objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
+
         Object object = objectInputStream.readObject();
 
         if (object instanceof Game) {
             game = (Game) object;
         }
-
+        System.out.println("recebi um jogo " + game);
     }
 
+    public void sendGameAfterTurn() throws IOException {
+
+        objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
+        objectOutputStream.writeObject(game);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+        System.out.println("enviei um jogo " + game);
+    }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client2 cliente = new Client2();
         cliente.getServerInfo();
         cliente.speak();
+
 
     }
 }
