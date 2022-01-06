@@ -349,7 +349,6 @@ public class Game implements ActionListener, Serializable {
 
         currentPlayer = playerList.get(playerIndex);
 
-
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);

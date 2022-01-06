@@ -76,6 +76,7 @@ public class Client {
     public void playingLoop() throws IOException, ClassNotFoundException {
 
         while (true) {
+            synchronized (game.getCurrentPlayer()){
             if (!game.getCurrentPlayer().getName().equals(name)) {
                 game.turnOffOtherPlayerButtons();
             }
@@ -86,6 +87,7 @@ public class Client {
                 }
             }
             receiveGame();
+            }
         }
     }
 
