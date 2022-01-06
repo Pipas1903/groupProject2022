@@ -27,7 +27,9 @@ public class Game implements ActionListener, Serializable {
     private int round = 1;
     private final int lifeRestoration = 80;
     Player currentPlayer = null;
+
     public int playerIndex = 0;
+
     int playerLocation;
 
     public Game(List<Player> playerList) {
@@ -36,15 +38,17 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard = new Board(6, 6, 612, 612);
         gameBoard.setBackground(new Color(192, 192, 192));
+
         gameBoard.armTrap.addActionListener(this);
         gameBoard.throwDice.addActionListener(this);
         gameBoard.upgradeTrap.addActionListener(this);
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
+
         gameBoard.setPlayerList(playerList);
         gameBoard.panelInfo(this.playerList);
 
-        start();
+        //   start();
     }
 
     public List<Player> getPlayerList() {
@@ -68,8 +72,6 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void rounds() {
-        currentPlayer = playerList.get(0);
-
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
@@ -359,7 +361,8 @@ public class Game implements ActionListener, Serializable {
         }
 
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
-        gameBoard.rounds.setText(Messages.ROUND + round);
+        // gameBoard.rounds.setText(Messages.ROUND + round);
+
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
         gameBoard.updateUI();
 
@@ -395,5 +398,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.passTurn.setEnabled(false);
         gameBoard.stealTrap.setEnabled(false);
         gameBoard.upgradeTrap.setEnabled(false);
+        gameBoard.updateUI();
     }
 }

@@ -56,6 +56,7 @@ public class GameManager {
         game = new Game(playersList);
         //for each socket in playerlist, create an outputstream
         game.setCurrentPlayer(playersList.get(0));
+
         send();
 
         gameLoop();

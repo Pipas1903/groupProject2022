@@ -2,6 +2,7 @@ package tvg.client;
 
 import tvg.board.Frame;
 import tvg.game.Game;
+import tvg.player.Player;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -89,6 +90,12 @@ public class Client {
                 game.turnOffOtherPlayerButtons();
             }
 
+            for(Player p : game.playerList){
+                System.out.println(p.getName());
+            }
+
+            System.out.println(game.getCurrentPlayer().getName());
+
             if (game.getCurrentPlayer().getName().equals(name)) {
                 System.out.println("passei o receive game");
 
@@ -97,11 +104,12 @@ public class Client {
                 }
 
                 System.out.println("out of while");
+
                 if (game.getCurrentPlayer().isEndOfTurn()) {
                     System.out.println("entrou no is end of turn");
-                    game.setCurrentPlayer(game.playerList.get(game.playerIndex));
-                    game.turnButtonsOnForCurrentPlayer();
                     game.resetEndOfTurn();
+                    game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    game.getGameBoard().rounds.setText(game.getCurrentPlayer().getName());
                     sendGameAfterTurn();
                     System.out.println(game.getCurrentPlayer());
                     continue;
@@ -123,6 +131,7 @@ public class Client {
             game = (Game) object;
             frame.setGame(game);
             game.getGameBoard().updateUI();
+            frame.validate();
         }
         System.out.println("recebi um jogo " + game);
 

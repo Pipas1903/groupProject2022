@@ -1,13 +1,14 @@
 package tvg.board;
 
-import tvg.player.Player;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.Serializable;
 
-public class Tile extends JPanel {
+public class Tile extends JPanel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int price;
     private int upgradePrice;

@@ -29,7 +29,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel armed;
 
     public JLabel printPlayer1;
-
     public JLabel printPlayer2;
     public JLabel printPlayer3;
     public JLabel printPlayer4;
@@ -510,6 +509,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         throwDice.setBounds(850, 225, 100, 80);
         throwDice.setText("Throw Dice");
         throwDice.setVisible(true);
+
     }
 
 

@@ -2,13 +2,16 @@ package tvg.client;
 
 import tvg.board.Frame;
 import tvg.game.Game;
+import tvg.player.Player;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.EventListener;
+import java.util.Observer;
 import java.util.Scanner;
 
-public class Client2 {
+public class Client2 implements EventListener {
 
     // OPEN A CLIENT SOCKET
     Scanner scan = new Scanner(System.in);
@@ -89,6 +92,12 @@ public class Client2 {
                 game.turnOffOtherPlayerButtons();
             }
 
+            for(Player p : game.playerList){
+                System.out.println(p.getName());
+            }
+
+            System.out.println(game.getCurrentPlayer().getName());
+
             if (game.getCurrentPlayer().getName().equals(name)) {
                 System.out.println("passei o receive game");
 
@@ -99,9 +108,9 @@ public class Client2 {
                 System.out.println("out of while");
                 if (game.getCurrentPlayer().isEndOfTurn()) {
                     System.out.println("entrou no is end of turn");
-                    game.setCurrentPlayer(game.playerList.get(game.playerIndex));
-                    game.turnButtonsOnForCurrentPlayer();
                     game.resetEndOfTurn();
+                    game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    game.getGameBoard().rounds.setText(game.getCurrentPlayer().getName());
                     sendGameAfterTurn();
                     System.out.println(game.getCurrentPlayer());
                     continue;
@@ -123,6 +132,7 @@ public class Client2 {
             game = (Game) object;
             frame.setGame(game);
             game.getGameBoard().updateUI();
+            frame.validate();
         }
         System.out.println("recebi um jogo " + game);
 
@@ -135,8 +145,6 @@ public class Client2 {
 
         System.out.println("enviei um jogo " + game);
     }
-
-
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Client2 client = new Client2();

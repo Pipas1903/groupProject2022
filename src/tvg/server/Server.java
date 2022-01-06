@@ -32,15 +32,10 @@ public class Server {
             while (true) {
 
                 clientSocket = serverSocket.accept();
-
                 ClientHandler clientHandler = new ClientHandler(clientSocket, clientHandlers);
-
                 clientHandler.start();
-
                 System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
-
                 clientHandlers.add(clientHandler);
-
                 System.out.println("waiting for client to connect");
 
             }
