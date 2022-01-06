@@ -1,6 +1,5 @@
 package tvg.server;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -11,18 +10,19 @@ import java.util.*;
 
 public class Server {
 
-    private static ServerSocket serverSocket;
-    private static Socket clientSocket;
-    private static int port = 930;
+    private ServerSocket serverSocket;
+    private Socket clientSocket;
+    private int port = 930;
 
     private static volatile List<ClientHandler> clientHandlers = new ArrayList<>();
 
 
     public static void main(String[] args) {
-        initializerServer();
+        Server server = new Server();
+        server.initializerServer();
     }
 
-    public static void initializerServer() {
+    public void initializerServer() {
 
         try {
             serverSocket = new ServerSocket(port);
@@ -51,7 +51,7 @@ public class Server {
 
     }
 
-    public static void sendActualizedList() {
+    public void sendActualizedList() {
         for (ClientHandler clientHandler : clientHandlers)
             clientHandler.setAllClientsList(clientHandlers);
     }
