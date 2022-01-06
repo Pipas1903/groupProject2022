@@ -4,10 +4,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-/*
- * server's only function is to connect clients and send to all client handlers a list of the connected clients
- */
-
 public class Server {
 
     private ServerSocket serverSocket;

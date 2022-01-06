@@ -86,9 +86,8 @@ public class ClientHandler extends Thread {
         out.println("stop");
         line = in.readLine();
 
-        // while (gameManager.getPlayerBySocket().size() <= Integer.parseInt(line)) {
         int number = Integer.parseInt(line);
-        // }
+
         out.println("great, there will be " + line + " players");
         out.println("press enter");
         out.println("stop");
