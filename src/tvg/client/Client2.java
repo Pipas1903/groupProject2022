@@ -15,11 +15,13 @@ public class Client2 {
     InetAddress hostName;
     int portNumber;
     Socket serverSocket;
+    Thread receiveUpdate;
+
     Game game;
     ObjectOutputStream objectOutputStream;
     ObjectInputStream objectInputStream;
-    private boolean firstIteration = true;
-    private String name = "";
+    boolean firstIteration = true;
+    String name = "";
     Frame frame;
 
 
@@ -31,12 +33,14 @@ public class Client2 {
         portNumber = scan.nextInt();
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
+        System.out.println("*connection established*");
     }
 
-    public void speak() throws IOException, ClassNotFoundException {
+    public void speak() throws IOException, ClassNotFoundException, InterruptedException {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
         PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
+
 
         while (serverSocket.isBound()) {
 
@@ -50,13 +54,15 @@ public class Client2 {
             if (received.contains("init")) {
 
                 System.out.println("receiving game ...");
+                objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
+                Object object = objectInputStream.readObject();
 
-                receiveGame();
-
+                if (object instanceof Game) {
+                    game = (Game) object;
+                }
+                System.out.println("recebi um jogo " + game);
                 System.out.println("You joined a game!");
-
                 frame = new Frame(game);
-
                 frame.start();
 
                 playingLoop();
@@ -75,52 +81,66 @@ public class Client2 {
     }
 
     public void playingLoop() throws IOException, ClassNotFoundException {
-        while (true) {
 
+        while (true) {
+            frame.repaint();
+            game.getGameBoard().updateUI();
             if (!game.getCurrentPlayer().getName().equals(name)) {
                 game.turnOffOtherPlayerButtons();
             }
-            System.out.println(game.getCurrentPlayer().isEndOfTurn());
+
             if (game.getCurrentPlayer().getName().equals(name)) {
                 System.out.println("passei o receive game");
+
+                while (!game.getCurrentPlayer().isEndOfTurn()) {
+
+                }
+
+                System.out.println("out of while");
                 if (game.getCurrentPlayer().isEndOfTurn()) {
                     System.out.println("entrou no is end of turn");
+                    game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    game.turnButtonsOnForCurrentPlayer();
+                    game.resetEndOfTurn();
                     sendGameAfterTurn();
-                    break;
+                    System.out.println(game.getCurrentPlayer());
+                    continue;
                 }
             }
+
             receiveGame();
         }
     }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
-        System.out.println("entrei no receivegame");
+        System.out.println("entrei no receive game");
         objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
 
         Object object = objectInputStream.readObject();
 
         if (object instanceof Game) {
+            System.out.println("olha que entrou ehehe");
             game = (Game) object;
+            frame.setGame(game);
+            game.getGameBoard().updateUI();
         }
         System.out.println("recebi um jogo " + game);
-
 
     }
 
     public void sendGameAfterTurn() throws IOException {
-        System.out.println("enviei um jogo " + game);
         objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
         objectOutputStream.writeObject(game);
         objectOutputStream.flush();
-        objectOutputStream.close();
 
+        System.out.println("enviei um jogo " + game);
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Client2 cliente = new Client2();
-        cliente.getServerInfo();
-        cliente.speak();
 
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        Client2 client = new Client2();
+        client.getServerInfo();
+        client.speak();
     }
 }
-

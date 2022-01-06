@@ -1,10 +1,7 @@
 package tvg.board;
 
-import tvg.board.Board;
 import tvg.game.Game;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class Frame extends JFrame {
     private Game jogo;
@@ -22,6 +19,13 @@ public class Frame extends JFrame {
 
     public void start() {
         jogo.rounds();
+    }
+
+    public void setGame(Game game) {
+        this.jogo = game;
+        this.repaint();
+        jogo.turnButtonsOnForCurrentPlayer();
+        jogo.getGameBoard().updateUI();
     }
 
 }

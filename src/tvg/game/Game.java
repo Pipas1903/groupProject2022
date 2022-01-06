@@ -2,11 +2,15 @@ package tvg.game;
 
 import tvg.ConsoleUI;
 import tvg.board.Board;
+import tvg.client.Client;
+import tvg.client.Client2;
 import tvg.player.Player;
+import tvg.server.GameManager;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
@@ -23,7 +27,7 @@ public class Game implements ActionListener, Serializable {
     private int round = 1;
     private final int lifeRestoration = 80;
     Player currentPlayer = null;
-    private int playerIndex = 0;
+    public int playerIndex = 0;
     int playerLocation;
 
     public Game(List<Player> playerList) {
@@ -153,9 +157,14 @@ public class Game implements ActionListener, Serializable {
 
         }
         if (e.getSource() == gameBoard.passTurn) {
-            passTurn();
-            currentPlayer = playerList.get(playerIndex);
+            try {
+                passTurn();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             gameBoard.updateUI();
+
         }
         if (e.getSource() == gameBoard.stealTrap) {
             stealTrap();
@@ -165,6 +174,7 @@ public class Game implements ActionListener, Serializable {
 
     public void showPlayer() {
         gameBoard.printPlayer(currentPlayer);
+        gameBoard.updateUI();
     }
 
     public void throwDice() {
@@ -330,9 +340,10 @@ public class Game implements ActionListener, Serializable {
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER STEALING TRAP");
     }
 
-    public void passTurn() {
+    public void passTurn() throws IOException {
         System.out.println(currentPlayer.getName() + " PASSED TURN");
-        currentPlayer.setEndOfTurn(true);
+
+
         gameBoard.throwDice.setEnabled(false);
         gameBoard.passTurn.setEnabled(false);
         gameBoard.armTrap.setEnabled(false);
@@ -340,23 +351,32 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.setEnabled(false);
 
         playerIndex++;
+        currentPlayer.setEndOfTurn(Boolean.TRUE);
 
         if (playerIndex >= playerList.size()) {
             playerIndex = 0;
             round++;
         }
 
-
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
         gameBoard.updateUI();
+
+
+     /*   synchronized (this.getCurrentPlayer()) {
+            this.getCurrentPlayer().notifyAll();
+            System.out.println("notifiquei, a culpa é dele");
+        }
+     */
+
     }
 
     public void resetEndOfTurn() {
         for (Player player : playerList) {
-            player.setEndOfTurn(false);
+            player.setEndOfTurn(Boolean.FALSE);
         }
+        currentPlayer.setEndOfTurn(Boolean.FALSE);
     }
 
     public void turnOffOtherPlayerButtons() {
@@ -366,5 +386,14 @@ public class Game implements ActionListener, Serializable {
         gameBoard.throwDice.setEnabled(false);
         gameBoard.armTrap.setEnabled(false);
         gameBoard.updateUI();
+    }
+
+    public void turnButtonsOnForCurrentPlayer() {
+        gameBoard.throwDice.setEnabled(true);
+
+        gameBoard.armTrap.setEnabled(false);
+        gameBoard.passTurn.setEnabled(false);
+        gameBoard.stealTrap.setEnabled(false);
+        gameBoard.upgradeTrap.setEnabled(false);
     }
 }

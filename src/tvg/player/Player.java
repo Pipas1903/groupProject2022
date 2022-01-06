@@ -19,13 +19,13 @@ public class Player implements Serializable{
     private boolean isHost;
     private boolean yourTurn;
     JLabel playerSymbol;
-    private boolean endOfTurn;
+    private Boolean endOfTurn = Boolean.FALSE;
 
-    public boolean isEndOfTurn() {
+    public Boolean isEndOfTurn() {
         return endOfTurn;
     }
 
-    public void setEndOfTurn(boolean endOfTurn) {
+    public void setEndOfTurn(Boolean endOfTurn) {
         this.endOfTurn = endOfTurn;
     }
 
