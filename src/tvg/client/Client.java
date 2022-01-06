@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-
     // OPEN A CLIENT SOCKET
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
@@ -104,7 +103,6 @@ public class Client {
                 }
 
                 System.out.println("out of while");
-
                 if (game.getCurrentPlayer().isEndOfTurn()) {
                     System.out.println("entrou no is end of turn");
                     game.resetEndOfTurn();

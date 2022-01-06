@@ -15,6 +15,9 @@ public class GameManager {
     private HashMap<Socket, Player> clientSocketList = new HashMap<>();
     private List<Player> playersList = new ArrayList<>();
 
+    ObjectOutputStream player1Out;
+    ObjectOutputStream player2Out;
+
     private Game game;
     private String gameName;
     private Player last;
@@ -68,26 +71,30 @@ public class GameManager {
 
         for (Map.Entry<Socket, Player> map : getClientSocketList().entrySet()) {
 
-            if (last == null || map.getValue() != last) {
-                System.out.println("sending game to client " + map.getKey().getInetAddress());
-                objectOutputStream = new ObjectOutputStream(map.getKey().getOutputStream());
-                objectOutputStream.writeObject(game);
-                objectOutputStream.flush();
-            }
+            System.out.println("sending game to client " + map.getKey().getInetAddress());
+            objectOutputStream = new ObjectOutputStream(map.getKey().getOutputStream());
+            objectOutputStream.writeObject(game);
+            objectOutputStream.flush();
         }
     }
 
     public void gameLoop() throws IOException, ClassNotFoundException {
 
         while (true) {
+            boolean received = false;
 
             for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
-
-                if (game.getCurrentPlayer().equals(map.getValue())) {
+                System.out.println();
+                if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
+                    received = true;
+                    break;
                 }
             }
-            send();
+
+            if (received) {
+                send();
+            }
         }
     }
 
@@ -100,7 +107,6 @@ public class GameManager {
             game = (Game) object;
             System.out.println("Recebi um jogo: " + game);
         }
-
     }
 
     public void playingOrder() {

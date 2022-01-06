@@ -31,9 +31,7 @@ public class Frame extends JFrame {
         jogo.turnButtonsOnForCurrentPlayer();
 
         this.repaint();
-        this.validate();
 
-        jogo.rounds();
         jogo.getGameBoard().validate();
 
         jogo.getGameBoard().updateUI();

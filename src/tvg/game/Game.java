@@ -353,12 +353,15 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.setEnabled(false);
 
         playerIndex++;
-        currentPlayer.setEndOfTurn(Boolean.TRUE);
+        System.out.println("player index: " + playerIndex);
 
         if (playerIndex >= playerList.size()) {
             playerIndex = 0;
             round++;
+            System.out.println("resetou");
         }
+
+        currentPlayer.setEndOfTurn(Boolean.TRUE);
 
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         // gameBoard.rounds.setText(Messages.ROUND + round);
