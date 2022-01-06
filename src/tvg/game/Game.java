@@ -154,6 +154,7 @@ public class Game implements ActionListener, Serializable {
         }
         if (e.getSource() == gameBoard.passTurn) {
             passTurn();
+            currentPlayer = playerList.get(playerIndex);
             gameBoard.updateUI();
         }
         if (e.getSource() == gameBoard.stealTrap) {
@@ -331,9 +332,7 @@ public class Game implements ActionListener, Serializable {
 
     public void passTurn() {
         System.out.println(currentPlayer.getName() + " PASSED TURN");
-
         currentPlayer.setEndOfTurn(true);
-
         gameBoard.throwDice.setEnabled(false);
         gameBoard.passTurn.setEnabled(false);
         gameBoard.armTrap.setEnabled(false);
@@ -347,7 +346,6 @@ public class Game implements ActionListener, Serializable {
             round++;
         }
 
-        currentPlayer = playerList.get(playerIndex);
 
 
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);

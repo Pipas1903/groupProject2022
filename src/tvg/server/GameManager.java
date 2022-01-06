@@ -95,6 +95,7 @@ public class GameManager {
 
         if (object instanceof Game) {
             game = (Game) object;
+            System.out.println("Recebi um jogo: "+ game);
         }
 
     }

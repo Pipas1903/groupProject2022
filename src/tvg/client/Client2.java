@@ -76,13 +76,17 @@ public class Client2 {
 
     public void playingLoop() throws IOException, ClassNotFoundException {
         while (true) {
+
             if (!game.getCurrentPlayer().getName().equals(name)) {
                 game.turnOffOtherPlayerButtons();
             }
+            System.out.println(game.getCurrentPlayer().isEndOfTurn());
             if (game.getCurrentPlayer().getName().equals(name)) {
-                receiveGame();
+                System.out.println("passei o receive game");
                 if (game.getCurrentPlayer().isEndOfTurn()) {
+                    System.out.println("entrou no is end of turn");
                     sendGameAfterTurn();
+                    break;
                 }
             }
             receiveGame();
@@ -90,7 +94,7 @@ public class Client2 {
     }
 
     public void receiveGame() throws IOException, ClassNotFoundException {
-
+        System.out.println("entrei no receivegame");
         objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
 
         Object object = objectInputStream.readObject();
@@ -99,22 +103,23 @@ public class Client2 {
             game = (Game) object;
         }
         System.out.println("recebi um jogo " + game);
+
+
     }
 
     public void sendGameAfterTurn() throws IOException {
-
+        System.out.println("enviei um jogo " + game);
         objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
         objectOutputStream.writeObject(game);
         objectOutputStream.flush();
         objectOutputStream.close();
-        System.out.println("enviei um jogo " + game);
+
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client2 cliente = new Client2();
         cliente.getServerInfo();
         cliente.speak();
-
 
     }
 }
