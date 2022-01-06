@@ -389,7 +389,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName4.setHorizontalAlignment(JLabel.CENTER);
         printInfo4.add(printName4);
 
-
         this.add(printInfo1);
         this.add(printInfo2);
         this.add(printInfo3);

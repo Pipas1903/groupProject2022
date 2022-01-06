@@ -39,7 +39,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
         gameBoard.panelInfo(this.playerList);
-
         start();
     }
 
