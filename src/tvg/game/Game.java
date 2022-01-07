@@ -13,6 +13,8 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
+import static tvg.game.Dice.throwDice;
+
 
 public class Game implements ActionListener, Serializable {
 
@@ -77,60 +79,7 @@ public class Game implements ActionListener, Serializable {
         return armedTrapsRegister.get(playerLocation).equals(currentPlayer.getName());
     }
 
-    /*
-        public void chooseGameMode() {
-            // until death or limited rounds
-            Scanner sc = new Scanner(System.in);
 
-            if (sc.nextInt() == 1) {
-                tenRoundsGameMode();
-
-            } else if (sc.nextInt() == 2) {
-                longVersionGameMode();
-            }
-
-        }
-
-        public synchronized void playingOrder() {
-
-            Random random = new Random();
-
-            ArrayList<Integer> number = random.ints(1, 10).
-                    distinct().
-                    limit(4).
-                    boxed().
-                    collect(Collectors.toCollection(ArrayList<Integer>::new));
-
-            for (int i = 0; i < playerList.size(); i++) {
-                playerList.get(i).setOrder(number.get(i));
-            }
-
-            playerList.sort(Comparator.comparing(Player::getOrder));
-
-        }
-
-        public boolean checkGameStatus() {
-            if (playerList.size() == 1) {
-                System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
-                return false;
-            }
-            return true;
-        }
-
-        public void tenRoundsGameMode() {
-            while (round <= 10 & checkGameStatus()) {
-                start();
-                round++;
-            }
-        }
-
-        public void longVersionGameMode() {
-            start();
-            while (checkGameStatus()) {
-                rounds();
-            }
-        }
-    */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameBoard.throwDice) {
@@ -174,16 +123,16 @@ public class Game implements ActionListener, Serializable {
         gameBoard.updateUI();
     }
 
-    public void showPlayerInfo(){
+    public void showPlayerInfo() {
         System.out.println("entrei no show player info");
 
 
-        gameBoard.lifePoints1.setText("life :"+ this.playerList.get(0).getLifePoints());
-        System.out.println("vida :"+this.playerList.get(0).getLifePoints());
+        gameBoard.lifePoints1.setText("life :" + this.playerList.get(0).getLifePoints());
+        System.out.println("vida :" + this.playerList.get(0).getLifePoints());
         gameBoard.lifePoints1.updateUI();
         gameBoard.lifePoints1.validate();
-        System.out.println("vida :"+this.playerList.get(1).getLifePoints());
-        gameBoard.lifePoints2.setText("life :"+ this.playerList.get(1).getLifePoints());
+        System.out.println("vida :" + this.playerList.get(1).getLifePoints());
+        gameBoard.lifePoints2.setText("life :" + this.playerList.get(1).getLifePoints());
         gameBoard.lifePoints2.updateUI();
         gameBoard.lifePoints2.validate();
         gameBoard.printInfo1.updateUI();
@@ -191,9 +140,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.printInfo2.updateUI();
         gameBoard.printInfo2.validate();
 
-
-    public void showPlayerInfo() {
-        gameBoard.panelInfo(playerList);
     }
 
     public void throwDice() {
@@ -333,7 +279,6 @@ public class Game implements ActionListener, Serializable {
         }
         gameBoard.textinho.setText("You don't have traps, so you lose anything!");
     }
-
 
     public void armTrapValidation() {
 
@@ -535,4 +480,60 @@ public class Game implements ActionListener, Serializable {
     public void playerLoseTrap(Integer tileNumber) {
         armedTrapsRegister.remove(tileNumber);
     }
+
+     /*
+        public void chooseGameMode() {
+            // until death or limited rounds
+            Scanner sc = new Scanner(System.in);
+
+            if (sc.nextInt() == 1) {
+                tenRoundsGameMode();
+
+            } else if (sc.nextInt() == 2) {
+                longVersionGameMode();
+            }
+
+        }
+
+        public synchronized void playingOrder() {
+
+            Random random = new Random();
+
+            ArrayList<Integer> number = random.ints(1, 10).
+                    distinct().
+                    limit(4).
+                    boxed().
+                    collect(Collectors.toCollection(ArrayList<Integer>::new));
+
+            for (int i = 0; i < playerList.size(); i++) {
+                playerList.get(i).setOrder(number.get(i));
+            }
+
+            playerList.sort(Comparator.comparing(Player::getOrder));
+
+        }
+
+        public boolean checkGameStatus() {
+            if (playerList.size() == 1) {
+                System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
+                return false;
+            }
+            return true;
+        }
+
+        public void tenRoundsGameMode() {
+            while (round <= 10 & checkGameStatus()) {
+                start();
+                round++;
+            }
+        }
+
+        public void longVersionGameMode() {
+            start();
+            while (checkGameStatus()) {
+                rounds();
+            }
+        }
+    */
+
 }
