@@ -193,7 +193,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         allTiles.add(tile12);
         unbuyableTiles.add(tile12);
         tile12.addMouseListener(this);
-
+        tile12.setGoodLuck(true);
 
         // squares on the bottom
         Tile tile13 = new Tile(506, 606, 100, 100, squareNames[13], 0, true);
@@ -228,6 +228,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         allTiles.add(tile18);
         unbuyableTiles.add(tile18);
         tile18.addMouseListener(this);
+        tile18.setBadLuck(true);
 
 
         // squares on the left
@@ -316,7 +317,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         tile23.setDamageDealt(11);
     }
 
-
     @Override
     public void mouseClicked(MouseEvent e) {
         for (Tile tile : allTiles) {
@@ -344,6 +344,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     @Override
     public void mouseExited(MouseEvent e) {
     }
+
+
 
 
     public void panelInfo(List<Player> players) {
@@ -531,7 +533,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         throwDice.setVisible(true);
 
     }
-
 
     public void printPlayer(Player player) {
         System.out.println("ordem do player" + player.getOrder());

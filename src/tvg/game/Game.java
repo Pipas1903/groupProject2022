@@ -1,6 +1,7 @@
 package tvg.game;
 
 import tvg.board.Board;
+import tvg.board.Tile;
 import tvg.common.Messages;
 import tvg.player.Player;
 
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class Game implements ActionListener, Serializable {
@@ -20,6 +20,9 @@ public class Game implements ActionListener, Serializable {
 
     public List<Player> playerList;
     public HashMap<Integer, String> armedTrapsRegister = new HashMap<>();
+
+    int badLuck = (-150);
+    int goodLuck = 150;
 
     private Board gameBoard;
     private int round = 1;
@@ -189,6 +192,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.printInfo2.validate();
 
 
+    public void showPlayerInfo() {
+        gameBoard.panelInfo(playerList);
     }
 
     public void throwDice() {
@@ -227,7 +232,7 @@ public class Game implements ActionListener, Serializable {
 
         if (!gameBoard.getTileAtIndex(playerLocation).isBuyable()) {
 
-            gameBoard.passTurn.setEnabled(true);
+            checkEvents();
 
             gameBoard.upgradeTrap.setEnabled(false);
             gameBoard.stealTrap.setEnabled(false);
@@ -248,6 +253,87 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.setEnabled(false);
 
     }
+
+    public void checkEvents() {
+        if (gameBoard.getTileAtIndex(playerLocation).isBadLuck()) {
+
+            gameBoard.textinho.setText("Oh oh... You lost 150 life points");
+            currentPlayer.setLifePoints(currentPlayer.getLifePoints() + badLuck);
+
+        } else if (gameBoard.getTileAtIndex(playerLocation).isGoodLuck()) {
+
+            gameBoard.textinho.setText("YEY! You restored 150 life points");
+            currentPlayer.setLifePoints(currentPlayer.getLifePoints() + goodLuck);
+
+        } else {
+            executeRandomEvent();
+        }
+    }
+
+    public int findOneFreeTrap() {
+        for (Tile tile : gameBoard.getAllTiles()) {
+            if (!tile.isArmed()) {
+                return tile.getNumber();
+            }
+        }
+        return 30;
+    }
+
+    public void executeRandomEvent() {
+
+        Events randomEvent = Events.randomEvent();
+        gameBoard.textinho.setText(randomEvent.message);
+        gameBoard.passTurn.setEnabled(true);
+
+        switch (randomEvent) {
+            case WIN_TRAP:
+                int freeTrapNumber = findOneFreeTrap();
+                playerArmTrap(freeTrapNumber, currentPlayer.getName());
+                gameBoard.getTileAtIndex(freeTrapNumber).setOwner(currentPlayer.getName());
+                break;
+            case LOSE_TRAP:
+                tryToRemovePlayerTrap();
+                break;
+            case TASTY_SNACK:
+                currentPlayer.setLifePoints(currentPlayer.getLifePoints() + randomEvent.lifePoints);
+                break;
+            case UPGRADE_TRAP:
+                tryToUpgradePlayerTrap();
+                break;
+            case THROW_DICE_AGAIN:
+                gameBoard.passTurn.setEnabled(false);
+                gameBoard.throwDice.setEnabled(true);
+                break;
+            case TRIP_ON_SHOE_LACE:
+                currentPlayer.setLifePoints(currentPlayer.getLifePoints() - randomEvent.lifePoints);
+                break;
+        }
+    }
+
+    public void tryToUpgradePlayerTrap() {
+        for (Map.Entry<Integer, String> entry : armedTrapsRegister.entrySet()) {
+            if (entry.getValue().equals(currentPlayer.getName())) {
+                if (!gameBoard.getTileAtIndex(entry.getKey()).isUpgraded()) {
+                    gameBoard.getTileAtIndex(entry.getKey()).setUpgraded(true);
+                    System.out.println("Player got a trap upgraded for free");
+                    return;
+                }
+            }
+        }
+        gameBoard.textinho.setText("All your traps were upgraded, so you got nothing!");
+    }
+
+    public void tryToRemovePlayerTrap() {
+        for (Map.Entry<Integer, String> entry : armedTrapsRegister.entrySet()) {
+            if (entry.getValue().equals(currentPlayer.getName())) {
+                armedTrapsRegister.remove(entry.getKey());
+                System.out.println("Player lost a trap");
+                return;
+            }
+        }
+        gameBoard.textinho.setText("You don't have traps, so you lose anything!");
+    }
+
 
     public void armTrapValidation() {
 

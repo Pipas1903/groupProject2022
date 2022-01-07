@@ -3,7 +3,6 @@ package tvg;
 import tvg.board.Frame;
 import tvg.game.Game;
 import tvg.player.Player;
-import tvg.server.Server;
 
 import java.util.ArrayList;
 import java.util.List;
