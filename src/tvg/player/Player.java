@@ -21,8 +21,6 @@ public class Player implements Serializable{
 
     private static HashMap<Integer, String> playerOwnedTiles = new HashMap<>();
 
-    JLabel playerSymbol;
-
     public Boolean isEndOfTurn() {
         return endOfTurn;
     }
@@ -34,18 +32,6 @@ public class Player implements Serializable{
     public Player(String name) {
         this.lifePoints = 800;
         this.name = name;
-        playerSymbol = new JLabel();
-        playerSymbol.setOpaque(true);
-        playerSymbol.setText(name);
-
-    }
-
-    public void putSymbolInTile(int x, int y) {
-        playerSymbol.setBounds(x, y, 100, 30);
-    }
-
-    public void setPlayerSymbolColor(Color color) {
-        playerSymbol.setBackground(color);
     }
 
     public int getDiceRoll() {

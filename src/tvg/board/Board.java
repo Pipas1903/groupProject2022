@@ -1,7 +1,6 @@
 package tvg.board;
 
 import tvg.player.Player;
-import tvg.game.Game;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -9,7 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Board extends JPanel implements MouseListener, ActionListener, Serializable {
@@ -29,27 +27,25 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel damageDealt;
     public JLabel armed;
 
-    public JLabel printPlayer1;
-    public JLabel printPlayer2;
-    public JLabel printPlayer3;
-    public JLabel printPlayer4;
+    public JLabel lifePoints1;
+    public JLabel lifePoints2;
+
+    public JLabel printPlayer1, printPlayer2, printPlayer3, printPlayer4;
 
     public JLabel printName1, printName2, printName3, printName4;
+
+    public JPanel printInfo1, printInfo2, printInfo3, printInfo4;
 
     public ImageIcon right;
     public ImageIcon x;
     public JPanel info;
-    public JPanel printInfo1, printInfo2, printInfo3, printInfo4;
+
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
     private ArrayList<Tile> unbuyableTiles = new ArrayList<>();
 
     public ArrayList<JButton> buttonsList = new ArrayList<>();
     private List<Player> playerList;
-
-    public List<Player> getPlayerList() {
-        return playerList;
-    }
 
     public void setPlayerList(List<Player> playerList) {
         this.playerList = playerList;
@@ -62,7 +58,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public Tile getTileAtIndex(int location) {
         return allTiles.get(location);
     }
-
 
     public Board(int xCoord, int yCoord, int width, int height) {
 
@@ -348,6 +343,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void mouseExited(MouseEvent e) {
     }
 
+
     public void panelInfo(List<Player> players) {
         printInfo1 = new JPanel();
         printInfo1.setBounds(1100, 20, 200, 150);
@@ -360,6 +356,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName1.setHorizontalAlignment(JLabel.CENTER);
         printInfo1.add(printName1);
 
+        lifePoints1 = new JLabel();
+        // lifePoints1.setText("life points " + players.get(0).getLifePoints());
+        printInfo1.add(lifePoints1);
+        printInfo1.updateUI();
+
 
         printInfo2 = new JPanel();
         printInfo2.setBounds(1100, 220, 200, 150);
@@ -371,6 +372,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName2.setText(players.get(1).getName());
         printName2.setHorizontalAlignment(JLabel.CENTER);
         printInfo2.add(printName2);
+
+        lifePoints2 = new JLabel();
+        //lifePoints2.setText("life points " + players.get(1).getLifePoints());
+        printInfo2.add(lifePoints2);
+        printInfo2.updateUI();
 
 /*
         printInfo3 = new JPanel();
@@ -404,7 +410,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         //this.add(printInfo3);
         //this.add(printInfo4);
     }
-
 
     public void panel(Tile tile) {
 
