@@ -18,6 +18,9 @@ public class Messages {
     public static final String PRESS_ENTER = "---press enter to continue---";
     public static final String INICIATE_GAME = "init";
     public static final String REFRESH = "If there's no games, press 'R' to refresh";
-    public static final String WELCOME_TO_GAME= "Welcome to ";
+    public static final String WELCOME_TO_GAME = "Welcome to ";
+    public static final String CHOOSE_GAME_MODE = "Choose a game mode: ";
+    public static final String UNTIL_DEATH = "1 - until death";
+    public static final String LIMITED_ROUNDS = "2 - limited number of rounds";
 
 }
