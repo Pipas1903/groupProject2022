@@ -116,9 +116,14 @@ public class Client {
             frame.setGame(game);
             game.getGameBoard().updateUI();
             frame.validate();
+            print(UpdateMessages.RECEIVED_GAME + game);
         }
 
-        print(UpdateMessages.RECEIVED_GAME + game);
+        if (object instanceof String) {
+            System.out.println(objectInputStream.readObject());
+            serverSocket.close();
+            System.exit(1);
+        }
     }
 
     public void sendGameAfterTurn() throws IOException {

@@ -14,7 +14,6 @@ import java.util.Scanner;
 
 public class Client2 implements EventListener {
 
-
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
     int portNumber;
@@ -120,9 +119,14 @@ public class Client2 implements EventListener {
             frame.setGame(game);
             game.getGameBoard().updateUI();
             frame.validate();
+            print(UpdateMessages.RECEIVED_GAME + game);
         }
 
-        print(UpdateMessages.RECEIVED_GAME + game);
+        if (object instanceof String) {
+            System.out.println(objectInputStream.readObject());
+            serverSocket.close();
+            System.exit(1);
+        }
     }
 
     public void sendGameAfterTurn() throws IOException {

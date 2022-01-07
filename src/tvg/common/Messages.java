@@ -23,4 +23,6 @@ public class Messages {
     public static final String UNTIL_DEATH = "1 - until death";
     public static final String LIMITED_ROUNDS = "2 - limited number of rounds";
 
+    public static final String GAME_OVER = "Game Over! You are being removed from the server";
+
 }

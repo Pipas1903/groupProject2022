@@ -1,5 +1,6 @@
 package tvg.server;
 
+import tvg.common.Messages;
 import tvg.game.Game;
 import tvg.player.Player;
 
@@ -79,6 +80,8 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
+                    removeFaintedPlayerFromGameList();
+                    removeFaintedPlayerFromServer();
                     received = true;
                     break;
                 }
@@ -101,8 +104,20 @@ public class GameManager {
         }
     }
 
-    public void removeFaintedPlayer() {
+    public void removeFaintedPlayerFromGameList() {
         game.playerList.removeIf(player -> player.getLifePoints() <= 0 & !game.armedTrapsRegister.containsValue(player.getName()));
+    }
+
+    // PODE E DEVE SER MELHORADO
+    public void removeFaintedPlayerFromServer() throws IOException {
+        for (Map.Entry<Socket, Player> client : clientSocketList.entrySet()) {
+            if (client.getValue().getLifePoints() <= 0 && !game.armedTrapsRegister.containsValue(client.getValue().getName())) {
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getKey().getOutputStream());
+                objectOutputStream.writeObject(Messages.GAME_OVER);
+                client.getKey().close();
+                clientSocketList.remove(client.getKey());
+            }
+        }
     }
 
     public void playingOrder() {
