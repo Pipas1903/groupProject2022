@@ -45,6 +45,7 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.setPlayerList(playerList);
         gameBoard.panelInfo(playerList);
+
     }
 
     public List<Player> getPlayerList() {
@@ -171,7 +172,23 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void showPlayerInfo(){
-        gameBoard.panelInfo(playerList);
+        System.out.println("entrei no show player info");
+
+
+        gameBoard.lifePoints1.setText("life :"+ this.playerList.get(0).getLifePoints());
+        System.out.println("vida :"+this.playerList.get(0).getLifePoints());
+        gameBoard.lifePoints1.updateUI();
+        gameBoard.lifePoints1.validate();
+        System.out.println("vida :"+this.playerList.get(1).getLifePoints());
+        gameBoard.lifePoints2.setText("life :"+ this.playerList.get(1).getLifePoints());
+        gameBoard.lifePoints2.updateUI();
+        gameBoard.lifePoints2.validate();
+        gameBoard.printInfo1.updateUI();
+        gameBoard.printInfo1.validate();
+        gameBoard.printInfo2.updateUI();
+        gameBoard.printInfo2.validate();
+
+
     }
 
     public void throwDice() {
@@ -338,8 +355,8 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void stealTrap() {
-        gameBoard.stealTrap.setEnabled(false);
 
+        gameBoard.stealTrap.setEnabled(false);
         playerLoseTrap(playerLocation);
         playerArmTrap(playerLocation, currentPlayer.getName());
         gameBoard.getTileAtIndex(playerLocation).setOwner(currentPlayer.getName());
@@ -348,9 +365,8 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.textinho.setText("you stole: " + gameBoard.getTileAtIndex(playerLocation).getName());
 
-       // gameBoard.updateUI();
-
         showPlayer();
+        gameBoard.updateUI();
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER STEALING TRAP");
     }
 
@@ -404,7 +420,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.setEnabled(false);
         gameBoard.throwDice.setEnabled(false);
         gameBoard.armTrap.setEnabled(false);
-
         gameBoard.updateUI();
     }
 
