@@ -29,6 +29,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public JLabel lifePoints1;
     public JLabel lifePoints2;
+    public JLabel lifePoints3;
+    public JLabel lifePoints4;
 
     public JLabel printPlayer1, printPlayer2, printPlayer3, printPlayer4;
 
@@ -351,6 +353,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo1.setOpaque(true);
         printInfo1.setPreferredSize(new Dimension(200, 150));
         printInfo1.setLayout(new GridLayout(3, 1, 0, 20));
+
         printName1 = new JLabel();
         printName1.setText(players.get(0).getName());
         printName1.setHorizontalAlignment(JLabel.CENTER);
@@ -388,6 +391,9 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName3.setText(players.get(2).getName());
         printName3.setHorizontalAlignment(JLabel.CENTER);
         printInfo3.add(printName3);
+
+        lifePoints3 = new JLabel();
+
 
 
         printInfo4 = new JPanel();
