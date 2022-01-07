@@ -1,11 +1,8 @@
 package tvg.game;
 
-import tvg.ConsoleUI;
 import tvg.board.Board;
-import tvg.client.Client;
-import tvg.client.Client2;
+import tvg.common.Messages;
 import tvg.player.Player;
-import tvg.server.GameManager;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -85,7 +82,6 @@ public class Game implements ActionListener, Serializable {
     public void chooseGameMode() {
         // until death or limited rounds
         Scanner sc = new Scanner(System.in);
-        ConsoleUI.printModeSelection();
 
         if (sc.nextInt() == 1) {
             tenRoundsGameMode();

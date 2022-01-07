@@ -1,5 +1,7 @@
 package tvg.server;
 
+import tvg.common.Messages;
+import tvg.common.UpdateMessages;
 import tvg.player.Player;
 
 import java.io.*;
@@ -11,24 +13,19 @@ import java.util.*;
  */
 public class ClientHandler extends Thread {
 
-    public final Socket clientSocket;
-    private volatile List<ClientHandler> allClientsList;
+    public static volatile List<GameManager> ExistingGames = new ArrayList<>();
 
-    public static volatile List<GameManager> allGames = new ArrayList<>();
-
+    public Socket clientSocket;
     private Player player;
 
     private String line;
     private String name;
 
-    PrintWriter out = null;
-    BufferedReader in = null;
+    private PrintWriter out = null;
+    private BufferedReader in = null;
 
-    public static volatile Boolean ready = false;
-
-    public ClientHandler(Socket socket, List<ClientHandler> list) {
+    public ClientHandler(Socket socket) {
         this.clientSocket = socket;
-        this.allClientsList = list;
     }
 
     @Override
@@ -36,21 +33,25 @@ public class ClientHandler extends Thread {
         clientJoin();
     }
 
-    public void clientJoin() {
+    private void clientJoin() {
 
         try {
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            out.println("Insert your name: ");
-            out.println("stop");
+            out.println(Messages.INSERT_NAME);
+            out.println(Messages.STOP);
 
             name = in.readLine();
-            System.out.println("Client " + name + " wrote their name");
             player = new Player(name);
 
-            out.println("Do you wish to create or join a game?\n1 - create a game\n2 - join a game");
-            out.println("stop");
+            print(UpdateMessages.CLIENT + name + UpdateMessages.WROTE_NAME);
+
+            out.println(Messages.QUESTION_CREATE_OR_JOIN);
+            out.println(Messages.CREATE_GAME);
+            out.println(Messages.JOIN_GAME);
+            out.println(Messages.STOP);
+
             line = in.readLine();
 
             if (line.equals("1")) createGame();
@@ -63,40 +64,39 @@ public class ClientHandler extends Thread {
 
     }
 
-    public void createGame() throws IOException, ClassNotFoundException, InterruptedException {
+    private void createGame() throws IOException, ClassNotFoundException, InterruptedException {
 
-        out.println("Insert a name for your game: ");
-        out.println("stop");
+        out.println(Messages.INSERT_GAME_NAME);
+        out.println(Messages.STOP);
 
         line = in.readLine();
 
         GameManager gameManager = new GameManager();
-        allGames.add(gameManager);
         gameManager.setGameName(line);
+
+        ExistingGames.add(gameManager);
 
         gameManager.addPlayer(clientSocket, player);
 
-        System.out.println("Client " + name + " created a game called " + line);
+        print(UpdateMessages.CLIENT + name + UpdateMessages.CREATED_GAME + line);
 
-        player.setHost(true);
+        out.println(Messages.GAME_CREATED);
+        out.println(Messages.CHOOSE_NUMBER_OF_PLAYERS);
+        out.println(Messages.STOP);
 
-
-        out.println("Game created successfully!");
-        out.println("how many players will there be? 2 or 4");
-        out.println("stop");
         line = in.readLine();
 
         int number = Integer.parseInt(line);
 
-        out.println("great, there will be " + line + " players");
-        out.println("press enter");
-        out.println("stop");
+        out.println(Messages.NUMBER_OF_PLAYERS_CHOSEN + line + Messages.PLAYERS);
+        out.println(Messages.PRESS_ENTER);
+        out.println(Messages.STOP);
 
         in.readLine();
 
         while (gameManager.getClientSocketList().size() < number) {
-            synchronized (allGames.get(0)) {
-                allGames.get(0).wait();
+            synchronized (ExistingGames.get(0)) {
+                ExistingGames.get(0).wait();
             }
         }
 
@@ -104,49 +104,55 @@ public class ClientHandler extends Thread {
 
             out = new PrintWriter(map.getKey().getOutputStream());
 
-            out.println("init");
-            out.println("stop");
+            out.println(Messages.INICIATE_GAME);
+            out.println(Messages.STOP);
             out.flush();
         }
 
         gameManager.startGame();
     }
 
-    public void joinGame() throws IOException {
-        player.setHost(false);
-        int id = 0;
+    private void joinGame() throws IOException {
+
+        printExistingGames();
+
+        int index = Integer.parseInt(line);
+
+        System.out.println(name + UpdateMessages.JOINED_GAME + ExistingGames.get(index).getGameName());
+
+        out.println(Messages.WELCOME_TO_GAME + ExistingGames.get(index).getGameName());
+        out.println(Messages.PRESS_ENTER);
+        out.println(Messages.STOP);
+
+        in.readLine();
+        ExistingGames.get(index).addPlayer(clientSocket, player);
+
+        synchronized (ExistingGames.get(index)) {
+            ExistingGames.get(index).notifyAll();
+        }
+    }
+
+    private void printExistingGames() throws IOException {
 
         do {
-            for (GameManager games : allGames) {
+            int id = 0;
+
+            for (GameManager games : ExistingGames) {
                 out.println(games);
                 out.println(id + " - " + games.getGameName());
                 id++;
             }
-            out.println("if there's no games, press 'a' to refresh");
-            out.println("stop");
+            out.println(Messages.REFRESH);
+            out.println(Messages.STOP);
 
             line = in.readLine();
 
-        } while (line.equals("a"));
+        } while (line.equalsIgnoreCase("r"));
 
-        int index = Integer.parseInt(line);
-
-        System.out.println(name + " joined game " + allGames.get(index).getGameName());
-
-        out.println("Welcome to " + allGames.get(index).getHost().getName() + "'s game!");
-        out.println("press enter to continue");
-        out.println("stop");
-
-        in.readLine();
-        allGames.get(index).addPlayer(clientSocket, player);
-
-        synchronized (allGames.get(index)) {
-            allGames.get(index).notifyAll();
-        }
     }
 
-    public void setAllClientsList(List<ClientHandler> allClientsList) {
-        this.allClientsList = allClientsList;
+    private void print(String message) {
+        System.out.println(message);
     }
 
 }
