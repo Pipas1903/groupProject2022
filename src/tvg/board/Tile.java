@@ -21,6 +21,25 @@ public class Tile extends JPanel implements Serializable {
     JLabel nameLabel;
     static int totalTiles = 0;
     private String owner = null;
+    private boolean isGoodLuck;
+    private boolean isBadLuck;
+
+
+    public boolean isGoodLuck() {
+        return isGoodLuck;
+    }
+
+    public boolean isBadLuck() {
+        return isBadLuck;
+    }
+
+    public void setGoodLuck(boolean goodLuck) {
+        isGoodLuck = goodLuck;
+    }
+
+    public void setBadLuck(boolean badLuck) {
+        isBadLuck = badLuck;
+    }
 
     public String getOwner() {
         return owner;
