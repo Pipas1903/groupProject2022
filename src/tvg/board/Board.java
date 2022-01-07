@@ -378,7 +378,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo2.add(lifePoints2);
         printInfo2.updateUI();
 
-/*
         printInfo3 = new JPanel();
         printInfo3.setBounds(1100, 420, 200, 150);
         printInfo3.setVisible(true);
@@ -402,13 +401,10 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName4.setHorizontalAlignment(JLabel.CENTER);
         printInfo4.add(printName4);
 
-*/
-
-
         this.add(printInfo1);
         this.add(printInfo2);
-        //this.add(printInfo3);
-        //this.add(printInfo4);
+        this.add(printInfo3);
+        this.add(printInfo4);
     }
 
     public void panel(Tile tile) {
@@ -528,8 +524,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
         Player player1 = playerList.get(0);
         Player player2 = playerList.get(1);
-        // Player player3 = Game.playerList.get(2);
-        //Player player4 = Game.playerList.get(3);
+        Player player3 = playerList.get(2);
+        Player player4 = playerList.get(3);
 
         if (player == player1) {
             printPlayer1.setIcon(redCircle);
@@ -539,7 +535,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer2.setIcon(blueCircle);
             printPlayer2.setBounds(xLocationsOfPlayer2[player2.getPosition()], yLocationsOfPlayer2[player2.getPosition()], 40, 40);
             printPlayer2.updateUI();
-        } /* else if (player == player3) {
+        } else if (player == player3) {
             printPlayer3.setIcon(yellowCircle);
             printPlayer3.setBounds(xLocationsOfPlayer3[player3.getPosition()], yLocationsOfPlayer3[player3.getPosition()], 40, 40);
             printPlayer3.updateUI();
@@ -547,7 +543,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer4.setIcon(greenCircle);
             printPlayer4.setBounds(xLocationsOfPlayer4[player4.getPosition()], yLocationsOfPlayer4[player4.getPosition()], 40, 40);
             printPlayer4.updateUI();
-        }*/
+        }
     }
 
     @Override
