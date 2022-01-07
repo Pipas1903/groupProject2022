@@ -19,6 +19,7 @@ public class Game implements ActionListener, Serializable {
     private static final long serialVersionUID = 1L;
 
     public List<Player> playerList = new ArrayList<>();
+    public HashMap<Integer, String> armedTrapsRegister = new HashMap<>();
 
     private Board gameBoard;
     private int round = 1;
@@ -64,79 +65,70 @@ public class Game implements ActionListener, Serializable {
         return gameBoard;
     }
 
-    public void start() {
-        playingOrder();
-    }
-
-    public void rounds() {
+    public void showFirstPlayer() {
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
-        checkGameStatus();
     }
 
     public boolean playerOwnsTile() {
-        return Player.getPlayerOwnedTiles().get(playerLocation).equals(currentPlayer.getName());
+        return armedTrapsRegister.get(playerLocation).equals(currentPlayer.getName());
     }
 
-    public void chooseGameMode() {
-        // until death or limited rounds
-        Scanner sc = new Scanner(System.in);
+    /*
+        public void chooseGameMode() {
+            // until death or limited rounds
+            Scanner sc = new Scanner(System.in);
 
-        if (sc.nextInt() == 1) {
-            tenRoundsGameMode();
+            if (sc.nextInt() == 1) {
+                tenRoundsGameMode();
 
-        } else if (sc.nextInt() == 2) {
-            longVersionGameMode();
+            } else if (sc.nextInt() == 2) {
+                longVersionGameMode();
+            }
+
         }
 
-    }
+        public synchronized void playingOrder() {
 
-    public synchronized void playingOrder() {
+            Random random = new Random();
 
-        Random random = new Random();
+            ArrayList<Integer> number = random.ints(1, 10).
+                    distinct().
+                    limit(4).
+                    boxed().
+                    collect(Collectors.toCollection(ArrayList<Integer>::new));
 
-        ArrayList<Integer> number = random.ints(1, 10).
-                distinct().
-                limit(4).
-                boxed().
-                collect(Collectors.toCollection(ArrayList<Integer>::new));
+            for (int i = 0; i < playerList.size(); i++) {
+                playerList.get(i).setOrder(number.get(i));
+            }
 
-        for (int i = 0; i < playerList.size(); i++) {
-            playerList.get(i).setOrder(number.get(i));
+            playerList.sort(Comparator.comparing(Player::getOrder));
+
         }
 
-        playerList.sort(Comparator.comparing(Player::getOrder));
-
-    }
-
-    public boolean checkGameStatus() {
-        removeFaintedPlayer();
-        if (playerList.size() == 1) {
-            System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
-            return false;
+        public boolean checkGameStatus() {
+            if (playerList.size() == 1) {
+                System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
 
-    public void removeFaintedPlayer() {
-        playerList.removeIf(player -> player.getLifePoints() <= 0 & !Player.getPlayerOwnedTiles().containsValue(player.getName()));
-    }
+        public void tenRoundsGameMode() {
+            while (round <= 10 & checkGameStatus()) {
+                start();
+                round++;
+            }
+        }
 
-    public void tenRoundsGameMode() {
-        while (round <= 10 & checkGameStatus()) {
+        public void longVersionGameMode() {
             start();
-            round++;
+            while (checkGameStatus()) {
+                rounds();
+            }
         }
-    }
-
-    public void longVersionGameMode() {
-        start();
-        while (checkGameStatus()) {
-            rounds();
-        }
-    }
-
+    */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameBoard.throwDice) {
@@ -298,7 +290,8 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.armTrap.setEnabled(false);
 
-        Player.playerOwnTile(playerLocation, currentPlayer.getName());
+       playerArmTrap(playerLocation, currentPlayer.getName());
+       gameBoard.getTileAtIndex(playerLocation).setOwner(currentPlayer.getName());
 
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getPrice());
         gameBoard.getTileAtIndex(playerLocation).setArmed(true);
@@ -327,8 +320,9 @@ public class Game implements ActionListener, Serializable {
     public void stealTrap() {
         gameBoard.stealTrap.setEnabled(false);
 
-        Player.removeCurrentTileOwner(playerLocation);
-        Player.playerOwnTile(playerLocation, currentPlayer.getName());
+        playerLoseTrap(playerLocation);
+        playerArmTrap(playerLocation, currentPlayer.getName());
+        gameBoard.getTileAtIndex(playerLocation).setOwner(currentPlayer.getName());
 
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getUpgradePrice());
         gameBoard.textinho.setText("you stole: " + gameBoard.getTileAtIndex(playerLocation).getName());
@@ -398,5 +392,21 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.setEnabled(false);
         gameBoard.upgradeTrap.setEnabled(false);
         gameBoard.updateUI();
+    }
+
+    public HashMap<Integer, String> getArmedTrapsRegister() {
+        return armedTrapsRegister;
+    }
+
+    public void setArmedTrapsRegister(HashMap<Integer, String> armedTrapsRegister) {
+        this.armedTrapsRegister = armedTrapsRegister;
+    }
+
+    public void playerArmTrap(Integer tileNumber, String playerName){
+        armedTrapsRegister.put(tileNumber,playerName);
+    }
+
+    public void playerLoseTrap(Integer tileNumber){
+        armedTrapsRegister.remove(tileNumber);
     }
 }

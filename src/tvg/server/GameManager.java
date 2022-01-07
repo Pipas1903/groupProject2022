@@ -22,6 +22,8 @@ public class GameManager {
     private String gameName;
     private Player last;
 
+    private boolean isGameUntilDeath;
+
     ObjectInputStream objectInputStream = null;
 
     public void addPlayer(Socket socket, Player player) {
@@ -41,15 +43,6 @@ public class GameManager {
         return clientSocketList;
     }
 
-    public Player getHost() {
-        for (Map.Entry<Socket, Player> map : getClientSocketList().entrySet()) {
-            if (map.getValue().isHost()) {
-                return map.getValue();
-            }
-        }
-        return null;
-    }
-
     public void startGame() throws IOException, ClassNotFoundException {
 
         playingOrder();
@@ -57,7 +50,6 @@ public class GameManager {
         System.out.println("initializing game");
 
         game = new Game(playersList);
-        //for each socket in playerlist, create an outputstream
         game.setCurrentPlayer(playersList.get(0));
 
         send();
@@ -107,6 +99,10 @@ public class GameManager {
             game = (Game) object;
             System.out.println("Recebi um jogo: " + game);
         }
+    }
+
+    public void removeFaintedPlayer() {
+        game.playerList.removeIf(player -> player.getLifePoints() <= 0 & !game.armedTrapsRegister.containsValue(player.getName()));
     }
 
     public void playingOrder() {

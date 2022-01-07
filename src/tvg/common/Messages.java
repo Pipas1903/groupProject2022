@@ -16,7 +16,7 @@ public class Messages {
     public static final String NUMBER_OF_PLAYERS_CHOSEN = "Great, there will be ";
     public static final String PLAYERS = " players";
     public static final String PRESS_ENTER = "---press enter to continue---";
-    public static final String INICIATE_GAME = "init";
+    public static final String INITIATE_GAME = "init";
     public static final String REFRESH = "If there's no games, press 'R' to refresh";
     public static final String WELCOME_TO_GAME = "Welcome to ";
     public static final String CHOOSE_GAME_MODE = "Choose a game mode: ";

@@ -106,7 +106,7 @@ public class ClientHandler extends Thread {
 
             out = new PrintWriter(map.getKey().getOutputStream());
 
-            out.println(Messages.INICIATE_GAME);
+            out.println(Messages.INITIATE_GAME);
             out.println(Messages.STOP);
             out.flush();
         }

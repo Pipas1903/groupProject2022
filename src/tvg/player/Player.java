@@ -11,15 +11,17 @@ public class Player implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private String name;
+
     private int lifePoints;
     private int order;
-    private static HashMap<Integer, String> playerOwnedTiles = new HashMap<>();
     private int position;
     private int diceRoll;
-    private boolean isHost;
-    private boolean yourTurn;
-    JLabel playerSymbol;
+
     private Boolean endOfTurn = Boolean.FALSE;
+
+    private static HashMap<Integer, String> playerOwnedTiles = new HashMap<>();
+
+    JLabel playerSymbol;
 
     public Boolean isEndOfTurn() {
         return endOfTurn;
@@ -27,34 +29,6 @@ public class Player implements Serializable{
 
     public void setEndOfTurn(Boolean endOfTurn) {
         this.endOfTurn = endOfTurn;
-    }
-
-    public boolean isHost() {
-        return isHost;
-    }
-
-    public void setHost(boolean host) {
-        isHost = host;
-    }
-
-    public boolean isYourTurn() {
-        return yourTurn;
-    }
-
-    public void setYourTurn(boolean yourTurn) {
-        this.yourTurn = yourTurn;
-    }
-
-    public static HashMap<Integer, String> getPlayerOwnedTiles() {
-        return playerOwnedTiles;
-    }
-
-    public static void playerOwnTile(Integer tileNumber, String playerName) {
-        playerOwnedTiles.put(tileNumber, playerName);
-    }
-
-    public static void removeCurrentTileOwner(Integer tileNumber) {
-        playerOwnedTiles.remove(tileNumber);
     }
 
     public Player(String name) {
@@ -92,10 +66,6 @@ public class Player implements Serializable{
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getLifePoints() {

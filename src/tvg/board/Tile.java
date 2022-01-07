@@ -20,7 +20,15 @@ public class Tile extends JPanel implements Serializable {
     private boolean upgraded = false;
     JLabel nameLabel;
     static int totalTiles = 0;
+    private String owner = null;
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 
     public Tile(int xCoord, int yCoord, int width, int height, String labelString, int rotationDegrees, boolean buyable) {
         number = totalTiles;
@@ -38,7 +46,6 @@ public class Tile extends JPanel implements Serializable {
             nameLabel.setBounds(0, 20, this.getWidth(), 40);
             this.add(nameLabel);
         } else {
-
 
 
             nameLabel = new JLabel(labelString) {

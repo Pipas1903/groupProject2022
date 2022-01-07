@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Board extends JPanel implements MouseListener, ActionListener, Serializable {
@@ -42,9 +43,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
     private ArrayList<Tile> unbuyableTiles = new ArrayList<>();
-    public ArrayList<Tile> getUnbuyableTiles() {
-        return unbuyableTiles;
-    }
+
     public ArrayList<JButton> buttonsList = new ArrayList<>();
     private List<Player> playerList;
 
@@ -418,7 +417,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             armed.setText("Armed");
             armed.setIcon(x);
         } else {
-            armed.setText("Armed by: " + Player.getPlayerOwnedTiles().get(tile.getNumber()));
+            armed.setText("Armed by: " + tile.getOwner());
             armed.setIcon(right);
         }
         info.updateUI();
@@ -550,7 +549,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void actionPerformed(ActionEvent e) {
     }
 
-    //todas a localizações dos círculos
+    // every possible location for player symbols
 
     int[] xLocationsOfPlayer1 = {10, 110, 210, 310, 410, 510, 610,
             610, 610, 610, 610, 610, 610,

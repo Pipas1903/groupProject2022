@@ -29,11 +29,11 @@ public class Client2 implements EventListener {
 
 
     public void getServerInfo() throws IOException {
-        print("Server IP: ");
+        System.out.print("Server IP: ");
         String host = scan.nextLine();
         this.hostName = InetAddress.getByName(host);
 
-        print("Port: ");
+        System.out.print("Port: ");
         portNumber = scan.nextInt();
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
@@ -65,7 +65,6 @@ public class Client2 implements EventListener {
                 }
                 print(UpdateMessages.RECEIVED_GAME + game);
                 frame = new Frame(game);
-                frame.start();
 
                 playingLoop();
             }

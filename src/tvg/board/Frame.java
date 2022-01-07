@@ -16,10 +16,8 @@ public class Frame extends JFrame {
         this.add(jogo.getGameBoard(), new Integer(0));
         this.setResizable(false);
         this.setVisible(true);
-    }
 
-    public void start() {
-        jogo.rounds();
+        jogo.showFirstPlayer();
     }
 
     public void setGame(Game game) {
