@@ -1,17 +1,15 @@
 package tvg.server;
 
+import tvg.common.UpdateMessages;
+
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
 
 public class Server {
 
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private int port = 930;
-
-    private static volatile List<ClientHandler> clientHandlers = new ArrayList<>();
-
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -23,17 +21,14 @@ public class Server {
         try {
             serverSocket = new ServerSocket(port);
 
-            System.out.println("waiting for client to connect");
-
             while (true) {
+                print(UpdateMessages.WAITING_FOR_CLIENT);
 
                 clientSocket = serverSocket.accept();
-                ClientHandler clientHandler = new ClientHandler(clientSocket, clientHandlers);
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clientHandler.start();
-                System.out.println("client connected - " + clientSocket.getInetAddress().getHostAddress());
-                clientHandlers.add(clientHandler);
-                System.out.println("waiting for client to connect");
 
+                print(UpdateMessages.CLIENT_CONNECTED + clientSocket.getInetAddress().getHostAddress());
             }
 
         } catch (Exception e) {
@@ -42,9 +37,7 @@ public class Server {
 
     }
 
-    public void sendActualizedList() {
-        for (ClientHandler clientHandler : clientHandlers)
-            clientHandler.setAllClientsList(clientHandlers);
+    public void print(String message) {
+        System.out.println(message);
     }
-
 }
