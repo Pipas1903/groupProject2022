@@ -357,7 +357,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo1.add(printName1);
 
         lifePoints1 = new JLabel();
-        // lifePoints1.setText("life points " + players.get(0).getLifePoints());
+        lifePoints1.setText("life points " + players.get(0).getLifePoints());
         printInfo1.add(lifePoints1);
         printInfo1.updateUI();
 
@@ -374,7 +374,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo2.add(printName2);
 
         lifePoints2 = new JLabel();
-        //lifePoints2.setText("life points " + players.get(1).getLifePoints());
+        lifePoints2.setText("life points " + players.get(1).getLifePoints());
         printInfo2.add(lifePoints2);
         printInfo2.updateUI();
 
