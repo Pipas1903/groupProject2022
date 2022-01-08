@@ -126,12 +126,12 @@ public class Tile extends JPanel implements Serializable {
         }
         if (this.number == 13 || this.number == 15 || this.number == 16 || this.number == 17) {
             g.drawRect(0, 0, this.getWidth(), 20);
-            g.setColor(Color.ORANGE);
+            g.setColor(new Color(0, 180, 0));
             g.fillRect(0, 0, this.getWidth(), 20);
         }
         if (this.number == 19 || this.number == 20 || this.number == 22 || this.number == 23) {
             g.drawRect(this.getWidth() - 20, 0, 20, this.getHeight());
-            g.setColor(new Color(0, 180, 0));
+            g.setColor(Color.ORANGE );
             g.fillRect(this.getWidth() - 20, 0, 20, this.getHeight());
         }
 
