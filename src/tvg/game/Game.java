@@ -46,7 +46,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.setPlayerList(playerList);
         gameBoard.panelInfo(this.playerList);
 
-        //   start();
+
     }
 
     public List<Player> getPlayerList() {
@@ -75,7 +75,7 @@ public class Game implements ActionListener, Serializable {
         return armedTrapsRegister.get(playerLocation).equals(currentPlayer.getName());
     }
 
-    /*
+
         public void chooseGameMode() {
             // until death or limited rounds
             Scanner sc = new Scanner(System.in);
@@ -89,24 +89,6 @@ public class Game implements ActionListener, Serializable {
 
         }
 
-        public synchronized void playingOrder() {
-
-            Random random = new Random();
-
-            ArrayList<Integer> number = random.ints(1, 10).
-                    distinct().
-                    limit(4).
-                    boxed().
-                    collect(Collectors.toCollection(ArrayList<Integer>::new));
-
-            for (int i = 0; i < playerList.size(); i++) {
-                playerList.get(i).setOrder(number.get(i));
-            }
-
-            playerList.sort(Comparator.comparing(Player::getOrder));
-
-        }
-
         public boolean checkGameStatus() {
             if (playerList.size() == 1) {
                 System.out.println("Game over \nThe winner is: " + playerList.get(0).getName());
@@ -117,18 +99,15 @@ public class Game implements ActionListener, Serializable {
 
         public void tenRoundsGameMode() {
             while (round <= 10 & checkGameStatus()) {
-                start();
                 round++;
             }
         }
 
         public void longVersionGameMode() {
-            start();
             while (checkGameStatus()) {
-                rounds();
+
             }
         }
-    */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameBoard.throwDice) {
@@ -365,6 +344,11 @@ public class Game implements ActionListener, Serializable {
         gameBoard.getTileAtIndex(playerLocation).setOwner(currentPlayer.getName());
 
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getUpgradePrice());
+        gameBoard.updateUI();
+
+        showPlayer();
+
+        gameBoard.textinho.setText("you stole: " + gameBoard.getTileAtIndex(playerLocation).getName());
 
         gameBoard.lifePoints1.setText("life points " + playerList.get(0).getLifePoints());
         gameBoard.lifePoints2.setText("life points " + playerList.get(1).getLifePoints());
@@ -372,11 +356,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.lifePoints1.updateUI();
 
 
-        gameBoard.textinho.setText("you stole: " + gameBoard.getTileAtIndex(playerLocation).getName());
 
-        gameBoard.updateUI();
 
-        showPlayer();
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER STEALING TRAP");
     }
 
@@ -478,4 +459,6 @@ public class Game implements ActionListener, Serializable {
     public void playerLoseTrap(Integer tileNumber) {
         armedTrapsRegister.remove(tileNumber);
     }
+
+
 }

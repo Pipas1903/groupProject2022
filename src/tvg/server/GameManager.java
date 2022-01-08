@@ -22,6 +22,7 @@ public class GameManager {
     private Game game;
     private String gameName;
     private Player last;
+    private String gameMode;
 
     private boolean isGameUntilDeath;
 
@@ -73,23 +74,11 @@ public class GameManager {
 
     public void gameLoop() throws IOException, ClassNotFoundException {
 
-        while (true) {
-            boolean received = false;
-
-            for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
-                System.out.println();
-                if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
-                    receive(map.getKey());
-                    removeFaintedPlayerFromGameList();
-                    removeFaintedPlayerFromServer();
-                    received = true;
-                    break;
-                }
-            }
-
-            if (received) {
-                send();
-            }
+        if (this.gameMode.equals("ten rounds")) {
+            gameLoopTenRounds();
+        }
+        if (this.gameMode.equals("until death")) {
+            gameLoopUntilOneSurviver();
         }
     }
 
@@ -135,5 +124,57 @@ public class GameManager {
         }
 
         playersList.sort(Comparator.comparing(Player::getOrder));
+    }
+
+    public void gameLoopTenRounds() throws IOException, ClassNotFoundException {
+        int rounds = 0;
+        while (rounds <= 20) {
+            boolean received = false;
+
+            for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
+                System.out.println();
+                if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
+                    receive(map.getKey());
+                    removeFaintedPlayerFromGameList();
+                    removeFaintedPlayerFromServer();
+                    received = true;
+                    break;
+                }
+            }
+
+            if (received) {
+                send();
+            }
+            rounds++;
+        }
+    }
+
+    public void gameLoopUntilOneSurviver() throws IOException, ClassNotFoundException {
+        while (playersList.size() > 1) {
+            boolean received = false;
+
+            for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
+                System.out.println();
+                if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
+                    receive(map.getKey());
+                    removeFaintedPlayerFromGameList();
+                    removeFaintedPlayerFromServer();
+                    received = true;
+                    break;
+                }
+            }
+
+            if (received) {
+                send();
+            }
+        }
+    }
+
+    public String getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
     }
 }
