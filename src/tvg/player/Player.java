@@ -1,12 +1,8 @@
 package tvg.player;
 
-
-import javax.swing.*;
-import java.awt.*;
 import java.io.Serializable;
-import java.util.HashMap;
 
-public class Player implements Serializable{
+public class Player implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,8 +14,6 @@ public class Player implements Serializable{
     private int diceRoll;
 
     private Boolean endOfTurn = Boolean.FALSE;
-
-    private static HashMap<Integer, String> playerOwnedTiles = new HashMap<>();
 
     public Boolean isEndOfTurn() {
         return endOfTurn;
@@ -70,4 +64,10 @@ public class Player implements Serializable{
         this.position = position;
     }
 
+    /*public void printPlayer() {
+        System.out.println("nome " + name);
+        System.out.println("vida " + lifePoints);
+        System.out.println("posição " + position);
+    }
+*/
 }
