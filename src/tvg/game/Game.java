@@ -182,6 +182,12 @@ public class Game implements ActionListener, Serializable {
         if (gameBoard.getTileAtIndex(playerLocation).isBadLuck()) {
 
             gameBoard.textinho.setText("Oh oh... You lost 150 life points");
+
+            if (currentPlayer.getLifePoints() - luck < 0) {
+                currentPlayer.setLifePoints(0);
+                return;
+            }
+
             currentPlayer.setLifePoints(currentPlayer.getLifePoints() - luck);
             gameBoard.passTurn.setEnabled(true);
 
@@ -425,8 +431,6 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
         gameBoard.updateUI();
-
-
     }
 
     public void resetEndOfTurn() {
@@ -472,5 +476,4 @@ public class Game implements ActionListener, Serializable {
     public void playerLoseTrap(Integer tileNumber) {
         armedTrapsRegister.remove(tileNumber);
     }
-
 }

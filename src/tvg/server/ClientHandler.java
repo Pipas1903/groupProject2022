@@ -2,7 +2,6 @@ package tvg.server;
 
 import tvg.common.Messages;
 import tvg.common.UpdateMessages;
-import tvg.game.Game;
 import tvg.player.Player;
 
 import java.io.*;
@@ -138,16 +137,17 @@ public class ClientHandler extends Thread {
     private void chooseGameMode(GameManager gameManager) throws IOException {
         do {
             out.println(Messages.CHOOSE_GAME_MODE);
-            out.println(Messages.UNTIL_DEATH);
+            out.println(Messages.UNTIL_ONE_SURVIVOR);
             out.println(Messages.LIMITED_ROUNDS);
             out.println(Messages.STOP);
 
             line = in.readLine();
 
         } while (!line.equals("1") && !line.equals("2"));
+
         if (line.equals("1")) {
-            gameManager.setGameMode("until death");
-            print(UpdateMessages.CHOSE_GAME_MODE + UpdateMessages.UNTIL_DEATH);
+            gameManager.setGameMode("until one survivor");
+            print(UpdateMessages.CHOSE_GAME_MODE + UpdateMessages.UNTIL_ONE_SURVIVOR);
         }
         if (line.equals("2")) {
             gameManager.setGameMode("ten rounds");

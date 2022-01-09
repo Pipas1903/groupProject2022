@@ -77,7 +77,7 @@ public class GameManager {
         if (this.gameMode.equals("ten rounds")) {
             gameLoopTenRounds();
         }
-        if (this.gameMode.equals("until death")) {
+        if (this.gameMode.equals("until one survivor")) {
             gameLoopUntilOneSurviver();
         }
     }
