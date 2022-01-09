@@ -13,9 +13,6 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
-import static tvg.game.Dice.throwDice;
-
-
 public class Game implements ActionListener, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,8 +20,7 @@ public class Game implements ActionListener, Serializable {
     public List<Player> playerList;
     public HashMap<Integer, String> armedTrapsRegister = new HashMap<>();
 
-    int badLuck = (-150);
-    int goodLuck = 150;
+    int luck = 150;
 
     private Board gameBoard;
     private int round = 1;
@@ -204,15 +200,20 @@ public class Game implements ActionListener, Serializable {
         if (gameBoard.getTileAtIndex(playerLocation).isBadLuck()) {
 
             gameBoard.textinho.setText("Oh oh... You lost 150 life points");
-            currentPlayer.setLifePoints(currentPlayer.getLifePoints() + badLuck);
+            currentPlayer.setLifePoints(currentPlayer.getLifePoints() - luck);
+            gameBoard.passTurn.setEnabled(true);
 
         } else if (gameBoard.getTileAtIndex(playerLocation).isGoodLuck()) {
 
             gameBoard.textinho.setText("YEY! You restored 150 life points");
-            currentPlayer.setLifePoints(currentPlayer.getLifePoints() + goodLuck);
+            currentPlayer.setLifePoints(currentPlayer.getLifePoints() + luck);
+            gameBoard.passTurn.setEnabled(true);
 
+        } else if (gameBoard.getTileAtIndex(playerLocation).getName().equals("start")) {
+            gameBoard.passTurn.setEnabled(true);
         } else {
             executeRandomEvent();
+
         }
     }
 
