@@ -438,16 +438,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public void listTraps(){
 
-        if(countTraps1 > 0) {
-            for (int i = 0; i < countTraps1; i++) {
-                printInfo1.remove(countTraps1 + i);
-            }
-        }
+
 
         countTraps1 =1;
 
         JLabel traps1[] = new JLabel[10];
-
 
         for (Map.Entry entry: game.getArmedTrapsRegister().entrySet()) {
 
