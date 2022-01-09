@@ -19,19 +19,18 @@ public class Game implements ActionListener, Serializable {
 
     public List<Player> playerList;
 
-
     public HashMap<Integer, String> armedTrapsRegister = new HashMap<>();
 
     int luck = 150;
 
     private Board gameBoard;
     private int round = 1;
+    public int playerIndex = 0;
+    int playerLocation;
     private final int lifeRestoration = 80;
+
     Player currentPlayer = null;
 
-    public int playerIndex = 0;
-
-    int playerLocation;
 
     public Game(List<Player> playerList) {
 
@@ -461,7 +460,6 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.rounds.setText(Messages.ROUND + round);
 
-        gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
         gameBoard.updateUI();
         System.out.println();
     }

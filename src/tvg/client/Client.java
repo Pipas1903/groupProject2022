@@ -1,6 +1,7 @@
 package tvg.client;
 
 import tvg.board.Frame;
+import tvg.common.Messages;
 import tvg.common.UpdateMessages;
 import tvg.game.Game;
 
@@ -96,6 +97,7 @@ public class Client {
                     game.resetEndOfTurn();
                     game.playerIndex++;
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    game.getGameBoard().textinho.setText(game.getCurrentPlayer().getName() + Messages.THROW_DICE);
                     sendGameAfterTurn();
                     continue;
 
@@ -108,6 +110,7 @@ public class Client {
                     if (game.getCurrentPlayer().isEndOfTurn()) {
                         game.resetEndOfTurn();
                         game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                        game.getGameBoard().textinho.setText(game.getCurrentPlayer().getName() + Messages.THROW_DICE);
                         sendGameAfterTurn();
                         continue;
                     }
