@@ -35,9 +35,8 @@ public class Game implements ActionListener, Serializable {
 
         this.playerList = playerList;
 
-        gameBoard = new Board(6, 6, 612, 612);
+        gameBoard = new Board(6, 6, 612, 612,this);
         gameBoard.setBackground(new Color(192, 192, 192));
-
         gameBoard.armTrap.addActionListener(this);
         gameBoard.throwDice.addActionListener(this);
         gameBoard.upgradeTrap.addActionListener(this);
@@ -45,7 +44,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.passTurn.addActionListener(this);
         gameBoard.setPlayerList(playerList);
         gameBoard.panelInfo();
-
 
     }
 
@@ -66,8 +64,9 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void showFirstPlayer() {
-        gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
+
         gameBoard.rounds.setText(Messages.ROUND + round);
+        gameBoard.textinho.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
     }
 
@@ -149,7 +148,7 @@ public class Game implements ActionListener, Serializable {
         System.out.println(currentPlayer.getName() + " AT TILE NUMBER " + currentPlayer.getPosition());
         showPlayer();
 
-        //showPlayerInfo();
+
         playerLocation = currentPlayer.getPosition();
         changeButtonsState();
 

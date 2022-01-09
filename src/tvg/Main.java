@@ -19,5 +19,6 @@ public class Main {
         Game jogo = new Game(lista);
 
         Frame frame = new Frame(jogo);
+
     }
 }
