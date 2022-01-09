@@ -37,7 +37,6 @@ public class Client2 implements EventListener {
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
 
-        print("*connection established*");
     }
 
     public void speak() throws IOException, ClassNotFoundException {
@@ -86,24 +85,34 @@ public class Client2 implements EventListener {
             frame.repaint();
             game.getGameBoard().updateUI();
 
+
             if (!game.getCurrentPlayer().getName().equals(name)) {
                 game.turnOffOtherPlayerButtons();
             }
 
             if (game.getCurrentPlayer().getName().equals(name)) {
 
-                while (!game.getCurrentPlayer().isEndOfTurn()) {
-
-                }
-
-                if (game.getCurrentPlayer().isEndOfTurn()) {
+                if (game.getCurrentPlayer().isDead()) {
                     game.resetEndOfTurn();
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;
-                }
-            }
+                }else{
 
+                    while (!game.getCurrentPlayer().isEndOfTurn()) {
+
+                    }
+
+                    if (game.getCurrentPlayer().isEndOfTurn()) {
+                        game.resetEndOfTurn();
+                        game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                        sendGameAfterTurn();
+                        continue;
+                    }
+
+                }
+
+            }
             receiveGame();
         }
     }

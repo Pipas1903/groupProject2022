@@ -176,10 +176,6 @@ public class Tile extends JPanel implements Serializable {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
     public boolean isArmed() {
         return armed;
     }

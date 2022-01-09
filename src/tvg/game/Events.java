@@ -4,7 +4,7 @@ import java.util.Random;
 
 public enum Events {
 
-    UPGRADE_TRAP("cOh wait! You found a coin on the floor!<br>With that kind of money, <br>one of your traps is going to be upgraded!</html>", 0),
+    UPGRADE_TRAP("<html>Oh wait! You found a coin on the floor!<br>With that kind of money, <br>one of your traps is going to be upgraded!</html>", 0),
     LOSE_TRAP("<html>Oh no! You found the terrible Mickey Mouse <br> and he stole one of your traps!</html>", 0),
     THROW_DICE_AGAIN("<html>You just stumbled upon a dice! Throw it!</html>", 0),
     TRIP_ON_SHOE_LACE("<html>You're so silly that tripped on your own shoe lace! <br>That's going to leave a mark!<br>You just lost 15 life points!</html>", 15),
@@ -19,17 +19,10 @@ public enum Events {
         this.lifePoints = lifePoints;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public int getLifePoints() {
-        return lifePoints;
-    }
-
     public static Events randomEvent() {
         Random random = new Random();
         double rand = random.nextDouble();
+
         if (rand < .1) {
             return UPGRADE_TRAP;
         } else if (rand < .2) {

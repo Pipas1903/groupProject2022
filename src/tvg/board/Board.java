@@ -396,7 +396,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 //-----------------------Panel player 3
 
 
-   /*     printInfo3 = new JPanel();
+        printInfo3 = new JPanel();
         printInfo3.setBounds(1100, 420, 200, 150);
         printInfo3.setVisible(true);
         printInfo3.setOpaque(true);
@@ -404,9 +404,16 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo3.setLayout(new GridLayout(3, 1, 0, 20));
 
         printName3 = new JLabel();
-        printName3.setText(players.get(2).getName());
+        printName3.setOpaque(true);
+        printName3.setForeground(new Color(255,215,0));
+        printName3.setText(playerList.get(2).getName());
         printName3.setHorizontalAlignment(JLabel.CENTER);
+
+        lifePoints3 = new JLabel();
+
+        lifePoints3.setText("life : 800");
         printInfo3.add(printName3);
+        printInfo3.add(lifePoints3);
 
 
 //---------------Panel player 4
@@ -420,15 +427,22 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo4.setLayout(new GridLayout(3, 1, 0, 20));
 
         printName4 = new JLabel();
-        printName4.setText(players.get(3).getName());
+        printName4.setOpaque(true);
+        printName4.setText(playerList.get(3).getName());
+        printName4.setForeground(new Color(0,100,0));
         printName4.setHorizontalAlignment(JLabel.CENTER);
-        printInfo4.add(printName4);*/
+
+        lifePoints4 = new JLabel();
+
+        lifePoints4.setText("life : 800");
+        printInfo4.add(printName4);
+        printInfo4.add(lifePoints4);
 
 //------------------Adds
         this.add(printInfo1);
         this.add(printInfo2);
-        // this.add(printInfo3);
-        //this.add(printInfo4);
+        this.add(printInfo3);
+        this.add(printInfo4);
     }
 
     public void panel(Tile tile) {
@@ -452,11 +466,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         textinho = new JLabel();
         textinho.setBounds(800, 320, 280, 75);
         textinho.setVisible(true);
-        textinho.setOpaque(true);
+        textinho.setOpaque(false);
 //rounds
         rounds = new JLabel();
         rounds.setBounds(873, 15, 100, 30);
-        rounds.setForeground(new Color(0,102,0));
+        rounds.setForeground(new Color(0, 102, 0));
         rounds.setVisible(true);
         //rounds.setOpaque(true);
 //panel
@@ -543,8 +557,10 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         lifePoints1.updateUI();
         lifePoints2.setText("life : " + playerList.get(1).getLifePoints());
         lifePoints2.updateUI();
-        System.out.println("ordem do player" + player.getOrder());
-        System.out.println(player.getPosition());
+        lifePoints3.setText("life : " + playerList.get(2).getLifePoints());
+        lifePoints3.updateUI();
+        lifePoints4.setText("life : " + playerList.get(3).getLifePoints());
+        lifePoints4.updateUI();
 
         ImageIcon redCircle = new ImageIcon("src/tvg/images/redcircle.png");
         ImageIcon blueCircle = new ImageIcon("src/tvg/images/bluecircle.png");
@@ -553,8 +569,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
         Player player1 = playerList.get(0);
         Player player2 = playerList.get(1);
-        //Player player3 = playerList.get(2);
-        //Player player4 = playerList.get(3);
+        Player player3 = playerList.get(2);
+        Player player4 = playerList.get(3);
 
         if (player == player1) {
             printPlayer1.setIcon(redCircle);
@@ -564,7 +580,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer2.setIcon(blueCircle);
             printPlayer2.setBounds(xLocationsOfPlayer2[player2.getPosition()], yLocationsOfPlayer2[player2.getPosition()], 40, 40);
             printPlayer2.updateUI();
-        } /*else if (player == player3) {
+        } else if (player == player3) {
             printPlayer3.setIcon(yellowCircle);
             printPlayer3.setBounds(xLocationsOfPlayer3[player3.getPosition()], yLocationsOfPlayer3[player3.getPosition()], 40, 40);
             printPlayer3.updateUI();
@@ -572,7 +588,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer4.setIcon(greenCircle);
             printPlayer4.setBounds(xLocationsOfPlayer4[player4.getPosition()], yLocationsOfPlayer4[player4.getPosition()], 40, 40);
             printPlayer4.updateUI();
-        }*/
+        }
     }
 
     @Override

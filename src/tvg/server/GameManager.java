@@ -72,7 +72,7 @@ public class GameManager {
             gameLoopTenRounds();
         }
         if (this.gameMode.equals("until one survivor")) {
-            gameLoopUntilOneSurviver();
+            gameLoopUntilOneSurvivor();
         }
     }
 
@@ -88,11 +88,16 @@ public class GameManager {
     }
 
     public boolean removeFaintedPlayerFromGameList() throws IOException {
-        if (game.playerList.removeIf(player -> player.getLifePoints() <= 0)) {
-            game.passTurn();
-            return true;
+        // if (game.playerList.removeIf(player -> player.getLifePoints() <= 0)) {
+        //game.passTurn();
+        for (Player player : game.playerList) {
+            if (player.getLifePoints() <= 0) {
+                player.setDead(true);
+            }
         }
-        return false;
+        return true;
+        //  }
+        //  return false;
     }
 
     // PODE E DEVE SER MELHORADO
@@ -133,23 +138,27 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
-
                     received = true;
                     break;
                 }
             }
 
             if (received) {
-                removeFaintedPlayerFromGameList();
+               // removeFaintedPlayerFromGameList();
+                for (Player player : game.playerList) {
+                    if (player.getLifePoints() <= 0) {
+                        player.setDead(true);
+                    }
+                }
+
                 send();
-                removeFaintedPlayerFromServer();
             }
             rounds++;
         }
         System.out.println("Round " + rounds + " game is over");
     }
 
-    public void gameLoopUntilOneSurviver() throws IOException, ClassNotFoundException {
+    public void gameLoopUntilOneSurvivor() throws IOException, ClassNotFoundException {
         while (playersList.size() > 1) {
             boolean received = false;
             for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
@@ -163,20 +172,22 @@ public class GameManager {
             }
 
             if (received) {
-                send();
-                if (removeFaintedPlayerFromGameList()) {
-                    for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
-                        receive(map.getKey());
-
+                //removeFaintedPlayerFromGameList();
+                for (Player player : game.playerList) {
+                    if (player.getLifePoints() <= 0) {
+                        player.setDead(true);
                     }
                 }
-                removeFaintedPlayerFromServer();
-            }
-        }
-    }
 
-    public String getGameMode() {
-        return gameMode;
+                send();
+              /*  if (removeFaintedPlayerFromGameList()) {
+                    for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
+                        receive(map.getKey());
+                    }*/
+            }
+            // removeFaintedPlayerFromServer();
+        }
+
     }
 
     public void setGameMode(String gameMode) {

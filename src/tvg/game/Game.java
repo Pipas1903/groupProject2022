@@ -49,10 +49,6 @@ public class Game implements ActionListener, Serializable {
 
     }
 
-    public List<Player> getPlayerList() {
-        return playerList;
-    }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -126,9 +122,6 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
 
-
-        System.out.println("PLAYER ROLLED DICE");
-        System.out.println(currentPlayer.getPosition());
         showPlayer();
         System.out.println("PLAYER ROLLED " + currentPlayer.getDiceRoll());
 
@@ -200,7 +193,7 @@ public class Game implements ActionListener, Serializable {
 
             System.out.println(currentPlayer.getName() + " LANDED ON GOOD LUCK AND HAS NOW " + currentPlayer.getLifePoints());
 
-        } else if (gameBoard.getTileAtIndex(playerLocation).getName().equals("start")) {
+        } else if (gameBoard.getTileAtIndex(playerLocation).getName().equals("Start")) {
 
             gameBoard.passTurn.setEnabled(true);
             gameBoard.throwDice.setEnabled(false);
@@ -235,8 +228,8 @@ public class Game implements ActionListener, Serializable {
                 }
 
                 gameBoard.textinho.setText("<html>There are no more available traps.<br> Take 100 life points as compensation.</html>");
-                currentPlayer.setLifePoints(currentPlayer.getLifePoints() + 100);
 
+                currentPlayer.setLifePoints(currentPlayer.getLifePoints() + 100);
                 break;
 
             case LOSE_TRAP:
@@ -300,16 +293,19 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void tryToRemovePlayerTrap() {
+
         for (Map.Entry<Integer, String> entry : armedTrapsRegister.entrySet()) {
+
             if (entry.getValue().equals(currentPlayer.getName()) && !gameBoard.getTileAtIndex(entry.getKey()).isUpgraded()) {
                 armedTrapsRegister.remove(entry.getKey());
                 gameBoard.getTileAtIndex(entry.getKey()).setArmed(false);
                 gameBoard.getTileAtIndex(entry.getKey()).setOwner("");
                 System.out.println("Player lost a trap");
-                System.out.println("lost trap: " + gameBoard.getTileAtIndex(entry.getKey()));
+                System.out.println("lost trap: " + gameBoard.getTileAtIndex(entry.getKey()).getName());
+                return;
             }
         }
-        gameBoard.textinho.setText("<html>You don't have traps,<br> so you lose anything!</html>");
+        gameBoard.textinho.setText("<html>You don't have traps,<br> so you won't lose anything!</html>");
     }
 
     public void armTrapValidation() {
@@ -337,7 +333,6 @@ public class Game implements ActionListener, Serializable {
     public void trapStatusValidation() {
 
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getDamageDealt());
-
 
         System.out.println("PLAYER " + currentPlayer.getName() + " FELL ON A TRAP AND LOST " + gameBoard.getTileAtIndex(playerLocation).getDamageDealt() + " LIFE POINTS");
 
@@ -466,6 +461,7 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
         gameBoard.updateUI();
+        System.out.println();
     }
 
     public void resetEndOfTurn() {
@@ -494,14 +490,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.upgradeTrap.setEnabled(false);
 
         gameBoard.updateUI();
-    }
-
-    public HashMap<Integer, String> getArmedTrapsRegister() {
-        return armedTrapsRegister;
-    }
-
-    public void setArmedTrapsRegister(HashMap<Integer, String> armedTrapsRegister) {
-        this.armedTrapsRegister = armedTrapsRegister;
     }
 
     public void playerArmTrap(Integer tileNumber, String playerName) {

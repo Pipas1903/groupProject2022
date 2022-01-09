@@ -14,6 +14,15 @@ public class Player implements Serializable {
     private int diceRoll;
 
     private Boolean endOfTurn = Boolean.FALSE;
+    private boolean dead = false;
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
 
     public Boolean isEndOfTurn() {
         return endOfTurn;
@@ -24,7 +33,7 @@ public class Player implements Serializable {
     }
 
     public Player(String name) {
-        this.lifePoints = 800;
+        this.lifePoints = 300;
         this.name = name;
     }
 
@@ -64,10 +73,4 @@ public class Player implements Serializable {
         this.position = position;
     }
 
-    /*public void printPlayer() {
-        System.out.println("nome " + name);
-        System.out.println("vida " + lifePoints);
-        System.out.println("posição " + position);
-    }
-*/
 }
