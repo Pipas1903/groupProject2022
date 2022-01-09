@@ -10,19 +10,22 @@ public class Tile extends JPanel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    static int totalTiles = 0;
     private int price;
     private int upgradePrice;
     private int damageDealt;
-    private String name;
-    private boolean buyable;
     private int number;
+
+    private boolean buyable;
     private boolean armed;
     private boolean upgraded = false;
-    JLabel nameLabel;
-    static int totalTiles = 0;
-    private String owner = null;
     private boolean isGoodLuck;
     private boolean isBadLuck;
+
+    JLabel nameLabel;
+
+    private String name;
+    private String owner = null;
 
 
     public boolean isGoodLuck() {
@@ -55,7 +58,7 @@ public class Tile extends JPanel implements Serializable {
         setBorder(new LineBorder(new Color(0, 0, 0)));
         setBounds(xCoord, yCoord, width, height);
         name = labelString;
-        this.setLayout(null);
+        this.setLayout(new FlowLayout());
         this.buyable = buyable;
 
         if (rotationDegrees == 0) {
@@ -131,7 +134,7 @@ public class Tile extends JPanel implements Serializable {
         }
         if (this.number == 19 || this.number == 20 || this.number == 22 || this.number == 23) {
             g.drawRect(this.getWidth() - 20, 0, 20, this.getHeight());
-            g.setColor(Color.ORANGE );
+            g.setColor(Color.ORANGE);
             g.fillRect(this.getWidth() - 20, 0, 20, this.getHeight());
         }
 
