@@ -144,6 +144,7 @@ public class GameManager {
             }
             rounds++;
         }
+        System.out.println("Round " + rounds + " game is over");
     }
 
     public void gameLoopUntilOneSurviver() throws IOException, ClassNotFoundException {

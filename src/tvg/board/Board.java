@@ -450,7 +450,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public void textBoxes() {
         textinho = new JLabel();
-        textinho.setBounds(800, 320, 300, 80);
+        textinho.setBounds(800, 320, 280, 75);
         textinho.setVisible(true);
         textinho.setOpaque(true);
 //rounds

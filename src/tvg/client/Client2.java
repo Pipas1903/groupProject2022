@@ -123,7 +123,7 @@ public class Client2 implements EventListener {
         }
 
         if (object instanceof String) {
-            System.out.println("message received: "+objectInputStream.readObject());
+            System.out.println("message received: " + objectInputStream.readObject());
             serverSocket.close();
             System.exit(1);
         }
