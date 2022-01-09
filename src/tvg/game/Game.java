@@ -66,7 +66,6 @@ public class Game implements ActionListener, Serializable {
     }
 
     public void showFirstPlayer() {
-        gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
         gameBoard.rounds.setText(Messages.ROUND + round);
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
     }
@@ -302,13 +301,12 @@ public class Game implements ActionListener, Serializable {
 
     public void tryToRemovePlayerTrap() {
         for (Map.Entry<Integer, String> entry : armedTrapsRegister.entrySet()) {
-            if (entry.getValue().equals(currentPlayer.getName())) {
+            if (entry.getValue().equals(currentPlayer.getName()) && !gameBoard.getTileAtIndex(entry.getKey()).isUpgraded()) {
                 armedTrapsRegister.remove(entry.getKey());
                 gameBoard.getTileAtIndex(entry.getKey()).setArmed(false);
                 gameBoard.getTileAtIndex(entry.getKey()).setOwner("");
                 System.out.println("Player lost a trap");
                 System.out.println("lost trap: " + gameBoard.getTileAtIndex(entry.getKey()));
-                return;
             }
         }
         gameBoard.textinho.setText("<html>You don't have traps,<br> so you lose anything!</html>");
@@ -455,16 +453,13 @@ public class Game implements ActionListener, Serializable {
         gameBoard.stealTrap.setEnabled(false);
 
         playerIndex++;
-        System.out.println("player index: " + playerIndex);
 
         if (playerIndex >= playerList.size()) {
             playerIndex = 0;
             round++;
-            System.out.println("resetou");
         }
         showPlayer();
 
-        //showPlayerInfo();
         currentPlayer.setEndOfTurn(Boolean.TRUE);
 
         gameBoard.rounds.setText(Messages.ROUND + round);
