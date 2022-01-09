@@ -75,7 +75,6 @@ public class Game implements ActionListener, Serializable {
         return armedTrapsRegister.get(playerLocation).equals(currentPlayer.getName());
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameBoard.throwDice) {
@@ -119,7 +118,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.printPlayer(currentPlayer);
         gameBoard.updateUI();
     }
-
 
     public void throwDice() {
 
@@ -263,7 +261,7 @@ public class Game implements ActionListener, Serializable {
                 return;
             }
         }
-        gameBoard.textinho.setText("You don't have traps, so you lose anything!");
+        gameBoard.textinho.setText("<html>You don't have traps,<br> so you lose anything!</html>");
     }
 
     public void armTrapValidation() {
@@ -416,8 +414,7 @@ public class Game implements ActionListener, Serializable {
         //showPlayerInfo();
         currentPlayer.setEndOfTurn(Boolean.TRUE);
 
-        gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
-        // gameBoard.rounds.setText(Messages.ROUND + round);
+        gameBoard.rounds.setText(Messages.ROUND + round);
 
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
         gameBoard.updateUI();

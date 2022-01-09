@@ -58,7 +58,7 @@ public class Tile extends JPanel implements Serializable {
         setBorder(new LineBorder(new Color(0, 0, 0)));
         setBounds(xCoord, yCoord, width, height);
         name = labelString;
-        this.setLayout(new FlowLayout());
+        this.setLayout(null);
         this.buyable = buyable;
 
         if (rotationDegrees == 0) {

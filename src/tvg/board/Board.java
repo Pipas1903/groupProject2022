@@ -93,26 +93,26 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         String[] squareNames = {
                 "Start",
                 "Iron Foothold Trap",
-                "event",
+                "Event",
                 "Iron Leghold Trap",
                 "Iron Deadfall Trap",
                 "Iron Bear Trap",
-                "event",
+                "Event",
                 "Bronze Leghold Trap",
-                "Chance",
+                "Event",
                 "Bronze Foothold Trap",
                 "Bronze Bear Trap",
                 "Bronze Deadfall Trap",
-                "good luck",
+                "Good Luck",
                 "Silver Bear Trap",
-                "Community Chest",
+                "Event",
                 "Silver Deadfall Trap",
                 "Silver Foothold Trap",
                 "Silver Leghold Trap",
-                "bad luck",
+                "Bad Luck",
                 "Gold Deadfall Trap",
                 "Gold Foothold Trap",
-                "Chance",
+                "Event",
                 "Gold Leghold Trap",
                 "Gold Bear Trap"
         };
@@ -346,8 +346,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
-
-
     public void panelInfo() {
 
 
@@ -447,7 +445,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public void textBoxes() {
         textinho = new JLabel();
-        textinho.setBounds(800, 320, 200, 30);
+        textinho.setBounds(800, 320, 300, 80);
         textinho.setVisible(true);
         textinho.setOpaque(true);
 //rounds
@@ -617,7 +615,5 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             110, 210, 310, 410, 510, 610,
             610, 610, 610, 610, 610, 610,
             510, 410, 310, 210, 110};
-
-
 
 }
