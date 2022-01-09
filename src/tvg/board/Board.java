@@ -22,7 +22,10 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JButton passTurn;
     public JButton stealTrap;
     public JButton throwDice;
-    public static int countTraps1;
+    public  int countTraps1;
+    public  int countTraps2;
+    public  int countTraps3;
+    public  int countTraps4;
     public JLabel textinho;
     public JLabel rounds;
     public JLabel name;
@@ -30,10 +33,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel upgradePrice;
     public JLabel damageDealt;
     public JLabel armed;
-    public JLabel lifePoints1;
-    public JLabel lifePoints2;
-    public JLabel lifePoints3;
-    public JLabel lifePoints4;
     public JLabel printPlayer1, printPlayer2, printPlayer3, printPlayer4;
     public JLabel printName1, printName2, printName3, printName4;
     public JPanel printInfo1, printInfo2, printInfo3, printInfo4;
@@ -357,21 +356,15 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo1.setVisible(true);
         printInfo1.setOpaque(true);
         printInfo1.setPreferredSize(new Dimension(200, 150));
-        printInfo1.setLayout(new GridLayout(3, 1, 0, 20));
+        printInfo1.setLayout(new GridLayout(5, 1, 0, 5));
 
         printName1 = new JLabel();
         printName1.setOpaque(true);
         printName1.setForeground(Color.red);
-        printName1.setText(playerList.get(0).getName());
+        printName1.setText(playerList.get(0).getName()+"                   life : " + playerList.get(0).getLifePoints());
         printName1.setHorizontalAlignment(JLabel.CENTER);
 
-        lifePoints1 = new JLabel();
-
-        lifePoints1.setText("life : 800");
-
-
         printInfo1.add(printName1);
-        printInfo1.add(lifePoints1);
         printInfo1.updateUI();
 
 
@@ -382,21 +375,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo2.setVisible(true);
         printInfo2.setOpaque(true);
         printInfo2.setPreferredSize(new Dimension(200, 150));
-        printInfo2.setLayout(new GridLayout(5, 1, 0, 20));
+        printInfo2.setLayout(new GridLayout(5, 1, 0, 5));
 
         printName2 = new JLabel();
-
         printName2.setOpaque(true);
+        printName2.setVisible(true);
         printName2.setForeground(Color.blue);
-        printName2.setText(playerList.get(1).getName());
+        printName2.setText(playerList.get(1).getName()+"                   life : " + playerList.get(1).getLifePoints());
         printName2.setHorizontalAlignment(JLabel.CENTER);
 
-        lifePoints2 = new JLabel();
 
-        lifePoints2.setText("life : 800" );
         printInfo2.add(printName2);
-        printInfo2.add(lifePoints2);
-
         printInfo2.updateUI();
 
 //-----------------------Panel player 3
@@ -407,20 +396,18 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo3.setVisible(true);
         printInfo3.setOpaque(true);
         printInfo3.setPreferredSize(new Dimension(200, 150));
-        printInfo3.setLayout(new GridLayout(3, 1, 0, 20));
+        printInfo3.setLayout(new GridLayout(5, 1, 0, 5));
 
         printName3 = new JLabel();
-
+        printName3.setVisible(true);
         printName3.setOpaque(true);
         printName3.setForeground(new Color(255,215,0));
-        printName3.setText(playerList.get(2).getName());
+        printName3.setText(playerList.get(2).getName()+"                   life : " + playerList.get(2).getLifePoints());
         printName3.setHorizontalAlignment(JLabel.CENTER);
 
-        lifePoints3 = new JLabel();
 
-        lifePoints3.setText("life : 800");
         printInfo3.add(printName3);
-        printInfo3.add(lifePoints3);
+        printInfo3.updateUI();
 
 
 //---------------Panel player 4
@@ -431,19 +418,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo4.setVisible(true);
         printInfo4.setOpaque(true);
         printInfo4.setPreferredSize(new Dimension(200, 150));
-        printInfo4.setLayout(new GridLayout(3, 1, 0, 20));
+        printInfo4.setLayout(new GridLayout(5, 1, 0, 5));
 
         printName4 = new JLabel();
         printName4.setOpaque(true);
-        printName4.setText(playerList.get(3).getName());
+        printName4.setText(playerList.get(3).getName()+"                   life : " + playerList.get(3).getLifePoints());
         printName4.setForeground(new Color(0,100,0));
         printName4.setHorizontalAlignment(JLabel.CENTER);
 
-        lifePoints4 = new JLabel();
 
-        lifePoints4.setText("life : 800");
         printInfo4.add(printName4);
-        printInfo4.add(lifePoints4);
+        printInfo4.updateUI();
 
 
 //------------------Adds
@@ -456,28 +441,69 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public void listTraps(){
 
+        if(countTraps1>0){
+            for (int i= 0;i<countTraps1;i++){
+                printInfo1.remove(i+1);
+            }
+        }
+        if(countTraps2>0){
+            for (int i= 0;i<countTraps2;i++){
+                printInfo2.remove(i+1);
+            }
+        }
+        if(countTraps3>0){
+            for (int i= 0;i<countTraps3;i++){
+                printInfo3.remove(i+1);
+            }
+        }
+        if(countTraps4>0){
+            for (int i= 0;i<countTraps4;i++){
+                printInfo4.remove(i+1);
+            }
+        }
 
 
-        countTraps1 =1;
+        countTraps1 =0;
+        countTraps2 =0;
+        countTraps3 =0;
+        countTraps4 =0;
 
         JLabel traps1[] = new JLabel[10];
+        JLabel traps2[] = new JLabel[10];
+        JLabel traps3[] = new JLabel[10];
+        JLabel traps4[] = new JLabel[10];
 
         for (Map.Entry entry: game.getArmedTrapsRegister().entrySet()) {
 
             if(entry.getValue().equals(playerList.get(0).getName())){
-                        traps1[countTraps1] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName());
-                        printInfo1.add(traps1[countTraps1]);
-                        printInfo1.updateUI();
-                        countTraps1 +=1;
+                traps1[countTraps1] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps1);
+                printInfo1.add(traps1[countTraps1]);
+                countTraps1 +=1;
+                printInfo1.updateUI();
             }
-
-
 
             if(entry.getValue().equals(playerList.get(1).getName())){
+                traps2[countTraps2] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps2);
+                printInfo2.add(traps2[countTraps2]);
+                countTraps2 +=1;
+                printInfo2.updateUI();
+            }
+            if(entry.getValue().equals(playerList.get(2).getName())){
+                traps3[countTraps3] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps3);
+                printInfo3.add(traps3[countTraps3]);
+                countTraps3 +=1;
+                printInfo3.updateUI();
+            }
+
+            if(entry.getValue().equals(playerList.get(3).getName())){
+                traps4[countTraps4] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps4);
+                printInfo4.add(traps4[countTraps4]);
+                countTraps4 +=1;
+                printInfo4.updateUI();
 
             }
-        }
 
+        }
 
     }
 
@@ -508,7 +534,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         rounds.setBounds(873, 15, 100, 30);
         rounds.setForeground(new Color(0, 102, 0));
         rounds.setVisible(true);
-        //rounds.setOpaque(true);
+
 //panel
         info = new JPanel();
         info.setBounds(800, 400, 250, 250);
@@ -517,7 +543,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         info.setBackground(Color.WHITE);
         info.setVisible(true);
         info.setOpaque(true);
-//name
+//Tile name
         name = new JLabel();
         name.setHorizontalAlignment(JLabel.CENTER);
         info.add(name);
@@ -588,19 +614,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
     public void printPlayer(Player player) {
-<<<<<<< HEAD
+
         listTraps();
-        lifePoints1.setText("life : "+playerList.get(0).getLifePoints());
 
-
-        lifePoints1.setText("life : " + playerList.get(0).getLifePoints());
-        lifePoints1.updateUI();
-        lifePoints2.setText("life : " + playerList.get(1).getLifePoints());
-        lifePoints2.updateUI();
-        lifePoints3.setText("life : " + playerList.get(2).getLifePoints());
-        lifePoints3.updateUI();
-        lifePoints4.setText("life : " + playerList.get(3).getLifePoints());
-        lifePoints4.updateUI();
+        printName1.setText(playerList.get(0).getName()+"                   life : " + playerList.get(0).getLifePoints());
+        printName1.updateUI();
+        printName2.setText(playerList.get(1).getName()+"                   life : " + playerList.get(1).getLifePoints());
+        printName2.updateUI();
+        printName3.setText(playerList.get(2).getName()+"                   life : " + playerList.get(2).getLifePoints());
+        printName3.updateUI();
+        printName4.setText(playerList.get(3).getName()+"                   life : " + playerList.get(3).getLifePoints());
+        printName4.updateUI();
 
         ImageIcon redCircle = new ImageIcon("src/tvg/images/redcircle.png");
         ImageIcon blueCircle = new ImageIcon("src/tvg/images/bluecircle.png");
