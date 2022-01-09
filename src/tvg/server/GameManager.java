@@ -94,13 +94,13 @@ public class GameManager {
     }
 
     public void removeFaintedPlayerFromGameList() {
-        game.playerList.removeIf(player -> player.getLifePoints() <= 0 & !game.armedTrapsRegister.containsValue(player.getName()));
+        game.playerList.removeIf(player -> player.getLifePoints() <= 0);
     }
 
     // PODE E DEVE SER MELHORADO
     public void removeFaintedPlayerFromServer() throws IOException {
         for (Map.Entry<Socket, Player> client : clientSocketList.entrySet()) {
-            if (client.getValue().getLifePoints() <= 0 && !game.armedTrapsRegister.containsValue(client.getValue().getName())) {
+            if (client.getValue().getLifePoints() <= 0) {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getKey().getOutputStream());
                 objectOutputStream.writeObject(Messages.GAME_OVER);
                 client.getKey().close();
