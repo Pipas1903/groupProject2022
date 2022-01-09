@@ -344,7 +344,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
-    public void panelInfo(List<Player> players) {
+    public void panelInfo() {
 
 //------------------Panel player 1
         printInfo1 = new JPanel();
@@ -355,15 +355,14 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo1.setLayout(new GridLayout(3, 1, 0, 20));
 
         printName1 = new JLabel();
-        printName1.setText(players.get(0).getName());
+        printName1.setText(playerList.get(0).getName());
         printName1.setHorizontalAlignment(JLabel.CENTER);
 
         lifePoints1 = new JLabel();
-        lifePoints1.setText(" life :" +players.get(0).getLifePoints());
-        lifePoints1.updateUI();
+        lifePoints1.setText("life : 800");
         printInfo1.add(printName1);
-        printInfo1.updateUI();
         printInfo1.add(lifePoints1);
+        printInfo1.updateUI();
 
 
 //--------------------Panel player 2
@@ -376,12 +375,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo2.setLayout(new GridLayout(3, 1, 0, 20));
 
         printName2 = new JLabel();
-        printName2.setText(players.get(1).getName());
+        printName2.setText(playerList.get(1).getName());
         printName2.setHorizontalAlignment(JLabel.CENTER);
 
         lifePoints2 = new JLabel();
-        lifePoints2.setText("life : " + players.get(1).getLifePoints());
-        lifePoints2.updateUI();
+        lifePoints2.setText("life : 800" );
         printInfo2.add(printName2);
         printInfo2.add(lifePoints2);
         printInfo2.updateUI();
@@ -531,6 +529,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
 
     public void printPlayer(Player player) {
+        //panelInfo();
+        lifePoints1.setText("life : "+playerList.get(0).getLifePoints());
+        lifePoints1.updateUI();
+        lifePoints2.setText("life : "+ playerList.get(1).getLifePoints());
+        lifePoints2.updateUI();
         System.out.println("ordem do player" + player.getOrder());
         System.out.println(player.getPosition());
 
@@ -608,6 +611,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             110, 210, 310, 410, 510, 610,
             610, 610, 610, 610, 610, 610,
             510, 410, 310, 210, 110};
+
 
 
 }

@@ -30,10 +30,10 @@ public class Frame extends JFrame {
 
         this.repaint();
 
-        jogo.getGameBoard().validate();
+       // jogo.getGameBoard().validate();
 
         jogo.getGameBoard().updateUI();
-        this.validate();
+
     }
 
 }
