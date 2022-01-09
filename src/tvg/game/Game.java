@@ -217,8 +217,13 @@ public class Game implements ActionListener, Serializable {
         switch (randomEvent) {
             case WIN_TRAP:
                 int freeTrapNumber = findOneFreeTrap();
-                playerArmTrap(freeTrapNumber, currentPlayer.getName());
-                gameBoard.getTileAtIndex(freeTrapNumber).setOwner(currentPlayer.getName());
+                if (freeTrapNumber < gameBoard.getAllTiles().size()) {
+                    playerArmTrap(freeTrapNumber, currentPlayer.getName());
+                    gameBoard.getTileAtIndex(freeTrapNumber).setOwner(currentPlayer.getName());
+                    break;
+                }
+                gameBoard.textinho.setText("<html>There are no more available traps.<br> Take 100 life points as compensation.</html>");
+                currentPlayer.setLifePoints(currentPlayer.getLifePoints() + 100);
                 break;
             case LOSE_TRAP:
                 tryToRemovePlayerTrap();
@@ -288,7 +293,6 @@ public class Game implements ActionListener, Serializable {
     public void trapStatusValidation() {
 
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getDamageDealt());
-
 
 
         System.out.println("PLAYER " + currentPlayer.getName() + " FELL ON A TRAP AND LOST " + gameBoard.getTileAtIndex(playerLocation).getDamageDealt() + " LIFE POINTS");
