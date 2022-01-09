@@ -131,6 +131,7 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
+                    
                     received = true;
                     break;
                 }
@@ -152,6 +153,7 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
+
                     received = true;
                     break;
                 }
