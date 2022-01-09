@@ -29,6 +29,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public JLabel lifePoints1;
     public JLabel lifePoints2;
+    public JLabel lifePoints3;
+    public JLabel lifePoints4;
 
     public JLabel printPlayer1, printPlayer2, printPlayer3, printPlayer4;
 
@@ -90,29 +92,29 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         // TODO Auto-generated method stub
         String[] squareNames = {
                 "Start",
-                "TRAP1",
+                "Iron Foothold Trap",
                 "event",
-                "TRAP2",
-                "TRAP3",
-                "TRAP4",
+                "Iron Leghold Trap",
+                "Iron Deadfall Trap",
+                "Iron Bear Trap",
                 "event",
-                "TRAP5",
+                "Bronze Leghold Trap",
                 "Chance",
-                "TRAP6",
-                "TRAP7",
-                "TRAP8",
+                "Bronze Foothold Trap",
+                "Bronze Bear Trap",
+                "Bronze Deadfall Trap",
                 "good luck",
-                "St. James Place",
+                "Silver Bear Trap",
                 "Community Chest",
-                "TRAP9",
-                "TRAP10",
-                "TRAP11",
+                "Silver Deadfall Trap",
+                "Silver Foothold Trap",
+                "Silver Leghold Trap",
                 "bad luck",
-                "TRAP12",
-                "TRAP13",
+                "Gold Deadfall Trap",
+                "Gold Foothold Trap",
                 "Chance",
-                "TRAP14",
-                "TRAP15"
+                "Gold Leghold Trap",
+                "Gold Bear Trap"
         };
 
 
@@ -191,7 +193,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         allTiles.add(tile12);
         unbuyableTiles.add(tile12);
         tile12.addMouseListener(this);
-
+        tile12.setGoodLuck(true);
 
         // squares on the bottom
         Tile tile13 = new Tile(506, 606, 100, 100, squareNames[13], 0, true);
@@ -226,6 +228,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         allTiles.add(tile18);
         unbuyableTiles.add(tile18);
         tile18.addMouseListener(this);
+        tile18.setBadLuck(true);
 
 
         // squares on the left
@@ -314,7 +317,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         tile23.setDamageDealt(11);
     }
 
-
     @Override
     public void mouseClicked(MouseEvent e) {
         for (Tile tile : allTiles) {
@@ -344,7 +346,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
+
+
     public void panelInfo() {
+
+
 
 //------------------Panel player 1
         printInfo1 = new JPanel();
@@ -398,6 +404,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName3.setText(players.get(2).getName());
         printName3.setHorizontalAlignment(JLabel.CENTER);
         printInfo3.add(printName3);
+
 
 //---------------Panel player 4
 
@@ -526,7 +533,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         throwDice.setVisible(true);
 
     }
-
 
     public void printPlayer(Player player) {
         //panelInfo();
