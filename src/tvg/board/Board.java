@@ -386,7 +386,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         lifePoints2 = new JLabel();
         
         lifePoints2.updateUI();
-        printInfo2.add(printName2)
+        printInfo2.add(printName2);
         printInfo2.add(lifePoints2);
         lifePoints2.setText("life points " + players.get(1).getLifePoints());
         printInfo2.updateUI();
