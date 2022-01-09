@@ -34,6 +34,7 @@ public class Client4 {
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
 
+        print("*connection established*");
     }
 
     public void speak() throws IOException, ClassNotFoundException {
@@ -77,6 +78,7 @@ public class Client4 {
     }
 
     public void playingLoop() throws IOException, ClassNotFoundException {
+
         while (true) {
             frame.repaint();
             game.getGameBoard().updateUI();
@@ -89,10 +91,14 @@ public class Client4 {
             if (game.getCurrentPlayer().getName().equals(name)) {
 
                 if (game.getCurrentPlayer().isDead()) {
+                    game.getGameBoard().textinho.setText(name + "is dead");
+                    game.turnOffOtherPlayerButtons();
                     game.resetEndOfTurn();
+                    game.playerIndex++;
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;
+
                 } else {
 
                     while (!game.getCurrentPlayer().isEndOfTurn()) {
@@ -150,5 +156,6 @@ public class Client4 {
     public void print(String message) {
         System.out.println(message);
     }
-
 }
+
+

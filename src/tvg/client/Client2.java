@@ -3,16 +3,13 @@ package tvg.client;
 import tvg.board.Frame;
 import tvg.common.UpdateMessages;
 import tvg.game.Game;
-import tvg.player.Player;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.EventListener;
-import java.util.Observer;
 import java.util.Scanner;
 
-public class Client2 implements EventListener {
+public class Client2 {
 
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
@@ -37,6 +34,7 @@ public class Client2 implements EventListener {
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
 
+        print("*connection established*");
     }
 
     public void speak() throws IOException, ClassNotFoundException {
@@ -93,11 +91,15 @@ public class Client2 implements EventListener {
             if (game.getCurrentPlayer().getName().equals(name)) {
 
                 if (game.getCurrentPlayer().isDead()) {
+                    game.getGameBoard().textinho.setText(name + "is dead");
+                    game.turnOffOtherPlayerButtons();
                     game.resetEndOfTurn();
+                    game.playerIndex++;
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;
-                }else{
+
+                } else {
 
                     while (!game.getCurrentPlayer().isEndOfTurn()) {
 
@@ -155,3 +157,4 @@ public class Client2 implements EventListener {
         System.out.println(message);
     }
 }
+

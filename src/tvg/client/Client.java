@@ -91,15 +91,19 @@ public class Client {
             if (game.getCurrentPlayer().getName().equals(name)) {
 
                 if (game.getCurrentPlayer().isDead()) {
+                    game.getGameBoard().textinho.setText(name + "is dead");
+                    game.turnOffOtherPlayerButtons();
                     game.resetEndOfTurn();
+                    game.playerIndex++;
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;
-                }else{
 
-                while (!game.getCurrentPlayer().isEndOfTurn()) {
+                } else {
 
-                }
+                    while (!game.getCurrentPlayer().isEndOfTurn()) {
+
+                    }
 
                     if (game.getCurrentPlayer().isEndOfTurn()) {
                         game.resetEndOfTurn();
