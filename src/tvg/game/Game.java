@@ -43,9 +43,9 @@ public class Game implements ActionListener, Serializable {
         gameBoard.upgradeTrap.addActionListener(this);
         gameBoard.stealTrap.addActionListener(this);
         gameBoard.passTurn.addActionListener(this);
-
         gameBoard.setPlayerList(playerList);
-        gameBoard.panelInfo(playerList);
+        gameBoard.panelInfo();
+
 
     }
 
@@ -85,11 +85,13 @@ public class Game implements ActionListener, Serializable {
         }
         if (e.getSource() == gameBoard.armTrap) {
             armTrap();
+
             gameBoard.updateUI();
 
         }
         if (e.getSource() == gameBoard.upgradeTrap) {
             upgradeTrap();
+
             gameBoard.updateUI();
 
         }
@@ -100,12 +102,15 @@ public class Game implements ActionListener, Serializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+
             gameBoard.updateUI();
 
         }
         if (e.getSource() == gameBoard.stealTrap) {
             stealTrap();
+
             gameBoard.updateUI();
+
         }
     }
 
@@ -113,6 +118,7 @@ public class Game implements ActionListener, Serializable {
         gameBoard.printPlayer(currentPlayer);
         gameBoard.updateUI();
     }
+
 
     public void throwDice() {
 
@@ -141,6 +147,8 @@ public class Game implements ActionListener, Serializable {
         }
         System.out.println(currentPlayer.getName() + " AT TILE NUMBER " + currentPlayer.getPosition());
         showPlayer();
+
+        //showPlayerInfo();
         playerLocation = currentPlayer.getPosition();
         changeButtonsState();
 
@@ -282,7 +290,7 @@ public class Game implements ActionListener, Serializable {
     public void trapStatusValidation() {
 
         currentPlayer.setLifePoints(currentPlayer.getLifePoints() - gameBoard.getTileAtIndex(playerLocation).getDamageDealt());
-        gameBoard.panelInfo(playerList);
+
 
 
         System.out.println("PLAYER " + currentPlayer.getName() + " FELL ON A TRAP AND LOST " + gameBoard.getTileAtIndex(playerLocation).getDamageDealt() + " LIFE POINTS");
@@ -358,6 +366,8 @@ public class Game implements ActionListener, Serializable {
         gameBoard.updateUI();
 
         showPlayer();
+
+
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER UPGRADING TRAP");
 
     }
@@ -373,14 +383,18 @@ public class Game implements ActionListener, Serializable {
 
         gameBoard.textinho.setText("you stole: " + gameBoard.getTileAtIndex(playerLocation).getName());
 
-        showPlayer();
         gameBoard.updateUI();
+        showPlayer();
+
+
+
         System.out.println(currentPlayer.getName() + " HAS " + currentPlayer.getLifePoints() + " LIFE POINTS AFTER STEALING TRAP");
+
+
     }
 
     public void passTurn() throws IOException {
         System.out.println(currentPlayer.getName() + " PASSED TURN");
-
 
         gameBoard.throwDice.setEnabled(false);
         gameBoard.passTurn.setEnabled(false);
@@ -397,6 +411,8 @@ public class Game implements ActionListener, Serializable {
             System.out.println("resetou");
         }
         showPlayer();
+
+        //showPlayerInfo();
         currentPlayer.setEndOfTurn(Boolean.TRUE);
 
         gameBoard.rounds.setText(currentPlayer.getName() + Messages.PLAYER_TURN);
@@ -405,12 +421,6 @@ public class Game implements ActionListener, Serializable {
         gameBoard.textinho.setText(currentPlayer.getName() + Messages.THROW_DICE);
         gameBoard.updateUI();
 
-
-     /*   synchronized (this.getCurrentPlayer()) {
-            this.getCurrentPlayer().notifyAll();
-            System.out.println("notifiquei, a culpa é dele");
-        }
-     */
 
     }
 
