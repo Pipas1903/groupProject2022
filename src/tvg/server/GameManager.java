@@ -21,10 +21,7 @@ public class GameManager {
 
     private Game game;
     private String gameName;
-    private Player last;
     private String gameMode;
-
-    private boolean isGameUntilDeath;
 
     ObjectInputStream objectInputStream = null;
 
