@@ -99,7 +99,6 @@ public class Client2 implements EventListener {
                 if (game.getCurrentPlayer().isEndOfTurn()) {
                     game.resetEndOfTurn();
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
-                    game.getGameBoard().rounds.setText(game.getCurrentPlayer().getName());
                     sendGameAfterTurn();
                     continue;
                 }

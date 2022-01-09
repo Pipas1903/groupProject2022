@@ -456,7 +456,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 //rounds
         rounds = new JLabel();
         rounds.setBounds(873, 15, 100, 30);
-        rounds.setForeground(Color.RED);
+        rounds.setForeground(Color.ORANGE);
         rounds.setVisible(true);
         //rounds.setOpaque(true);
 //panel
