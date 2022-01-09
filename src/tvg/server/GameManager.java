@@ -87,10 +87,12 @@ public class GameManager {
         }
     }
 
-    public void removeFaintedPlayerFromGameList() throws IOException {
-        if(game.playerList.removeIf(player -> player.getLifePoints() <= 0)){
+    public boolean removeFaintedPlayerFromGameList() throws IOException {
+        if (game.playerList.removeIf(player -> player.getLifePoints() <= 0)) {
             game.passTurn();
+            return true;
         }
+        return false;
     }
 
     // PODE E DEVE SER MELHORADO
@@ -131,7 +133,7 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
-                    
+
                     received = true;
                     break;
                 }
@@ -160,8 +162,13 @@ public class GameManager {
             }
 
             if (received) {
-                removeFaintedPlayerFromGameList();
                 send();
+                if (removeFaintedPlayerFromGameList()) {
+                    for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
+                        receive(map.getKey());
+
+                    }
+                }
                 removeFaintedPlayerFromServer();
             }
         }
