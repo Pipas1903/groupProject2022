@@ -116,9 +116,7 @@ public class ClientHandler extends Thread {
 
     private void joinGame() throws IOException {
 
-        printExistingGames();
-
-        int index = Integer.parseInt(line);
+        int index = printExistingGames();
 
         System.out.println(name + UpdateMessages.JOINED_GAME + ExistingGames.get(index).getGameName());
 
@@ -127,6 +125,7 @@ public class ClientHandler extends Thread {
         out.println(Messages.STOP);
 
         in.readLine();
+
         ExistingGames.get(index).addPlayer(clientSocket, player);
 
         synchronized (ExistingGames.get(index)) {
@@ -155,7 +154,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void printExistingGames() throws IOException {
+    private int printExistingGames() throws IOException {
 
         do {
             int id = 0;
@@ -172,6 +171,7 @@ public class ClientHandler extends Thread {
 
         } while (line.equalsIgnoreCase("r"));
 
+        return Integer.parseInt(line);
     }
 
     private void print(String message) {
