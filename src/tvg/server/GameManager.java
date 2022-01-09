@@ -16,14 +16,9 @@ public class GameManager {
     private HashMap<Socket, Player> clientSocketList = new HashMap<>();
     private List<Player> playersList = new ArrayList<>();
 
-    ObjectOutputStream player1Out;
-    ObjectOutputStream player2Out;
-
     private Game game;
     private String gameName;
-    private Player last;
-
-    private boolean isGameUntilDeath;
+    private String gameMode;
 
     ObjectInputStream objectInputStream = null;
 
@@ -73,23 +68,11 @@ public class GameManager {
 
     public void gameLoop() throws IOException, ClassNotFoundException {
 
-        while (true) {
-            boolean received = false;
-
-            for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
-                System.out.println();
-                if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
-                    receive(map.getKey());
-                    removeFaintedPlayerFromGameList();
-                    removeFaintedPlayerFromServer();
-                    received = true;
-                    break;
-                }
-            }
-
-            if (received) {
-                send();
-            }
+        if (this.gameMode.equals("ten rounds")) {
+            gameLoopTenRounds();
+        }
+        if (this.gameMode.equals("until one survivor")) {
+            gameLoopUntilOneSurvivor();
         }
     }
 
@@ -104,14 +87,23 @@ public class GameManager {
         }
     }
 
-    public void removeFaintedPlayerFromGameList() {
-        game.playerList.removeIf(player -> player.getLifePoints() <= 0 & !game.armedTrapsRegister.containsValue(player.getName()));
+    public boolean removeFaintedPlayerFromGameList() throws IOException {
+        // if (game.playerList.removeIf(player -> player.getLifePoints() <= 0)) {
+        //game.passTurn();
+        for (Player player : game.playerList) {
+            if (player.getLifePoints() <= 0) {
+                player.setDead(true);
+            }
+        }
+        return true;
+        //  }
+        //  return false;
     }
 
     // PODE E DEVE SER MELHORADO
     public void removeFaintedPlayerFromServer() throws IOException {
         for (Map.Entry<Socket, Player> client : clientSocketList.entrySet()) {
-            if (client.getValue().getLifePoints() <= 0 && !game.armedTrapsRegister.containsValue(client.getValue().getName())) {
+            if (client.getValue().getLifePoints() <= 0) {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getKey().getOutputStream());
                 objectOutputStream.writeObject(Messages.GAME_OVER);
                 client.getKey().close();
@@ -135,5 +127,70 @@ public class GameManager {
         }
 
         playersList.sort(Comparator.comparing(Player::getOrder));
+    }
+
+    public void gameLoopTenRounds() throws IOException, ClassNotFoundException {
+        int rounds = 0;
+        while (rounds <= 20 && playersList.size() > 1) {
+            boolean received = false;
+
+            for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
+                System.out.println();
+                if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
+                    receive(map.getKey());
+                    received = true;
+                    break;
+                }
+            }
+
+            if (received) {
+               // removeFaintedPlayerFromGameList();
+                for (Player player : game.playerList) {
+                    if (player.getLifePoints() <= 0) {
+                        player.setDead(true);
+                    }
+                }
+
+                send();
+            }
+            rounds++;
+        }
+        System.out.println("Round " + rounds + " game is over");
+    }
+
+    public void gameLoopUntilOneSurvivor() throws IOException, ClassNotFoundException {
+        while (playersList.size() > 1) {
+            boolean received = false;
+            for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
+                System.out.println();
+                if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
+                    receive(map.getKey());
+
+                    received = true;
+                    break;
+                }
+            }
+
+            if (received) {
+                //removeFaintedPlayerFromGameList();
+                for (Player player : game.playerList) {
+                    if (player.getLifePoints() <= 0) {
+                        player.setDead(true);
+                    }
+                }
+
+                send();
+              /*  if (removeFaintedPlayerFromGameList()) {
+                    for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
+                        receive(map.getKey());
+                    }*/
+            }
+            // removeFaintedPlayerFromServer();
+        }
+
+    }
+
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
     }
 }

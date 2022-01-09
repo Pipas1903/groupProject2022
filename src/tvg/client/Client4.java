@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class Client4 {
 
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
@@ -34,7 +34,6 @@ public class Client {
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
 
-        print("*connection established*");
     }
 
     public void speak() throws IOException, ClassNotFoundException {
@@ -78,7 +77,6 @@ public class Client {
     }
 
     public void playingLoop() throws IOException, ClassNotFoundException {
-
         while (true) {
             frame.repaint();
             game.getGameBoard().updateUI();
@@ -95,11 +93,11 @@ public class Client {
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;
-                }else{
+                } else {
 
-                while (!game.getCurrentPlayer().isEndOfTurn()) {
+                    while (!game.getCurrentPlayer().isEndOfTurn()) {
 
-                }
+                    }
 
                     if (game.getCurrentPlayer().isEndOfTurn()) {
                         game.resetEndOfTurn();
@@ -144,7 +142,7 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Client client = new Client();
+        Client4 client = new Client4();
         client.getServerInfo();
         client.speak();
     }
@@ -152,5 +150,5 @@ public class Client {
     public void print(String message) {
         System.out.println(message);
     }
-}
 
+}

@@ -90,7 +90,7 @@ public class ClientHandler extends Thread {
 
         out.println(Messages.NUMBER_OF_PLAYERS_CHOSEN + line + Messages.PLAYERS);
 
-        chooseGameMode();
+        chooseGameMode(gameManager);
 
         out.println(Messages.PRESS_ENTER);
         out.println(Messages.STOP);
@@ -127,6 +127,7 @@ public class ClientHandler extends Thread {
         out.println(Messages.STOP);
 
         in.readLine();
+
         ExistingGames.get(index).addPlayer(clientSocket, player);
 
         synchronized (ExistingGames.get(index)) {
@@ -134,20 +135,23 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void chooseGameMode() throws IOException {
+    private void chooseGameMode(GameManager gameManager) throws IOException {
         do {
             out.println(Messages.CHOOSE_GAME_MODE);
-            out.println(Messages.UNTIL_DEATH);
+            out.println(Messages.UNTIL_ONE_SURVIVOR);
             out.println(Messages.LIMITED_ROUNDS);
             out.println(Messages.STOP);
 
             line = in.readLine();
 
         } while (!line.equals("1") && !line.equals("2"));
+
         if (line.equals("1")) {
-            print(UpdateMessages.CHOSE_GAME_MODE + UpdateMessages.UNTIL_DEATH);
+            gameManager.setGameMode("until one survivor");
+            print(UpdateMessages.CHOSE_GAME_MODE + UpdateMessages.UNTIL_ONE_SURVIVOR);
         }
         if (line.equals("2")) {
+            gameManager.setGameMode("ten rounds");
             print(UpdateMessages.CHOSE_GAME_MODE + UpdateMessages.LIMITED_ROUNDS);
         }
     }
@@ -168,7 +172,6 @@ public class ClientHandler extends Thread {
             line = in.readLine();
 
         } while (line.equalsIgnoreCase("r"));
-
     }
 
     private void print(String message) {

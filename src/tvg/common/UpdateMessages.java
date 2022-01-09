@@ -10,6 +10,6 @@ public class UpdateMessages {
     public static final String CREATED_GAME = " CREATED GAME CALLED ";
     public static final String JOINED_GAME = " JOINED GAME ";
     public static final String CHOSE_GAME_MODE = "PLAYER CHOSE THE GAME MODE ";
-    public static final String UNTIL_DEATH = "UNTIL DEATH";
+    public static final String UNTIL_ONE_SURVIVOR = "UNTIL ONE SURVIVOR";
     public static final String LIMITED_ROUNDS = "LIMITED ROUNDS";
 }

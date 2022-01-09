@@ -94,28 +94,28 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         // TODO Auto-generated method stub
         String[] squareNames = {
                 "Start",
-                "Iron Foothold Trap",
-                "event",
-                "Iron Leghold Trap",
-                "Iron Deadfall Trap",
+                "Iron Foothold",
+                "Event",
+                "Iron Leghold",
+                "Iron Deadfall",
                 "Iron Bear Trap",
-                "event",
-                "Bronze Leghold Trap",
-                "Chance",
-                "Bronze Foothold Trap",
+                "Event",
+                "Bronze Leghold",
+                "Event",
+                "Bronze Foothold",
                 "Bronze Bear Trap",
-                "Bronze Deadfall Trap",
-                "good luck",
+                "Bronze Deadfall",
+                "Good Luck",
                 "Silver Bear Trap",
-                "Community Chest",
-                "Silver Deadfall Trap",
-                "Silver Foothold Trap",
-                "Silver Leghold Trap",
-                "bad luck",
-                "Gold Deadfall Trap",
-                "Gold Foothold Trap",
-                "Chance",
-                "Gold Leghold Trap",
+                "Event",
+                "Silver Deadfall",
+                "Silver Foothold",
+                "Silver Leghold",
+                "Bad Luck",
+                "Gold Deadfall",
+                "Gold Foothold",
+                "Event",
+                "Gold Leghold",
                 "Gold Bear Trap"
         };
 
@@ -348,10 +348,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
-
-
     public void panelInfo() {
-
 
 
 //------------------Panel player 1
@@ -363,10 +360,13 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo1.setLayout(new GridLayout(3, 1, 0, 20));
 
         printName1 = new JLabel();
+        printName1.setOpaque(true);
+        printName1.setForeground(Color.red);
         printName1.setText(playerList.get(0).getName());
         printName1.setHorizontalAlignment(JLabel.CENTER);
 
         lifePoints1 = new JLabel();
+
         lifePoints1.setText("life : 800");
 
 
@@ -385,14 +385,15 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo2.setLayout(new GridLayout(5, 1, 0, 20));
 
         printName2 = new JLabel();
+
+        printName2.setOpaque(true);
+        printName2.setForeground(Color.blue);
         printName2.setText(playerList.get(1).getName());
         printName2.setHorizontalAlignment(JLabel.CENTER);
 
         lifePoints2 = new JLabel();
+
         lifePoints2.setText("life : 800" );
-
-
-
         printInfo2.add(printName2);
         printInfo2.add(lifePoints2);
 
@@ -409,9 +410,17 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo3.setLayout(new GridLayout(3, 1, 0, 20));
 
         printName3 = new JLabel();
+
+        printName3.setOpaque(true);
+        printName3.setForeground(new Color(255,215,0));
         printName3.setText(playerList.get(2).getName());
         printName3.setHorizontalAlignment(JLabel.CENTER);
+
+        lifePoints3 = new JLabel();
+
+        lifePoints3.setText("life : 800");
         printInfo3.add(printName3);
+        printInfo3.add(lifePoints3);
 
 
 //---------------Panel player 4
@@ -425,15 +434,24 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo4.setLayout(new GridLayout(3, 1, 0, 20));
 
         printName4 = new JLabel();
+        printName4.setOpaque(true);
         printName4.setText(playerList.get(3).getName());
+        printName4.setForeground(new Color(0,100,0));
         printName4.setHorizontalAlignment(JLabel.CENTER);
+
+        lifePoints4 = new JLabel();
+
+        lifePoints4.setText("life : 800");
         printInfo4.add(printName4);
+        printInfo4.add(lifePoints4);
+
 
 //------------------Adds
         this.add(printInfo1);
         this.add(printInfo2);
         this.add(printInfo3);
         this.add(printInfo4);
+
     }
 
     public void listTraps(){
@@ -460,6 +478,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             }
         }
 
+
     }
 
     public void panel(Tile tile) {
@@ -481,13 +500,13 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public void textBoxes() {
         textinho = new JLabel();
-        textinho.setBounds(800, 320, 200, 30);
+        textinho.setBounds(800, 320, 280, 75);
         textinho.setVisible(true);
-        textinho.setOpaque(true);
+        textinho.setOpaque(false);
 //rounds
         rounds = new JLabel();
         rounds.setBounds(873, 15, 100, 30);
-        rounds.setForeground(Color.RED);
+        rounds.setForeground(new Color(0, 102, 0));
         rounds.setVisible(true);
         //rounds.setOpaque(true);
 //panel
@@ -519,7 +538,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 //printPlayer
         printPlayer1 = new JLabel();
         printPlayer1.setVisible(true);
-       this.add(printPlayer1);
+        this.add(printPlayer1);
 
 
         printPlayer2 = new JLabel();
@@ -569,13 +588,19 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
     public void printPlayer(Player player) {
+<<<<<<< HEAD
         listTraps();
         lifePoints1.setText("life : "+playerList.get(0).getLifePoints());
+
+
+        lifePoints1.setText("life : " + playerList.get(0).getLifePoints());
         lifePoints1.updateUI();
-        lifePoints2.setText("life : "+ playerList.get(1).getLifePoints());
+        lifePoints2.setText("life : " + playerList.get(1).getLifePoints());
         lifePoints2.updateUI();
-        System.out.println("ordem do player" + player.getOrder());
-        System.out.println(player.getPosition());
+        lifePoints3.setText("life : " + playerList.get(2).getLifePoints());
+        lifePoints3.updateUI();
+        lifePoints4.setText("life : " + playerList.get(3).getLifePoints());
+        lifePoints4.updateUI();
 
         ImageIcon redCircle = new ImageIcon("src/tvg/images/redcircle.png");
         ImageIcon blueCircle = new ImageIcon("src/tvg/images/bluecircle.png");
@@ -584,8 +609,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
         Player player1 = playerList.get(0);
         Player player2 = playerList.get(1);
-        //Player player3 = playerList.get(2);
-        //Player player4 = playerList.get(3);
+        Player player3 = playerList.get(2);
+        Player player4 = playerList.get(3);
 
         if (player == player1) {
             printPlayer1.setIcon(redCircle);
@@ -595,7 +620,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer2.setIcon(blueCircle);
             printPlayer2.setBounds(xLocationsOfPlayer2[player2.getPosition()], yLocationsOfPlayer2[player2.getPosition()], 40, 40);
             printPlayer2.updateUI();
-        } /*else if (player == player3) {
+        } else if (player == player3) {
             printPlayer3.setIcon(yellowCircle);
             printPlayer3.setBounds(xLocationsOfPlayer3[player3.getPosition()], yLocationsOfPlayer3[player3.getPosition()], 40, 40);
             printPlayer3.updateUI();
@@ -603,7 +628,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             printPlayer4.setIcon(greenCircle);
             printPlayer4.setBounds(xLocationsOfPlayer4[player4.getPosition()], yLocationsOfPlayer4[player4.getPosition()], 40, 40);
             printPlayer4.updateUI();
-        }*/
+        }
     }
 
     @Override
@@ -651,7 +676,5 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
             110, 210, 310, 410, 510, 610,
             610, 610, 610, 610, 610, 610,
             510, 410, 310, 210, 110};
-
-
 
 }
