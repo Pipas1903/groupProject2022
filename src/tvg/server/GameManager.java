@@ -87,8 +87,10 @@ public class GameManager {
         }
     }
 
-    public void removeFaintedPlayerFromGameList() {
-        game.playerList.removeIf(player -> player.getLifePoints() <= 0);
+    public void removeFaintedPlayerFromGameList() throws IOException {
+        if(game.playerList.removeIf(player -> player.getLifePoints() <= 0)){
+            game.passTurn();
+        }
     }
 
     // PODE E DEVE SER MELHORADO
@@ -135,11 +137,11 @@ public class GameManager {
             }
 
             if (received) {
+                removeFaintedPlayerFromGameList();
                 send();
+                removeFaintedPlayerFromServer();
             }
             rounds++;
-            removeFaintedPlayerFromServer();
-            removeFaintedPlayerFromGameList();
         }
     }
 
@@ -156,10 +158,10 @@ public class GameManager {
             }
 
             if (received) {
+                removeFaintedPlayerFromGameList();
                 send();
+                removeFaintedPlayerFromServer();
             }
-            removeFaintedPlayerFromGameList();
-            removeFaintedPlayerFromServer();
         }
     }
 
