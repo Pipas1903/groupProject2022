@@ -120,7 +120,7 @@ public class Client {
         }
 
         if (object instanceof String) {
-            System.out.println(objectInputStream.readObject());
+            System.out.println("message received: " + objectInputStream.readObject());
             serverSocket.close();
             System.exit(1);
         }

@@ -122,6 +122,7 @@ public class Game implements ActionListener, Serializable {
     public void throwDice() {
 
         resetEndOfTurn();
+
         currentPlayer.setDiceRoll(Dice.throwDice());
 
         gameBoard.textinho.setText(currentPlayer.getName() + " rolled " + currentPlayer.getDiceRoll());
@@ -161,7 +162,6 @@ public class Game implements ActionListener, Serializable {
             gameBoard.upgradeTrap.setEnabled(false);
             gameBoard.stealTrap.setEnabled(false);
             gameBoard.armTrap.setEnabled(false);
-            gameBoard.throwDice.setEnabled(false);
 
             return;
         }
@@ -183,47 +183,43 @@ public class Game implements ActionListener, Serializable {
 
             gameBoard.textinho.setText("Oh oh... You lost 150 life points");
 
-            if (currentPlayer.getLifePoints() - luck < 0) {
-                currentPlayer.setLifePoints(0);
-                return;
-            } else {
-                currentPlayer.setLifePoints(currentPlayer.getLifePoints() - luck);
-            }
+            currentPlayer.setLifePoints(Math.max(currentPlayer.getLifePoints() - luck, 0));
 
             System.out.println(currentPlayer.getName() + " LANDED ON BAD LUCK AND HAS NOW " + currentPlayer.getLifePoints());
 
             gameBoard.passTurn.setEnabled(true);
+            gameBoard.throwDice.setEnabled(false);
+            gameBoard.updateUI();
 
         } else if (gameBoard.getTileAtIndex(playerLocation).isGoodLuck()) {
 
             gameBoard.textinho.setText("YEY! You restored 150 life points");
             currentPlayer.setLifePoints(currentPlayer.getLifePoints() + luck);
             gameBoard.passTurn.setEnabled(true);
+            gameBoard.throwDice.setEnabled(false);
+            gameBoard.updateUI();
 
             System.out.println(currentPlayer.getName() + " LANDED ON GOOD LUCK AND HAS NOW " + currentPlayer.getLifePoints());
 
         } else if (gameBoard.getTileAtIndex(playerLocation).getName().equals("start")) {
+
             gameBoard.passTurn.setEnabled(true);
+            gameBoard.throwDice.setEnabled(false);
+            gameBoard.updateUI();
+
             System.out.println(currentPlayer.getName() + " LANDED ON START AND HAS NOW " + currentPlayer.getLifePoints());
         } else {
             executeRandomEvent();
         }
     }
 
-    public int findOneFreeTrap() {
-        for (Tile tile : gameBoard.getAllTiles()) {
-            if (!tile.isArmed() && tile.isBuyable()) {
-                return tile.getNumber();
-            }
-        }
-        return 30;
-    }
-
     public void executeRandomEvent() {
 
         Events randomEvent = Events.randomEvent();
         gameBoard.textinho.setText(randomEvent.message);
+
         gameBoard.passTurn.setEnabled(true);
+        gameBoard.throwDice.setEnabled(false);
 
         switch (randomEvent) {
             case WIN_TRAP:
@@ -231,15 +227,17 @@ public class Game implements ActionListener, Serializable {
 
                 int freeTrapNumber = findOneFreeTrap();
 
-                if (freeTrapNumber < gameBoard.getAllTiles().size()) {
+                if (freeTrapNumber <= gameBoard.getAllTiles().size()) {
                     playerArmTrap(freeTrapNumber, currentPlayer.getName());
                     gameBoard.getTileAtIndex(freeTrapNumber).setOwner(currentPlayer.getName());
+                    gameBoard.getTileAtIndex(freeTrapNumber).setArmed(true);
                     gameBoard.updateUI();
                     break;
                 }
 
                 gameBoard.textinho.setText("<html>There are no more available traps.<br> Take 100 life points as compensation.</html>");
                 currentPlayer.setLifePoints(currentPlayer.getLifePoints() + 100);
+
                 break;
 
             case LOSE_TRAP:
@@ -252,6 +250,7 @@ public class Game implements ActionListener, Serializable {
 
                 System.out.println(currentPlayer.getName() + " GOT EVENT " + Events.TASTY_SNACK + " AND HAS NOW " + currentPlayer.getLifePoints());
                 currentPlayer.setLifePoints(currentPlayer.getLifePoints() + randomEvent.lifePoints);
+
                 break;
 
             case UPGRADE_TRAP:
@@ -263,16 +262,28 @@ public class Game implements ActionListener, Serializable {
             case THROW_DICE_AGAIN:
 
                 System.out.println(currentPlayer.getName() + " GOT EVENT " + Events.THROW_DICE_AGAIN);
-                gameBoard.passTurn.setEnabled(false);
+
                 gameBoard.throwDice.setEnabled(true);
+                gameBoard.passTurn.setEnabled(false);
                 break;
 
             case TRIP_ON_SHOE_LACE:
 
                 currentPlayer.setLifePoints(currentPlayer.getLifePoints() - randomEvent.lifePoints);
-                System.out.println(currentPlayer.getName() + " GOT EVENT " + Events.TRIP_ON_SHOE_LACE + " AND HAS NOW " + currentPlayer.getLifePoints() );
+                System.out.println(currentPlayer.getName() + " GOT EVENT " + Events.TRIP_ON_SHOE_LACE + " AND HAS NOW " + currentPlayer.getLifePoints());
+
                 break;
         }
+        gameBoard.updateUI();
+    }
+
+    public int findOneFreeTrap() {
+        for (Tile tile : gameBoard.getAllTiles()) {
+            if (!tile.isArmed() && tile.isBuyable()) {
+                return tile.getNumber();
+            }
+        }
+        return 30;
     }
 
     public void tryToUpgradePlayerTrap() {
@@ -286,13 +297,15 @@ public class Game implements ActionListener, Serializable {
                 }
             }
         }
-        gameBoard.textinho.setText("No traps with upgraded were found");
+        gameBoard.textinho.setText("No traps to upgrade were found");
     }
 
     public void tryToRemovePlayerTrap() {
         for (Map.Entry<Integer, String> entry : armedTrapsRegister.entrySet()) {
             if (entry.getValue().equals(currentPlayer.getName())) {
                 armedTrapsRegister.remove(entry.getKey());
+                gameBoard.getTileAtIndex(entry.getKey()).setArmed(false);
+                gameBoard.getTileAtIndex(entry.getKey()).setOwner("");
                 System.out.println("Player lost a trap");
                 System.out.println("lost trap: " + gameBoard.getTileAtIndex(entry.getKey()));
                 return;

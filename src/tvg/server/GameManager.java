@@ -132,7 +132,7 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
-                    removeFaintedPlayerFromGameList();
+                    //removeFaintedPlayerFromGameList();
                     removeFaintedPlayerFromServer();
                     received = true;
                     break;
@@ -154,8 +154,8 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
+                    // removeFaintedPlayerFromServer();
                     removeFaintedPlayerFromGameList();
-                    removeFaintedPlayerFromServer();
                     received = true;
                     break;
                 }
