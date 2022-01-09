@@ -24,7 +24,7 @@ public class Player implements Serializable {
     }
 
     public Player(String name) {
-        this.lifePoints = 800;
+        this.lifePoints = 250;
         this.name = name;
     }
 
