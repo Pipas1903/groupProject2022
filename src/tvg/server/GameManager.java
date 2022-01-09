@@ -16,9 +16,6 @@ public class GameManager {
     private HashMap<Socket, Player> clientSocketList = new HashMap<>();
     private List<Player> playersList = new ArrayList<>();
 
-    ObjectOutputStream player1Out;
-    ObjectOutputStream player2Out;
-
     private Game game;
     private String gameName;
     private String gameMode;
@@ -125,15 +122,13 @@ public class GameManager {
 
     public void gameLoopTenRounds() throws IOException, ClassNotFoundException {
         int rounds = 0;
-        while (rounds <= 20) {
+        while (rounds <= 20 && playersList.size() > 1) {
             boolean received = false;
 
             for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
-                    removeFaintedPlayerFromGameList();
-                    removeFaintedPlayerFromServer();
                     received = true;
                     break;
                 }
@@ -143,19 +138,18 @@ public class GameManager {
                 send();
             }
             rounds++;
+            removeFaintedPlayerFromServer();
+            removeFaintedPlayerFromGameList();
         }
     }
 
     public void gameLoopUntilOneSurviver() throws IOException, ClassNotFoundException {
         while (playersList.size() > 1) {
             boolean received = false;
-
             for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
-                    removeFaintedPlayerFromGameList();
-                    removeFaintedPlayerFromServer();
                     received = true;
                     break;
                 }
@@ -164,6 +158,8 @@ public class GameManager {
             if (received) {
                 send();
             }
+            removeFaintedPlayerFromGameList();
+            removeFaintedPlayerFromServer();
         }
     }
 
