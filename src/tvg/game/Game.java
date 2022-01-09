@@ -147,7 +147,6 @@ public class Game implements ActionListener, Serializable {
         System.out.println(currentPlayer.getName() + " AT TILE NUMBER " + currentPlayer.getPosition());
         showPlayer();
 
-        //showPlayerInfo();
         playerLocation = currentPlayer.getPosition();
         changeButtonsState();
 
@@ -250,7 +249,7 @@ public class Game implements ActionListener, Serializable {
                 }
             }
         }
-        gameBoard.textinho.setText("All your traps were upgraded, so you got nothing!");
+        gameBoard.textinho.setText("No traps with upgraded were found");
     }
 
     public void tryToRemovePlayerTrap() {
