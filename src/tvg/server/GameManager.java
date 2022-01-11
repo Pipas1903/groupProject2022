@@ -87,30 +87,6 @@ public class GameManager {
         }
     }
 
-    public boolean removeFaintedPlayerFromGameList() throws IOException {
-        // if (game.playerList.removeIf(player -> player.getLifePoints() <= 0)) {
-        //game.passTurn();
-        for (Player player : game.playerList) {
-            if (player.getLifePoints() <= 0) {
-                player.setDead(true);
-            }
-        }
-        return true;
-        //  }
-        //  return false;
-    }
-
-    // PODE E DEVE SER MELHORADO
-    public void removeFaintedPlayerFromServer() throws IOException {
-        for (Map.Entry<Socket, Player> client : clientSocketList.entrySet()) {
-            if (client.getValue().getLifePoints() <= 0) {
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getKey().getOutputStream());
-                objectOutputStream.writeObject(Messages.GAME_OVER);
-                client.getKey().close();
-                clientSocketList.remove(client.getKey());
-            }
-        }
-    }
 
     public void playingOrder() {
 
@@ -144,7 +120,6 @@ public class GameManager {
             }
 
             if (received) {
-                // removeFaintedPlayerFromGameList();
                 for (Player player : game.playerList) {
                     if (player.getLifePoints() <= 0) {
                         player.setDead(true);
@@ -159,8 +134,14 @@ public class GameManager {
     }
 
     public void gameLoopUntilOneSurvivor() throws IOException, ClassNotFoundException {
-        while (playersList.size() > 1) {
+        int playersAlive = 4;
+
+        while (playersAlive > 1) {
+
+            playersAlive = 0;
+
             boolean received = false;
+
             for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
@@ -170,9 +151,7 @@ public class GameManager {
                     break;
                 }
             }
-
             if (received) {
-                //removeFaintedPlayerFromGameList();
                 for (Player player : game.playerList) {
                     if (player.getLifePoints() <= 0) {
                         player.setDead(true);
@@ -180,14 +159,14 @@ public class GameManager {
                 }
 
                 send();
-              /*  if (removeFaintedPlayerFromGameList()) {
-                    for (Map.Entry<Socket, Player> map : clientSocketList.entrySet()) {
-                        receive(map.getKey());
-                    }*/
             }
-            // removeFaintedPlayerFromServer();
-        }
 
+            for(Player player : game.playerList){
+                if(!player.isDead()){
+                    playersAlive++;
+                }
+            }
+        }
     }
 
     public void setGameMode(String gameMode) {
