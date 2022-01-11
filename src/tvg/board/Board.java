@@ -441,27 +441,15 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public void listTraps(){
 
-        if(countTraps1>0){
-            for (int i= 0;i<countTraps1;i++){
-                printInfo1.remove(i+1);
-            }
-        }
-        if(countTraps2>0){
-            for (int i= 0;i<countTraps2;i++){
-                printInfo2.remove(i+1);
-            }
-        }
-        if(countTraps3>0){
-            for (int i= 0;i<countTraps3;i++){
-                printInfo3.remove(i+1);
-            }
-        }
-        if(countTraps4>0){
-            for (int i= 0;i<countTraps4;i++){
-                printInfo4.remove(i+1);
-            }
-        }
+        printInfo1.removeAll();
+        printInfo2.removeAll();
+        printInfo3.removeAll();
+        printInfo4.removeAll();
 
+        printInfo1.add(printName1);
+        printInfo2.add(printName2);
+        printInfo3.add(printName3);
+        printInfo4.add(printName4);
 
         countTraps1 =0;
         countTraps2 =0;
