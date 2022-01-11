@@ -1,6 +1,7 @@
 package tvg.board;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -23,7 +24,7 @@ public class Tile extends JPanel implements Serializable {
     private boolean isBadLuck;
 
     JLabel nameLabel;
-
+    Image bearTrap;
     private String name;
     private String owner = null;
 
@@ -107,11 +108,12 @@ public class Tile extends JPanel implements Serializable {
     // NEEDS CHANGES, GROUPS OF TWO, NOT THREE
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (this.number == 1 || this.number == 3 || this.number == 4 || this.number == 5) {
+        if (this.number == 5 || this.number == 10 || this.number == 13 || this.number == 23) {
             this.setBackground(Color.blue);
-          //  g.drawRect(0, this.getHeight() - 20, this.getWidth(), 20);
-            //g.setColor(Color.BLUE);
-            //g.fillRect(0, this.getHeight() - 20, this.getWidth(), 20);
+            Border border = BorderFactory.createLineBorder(Color.BLUE,4);
+            bearTrap = new ImageIcon("/Users/joaomoutinho/school/groupProject2022/src/tvg/images/beartrap.png").getImage();
+            this.setBorder(border);
+            g.drawImage(bearTrap,0,0,null);
         }
         if (this.number == 18) {
             setBackground(new Color(255, 114, 111));
@@ -124,21 +126,14 @@ public class Tile extends JPanel implements Serializable {
         }
         if (this.number == 7 || this.number == 9 || this.number == 10 || this.number == 11) {
             this.setBackground(new Color(224, 100, 168));
-            // g.drawRect(0, 0, 20, this.getHeight());
-            //g.setColor(new Color(224, 100, 168));
-            //g.fillRect(0, 0, 20, this.getHeight());
+
         }
         if (this.number == 13 || this.number == 15 || this.number == 16 || this.number == 17) {
             this.setBackground(new Color(0, 180, 0));
-           // g.drawRect(0, 0, this.getWidth(), 20);
-            //g.setColor(new Color(0, 180, 0));
-            //g.fillRect(0, 0, this.getWidth(), 20);
+
         }
        if (this.number == 19 || this.number == 20 || this.number == 22 || this.number == 23) {
            this.setBackground(Color.orange);
-           // g.drawRect(this.getWidth() - 20, 0, 20, this.getHeight());
-            //g.setColor(Color.ORANGE);
-            //g.fillRect(this.getWidth() - 20, 0, 20, this.getHeight());
         }
 
     }
