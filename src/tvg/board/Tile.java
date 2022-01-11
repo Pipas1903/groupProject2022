@@ -119,7 +119,7 @@ public class Tile extends JPanel implements Serializable {
         if (this.number == 12) {
             setBackground(new Color(153, 255, 153));
         }
-        if (this.number == 6) {
+        if (this.number == 2 || this.number == 6 || this.number == 8 || this.number == 14 || this.number == 21) {
             setBackground(new Color(255, 178, 102));
         }
         if (this.number == 7 || this.number == 9 || this.number == 10 || this.number == 11) {
