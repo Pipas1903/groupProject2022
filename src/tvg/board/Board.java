@@ -441,7 +441,9 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
+
     public void listTraps(){
+
 
 
         printInfo1.removeAll();
@@ -449,46 +451,49 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo3.removeAll();
         printInfo4.removeAll();
 
+
         printInfo1.add(printName1);
         printInfo2.add(printName2);
         printInfo3.add(printName3);
         printInfo4.add(printName4);
+
 
         countTraps1 = 0;
         countTraps2 = 0;
         countTraps3 = 0;
         countTraps4 = 0;
 
-        List<JLabel> traps1 = new ArrayList<>();
-        List<JLabel> traps2 = new ArrayList<>();
-        List<JLabel> traps3 = new ArrayList<>();
-        List<JLabel> traps4 = new ArrayList<>();
+        JLabel[] traps1 = new JLabel[10];
+        JLabel[] traps2 = new JLabel[10];
+        JLabel[] traps3 = new JLabel[10];
+        JLabel[] traps4 = new JLabel[10];
 
-        for (Map.Entry entry : game.getArmedTrapsRegister().entrySet()) {
+        for (Map.Entry<Integer, String> entry : game.getArmedTrapsRegister().entrySet()) {
 
             if (entry.getValue().equals(playerList.get(0).getName())) {
-                traps1.add(new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps1));
-                printInfo1.add(traps1.get(countTraps1));
+                traps1[countTraps1] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps1);
+                printInfo1.add(traps1[countTraps1]);
                 countTraps1 += 1;
                 printInfo1.updateUI();
             }
 
             if (entry.getValue().equals(playerList.get(1).getName())) {
-                traps2.add(new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps2));
-                printInfo2.add(traps2.get(countTraps2));
+                traps2[countTraps2] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps2);
+                printInfo2.add(traps2[countTraps2]);
                 countTraps2 += 1;
                 printInfo2.updateUI();
             }
             if (entry.getValue().equals(playerList.get(2).getName())) {
-                traps3.add(new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps3));
-                printInfo3.add(traps3.get(countTraps3));
+
+                traps3[countTraps3] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps3);
+                printInfo3.add(traps3[countTraps3]);
                 countTraps3 += 1;
                 printInfo3.updateUI();
             }
 
             if (entry.getValue().equals(playerList.get(3).getName())) {
-                traps4.add(new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps4));
-                printInfo4.add(traps4.get(countTraps4));
+                traps4[countTraps4] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps4);
+                printInfo4.add(traps4[countTraps4]);
                 countTraps4 += 1;
                 printInfo4.updateUI();
             }

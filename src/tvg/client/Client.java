@@ -92,30 +92,33 @@ public class Client {
             if (game.getCurrentPlayer().getName().equals(name)) {
 
                 if (game.getCurrentPlayer().isDead()) {
-                    game.getGameBoard().textinho.setText(name + "is dead");
-                    game.turnOffOtherPlayerButtons();
                     game.resetEndOfTurn();
+
                     game.playerIndex++;
+                    if (game.playerIndex >= game.playerList.size()) {
+                        game.playerIndex = 0;
+                        game.round++;
+                    }
+
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     game.getGameBoard().textinho.setText(game.getCurrentPlayer().getName() + Messages.THROW_DICE);
                     sendGameAfterTurn();
                     continue;
 
-                } else {
+                }
 
-                    while (!game.getCurrentPlayer().isEndOfTurn()) {
-
-                    }
-
-                    if (game.getCurrentPlayer().isEndOfTurn()) {
-                        game.resetEndOfTurn();
-                        game.setCurrentPlayer(game.playerList.get(game.playerIndex));
-                        game.getGameBoard().textinho.setText(game.getCurrentPlayer().getName() + Messages.THROW_DICE);
-                        sendGameAfterTurn();
-                        continue;
-                    }
+                while (!game.getCurrentPlayer().isEndOfTurn()) {
 
                 }
+
+                if (game.getCurrentPlayer().isEndOfTurn()) {
+                    game.resetEndOfTurn();
+                    game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    game.getGameBoard().textinho.setText(game.getCurrentPlayer().getName() + Messages.THROW_DICE);
+                    sendGameAfterTurn();
+                    continue;
+                }
+
 
             }
             receiveGame();
