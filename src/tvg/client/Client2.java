@@ -94,6 +94,7 @@ public class Client2 implements EventListener {
 
                 if (game.getCurrentPlayer().isDead()) {
                     game.resetEndOfTurn();
+                    game.playerIndex++;
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;

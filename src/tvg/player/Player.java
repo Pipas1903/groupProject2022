@@ -33,7 +33,7 @@ public class Player implements Serializable {
     }
 
     public Player(String name) {
-        this.lifePoints = 300;
+        this.lifePoints = 800;
         this.name = name;
     }
 

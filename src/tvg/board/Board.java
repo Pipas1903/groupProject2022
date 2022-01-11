@@ -16,16 +16,15 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     private static final long serialVersionUID = 1L;
 
 
-
     public JButton armTrap;
     public JButton upgradeTrap;
     public JButton passTurn;
     public JButton stealTrap;
     public JButton throwDice;
-    public  int countTraps1;
-    public  int countTraps2;
-    public  int countTraps3;
-    public  int countTraps4;
+    public int countTraps1;
+    public int countTraps2;
+    public int countTraps3;
+    public int countTraps4;
     public JLabel textinho;
     public JLabel rounds;
     public JLabel name;
@@ -40,7 +39,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public ImageIcon x;
     public JPanel info;
     public Game game;
-
 
 
     private ArrayList<Tile> allTiles = new ArrayList<>();
@@ -361,7 +359,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName1 = new JLabel();
         printName1.setOpaque(true);
         printName1.setForeground(Color.red);
-        printName1.setText(playerList.get(0).getName()+"                   life : " + playerList.get(0).getLifePoints());
+        printName1.setText(playerList.get(0).getName() + "                   life : " + playerList.get(0).getLifePoints());
         printName1.setHorizontalAlignment(JLabel.CENTER);
 
         printInfo1.add(printName1);
@@ -381,7 +379,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName2.setOpaque(true);
         printName2.setVisible(true);
         printName2.setForeground(Color.blue);
-        printName2.setText(playerList.get(1).getName()+"                   life : " + playerList.get(1).getLifePoints());
+        printName2.setText(playerList.get(1).getName() + "                   life : " + playerList.get(1).getLifePoints());
         printName2.setHorizontalAlignment(JLabel.CENTER);
 
 
@@ -401,8 +399,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName3 = new JLabel();
         printName3.setVisible(true);
         printName3.setOpaque(true);
-        printName3.setForeground(new Color(255,215,0));
-        printName3.setText(playerList.get(2).getName()+"                   life : " + playerList.get(2).getLifePoints());
+        printName3.setForeground(new Color(255, 215, 0));
+        printName3.setText(playerList.get(2).getName() + "                   life : " + playerList.get(2).getLifePoints());
         printName3.setHorizontalAlignment(JLabel.CENTER);
 
 
@@ -422,8 +420,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
         printName4 = new JLabel();
         printName4.setOpaque(true);
-        printName4.setText(playerList.get(3).getName()+"                   life : " + playerList.get(3).getLifePoints());
-        printName4.setForeground(new Color(0,100,0));
+        printName4.setText(playerList.get(3).getName() + "                   life : " + playerList.get(3).getLifePoints());
+        printName4.setForeground(new Color(0, 100, 0));
         printName4.setHorizontalAlignment(JLabel.CENTER);
 
 
@@ -439,66 +437,55 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     }
 
-    public void listTraps(){
+    public void listTraps() {
 
-        if(countTraps1>0){
-            for (int i= 0;i<countTraps1;i++){
-                printInfo1.remove(i+1);
-            }
-        }
-        if(countTraps2>0){
-            for (int i= 0;i<countTraps2;i++){
-                printInfo2.remove(i+1);
-            }
-        }
-        if(countTraps3>0){
-            for (int i= 0;i<countTraps3;i++){
-                printInfo3.remove(i+1);
-            }
-        }
-        if(countTraps4>0){
-            for (int i= 0;i<countTraps4;i++){
-                printInfo4.remove(i+1);
-            }
-        }
+        printInfo1.removeAll();
+        printInfo2.removeAll();
+        printInfo3.removeAll();
+        printInfo4.removeAll();
+
+        printInfo1.add(printName1);
+        printInfo2.add(printName2);
+        printInfo3.add(printName3);
+        printInfo4.add(printName4);
 
 
-        countTraps1 =0;
-        countTraps2 =0;
-        countTraps3 =0;
-        countTraps4 =0;
+        countTraps1 = 0;
+        countTraps2 = 0;
+        countTraps3 = 0;
+        countTraps4 = 0;
 
-        JLabel traps1[] = new JLabel[10];
-        JLabel traps2[] = new JLabel[10];
-        JLabel traps3[] = new JLabel[10];
-        JLabel traps4[] = new JLabel[10];
+        JLabel[] traps1 = new JLabel[10];
+        JLabel[] traps2 = new JLabel[10];
+        JLabel[] traps3 = new JLabel[10];
+        JLabel[] traps4 = new JLabel[10];
 
-        for (Map.Entry entry: game.getArmedTrapsRegister().entrySet()) {
+        for (Map.Entry<Integer, String> entry : game.getArmedTrapsRegister().entrySet()) {
 
-            if(entry.getValue().equals(playerList.get(0).getName())){
-                traps1[countTraps1] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps1);
+            if (entry.getValue().equals(playerList.get(0).getName())) {
+                traps1[countTraps1] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps1);
                 printInfo1.add(traps1[countTraps1]);
-                countTraps1 +=1;
+                countTraps1 += 1;
                 printInfo1.updateUI();
             }
 
-            if(entry.getValue().equals(playerList.get(1).getName())){
-                traps2[countTraps2] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps2);
+            if (entry.getValue().equals(playerList.get(1).getName())) {
+                traps2[countTraps2] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps2);
                 printInfo2.add(traps2[countTraps2]);
-                countTraps2 +=1;
+                countTraps2 += 1;
                 printInfo2.updateUI();
             }
-            if(entry.getValue().equals(playerList.get(2).getName())){
-                traps3[countTraps3] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps3);
+            if (entry.getValue().equals(playerList.get(2).getName())) {
+                traps3[countTraps3] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps3);
                 printInfo3.add(traps3[countTraps3]);
-                countTraps3 +=1;
+                countTraps3 += 1;
                 printInfo3.updateUI();
             }
 
-            if(entry.getValue().equals(playerList.get(3).getName())){
-                traps4[countTraps4] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName()+" "+countTraps4);
+            if (entry.getValue().equals(playerList.get(3).getName())) {
+                traps4[countTraps4] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps4);
                 printInfo4.add(traps4[countTraps4]);
-                countTraps4 +=1;
+                countTraps4 += 1;
                 printInfo4.updateUI();
 
             }
@@ -617,13 +604,13 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
         listTraps();
 
-        printName1.setText(playerList.get(0).getName()+"                   life : " + playerList.get(0).getLifePoints());
+        printName1.setText(playerList.get(0).getName() + "                   life : " + playerList.get(0).getLifePoints());
         printName1.updateUI();
-        printName2.setText(playerList.get(1).getName()+"                   life : " + playerList.get(1).getLifePoints());
+        printName2.setText(playerList.get(1).getName() + "                   life : " + playerList.get(1).getLifePoints());
         printName2.updateUI();
-        printName3.setText(playerList.get(2).getName()+"                   life : " + playerList.get(2).getLifePoints());
+        printName3.setText(playerList.get(2).getName() + "                   life : " + playerList.get(2).getLifePoints());
         printName3.updateUI();
-        printName4.setText(playerList.get(3).getName()+"                   life : " + playerList.get(3).getLifePoints());
+        printName4.setText(playerList.get(3).getName() + "                   life : " + playerList.get(3).getLifePoints());
         printName4.updateUI();
 
         ImageIcon redCircle = new ImageIcon("src/tvg/images/redcircle.png");
