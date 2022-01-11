@@ -81,22 +81,13 @@ public class ClientHandler extends Thread {
         print(UpdateMessages.CLIENT + name + UpdateMessages.CREATED_GAME + line);
 
         out.println(Messages.GAME_CREATED);
-        out.println(Messages.CHOOSE_NUMBER_OF_PLAYERS);
-        out.println(Messages.STOP);
 
-        line = in.readLine();
-
-        int number = Integer.parseInt(line);
-
-        out.println(Messages.NUMBER_OF_PLAYERS_CHOSEN + line + Messages.PLAYERS);
-
-        chooseGameMode(gameManager);
 
         out.println(Messages.PRESS_ENTER);
         out.println(Messages.STOP);
         in.readLine();
 
-        while (gameManager.getClientSocketList().size() < number) {
+        while (gameManager.getClientSocketList().size() < 4) {
             synchronized (ExistingGames.get(0)) {
                 ExistingGames.get(0).wait();
             }
@@ -135,26 +126,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void chooseGameMode(GameManager gameManager) throws IOException {
-        do {
-            out.println(Messages.CHOOSE_GAME_MODE);
-            out.println(Messages.UNTIL_ONE_SURVIVOR);
-            out.println(Messages.LIMITED_ROUNDS);
-            out.println(Messages.STOP);
 
-            line = in.readLine();
-
-        } while (!line.equals("1") && !line.equals("2"));
-
-        if (line.equals("1")) {
-            gameManager.setGameMode("until one survivor");
-            print(UpdateMessages.CHOSE_GAME_MODE + UpdateMessages.UNTIL_ONE_SURVIVOR);
-        }
-        if (line.equals("2")) {
-            gameManager.setGameMode("ten rounds");
-            print(UpdateMessages.CHOSE_GAME_MODE + UpdateMessages.LIMITED_ROUNDS);
-        }
-    }
 
     private void printExistingGames() throws IOException {
 
