@@ -21,10 +21,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JButton passTurn;
     public JButton stealTrap;
     public JButton throwDice;
+
     public int countTraps1;
     public int countTraps2;
     public int countTraps3;
     public int countTraps4;
+
     public JLabel textinho;
     public JLabel rounds;
     public JLabel name;
@@ -32,6 +34,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel upgradePrice;
     public JLabel damageDealt;
     public JLabel armed;
+
     public JLabel printPlayer1, printPlayer2, printPlayer3, printPlayer4;
     public JLabel printName1, printName2, printName3, printName4;
     public JPanel printInfo1, printInfo2, printInfo3, printInfo4;
@@ -439,10 +442,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     public void listTraps() {
 
+
         printInfo1.removeAll();
         printInfo2.removeAll();
         printInfo3.removeAll();
         printInfo4.removeAll();
+
 
         printInfo1.add(printName1);
         printInfo2.add(printName2);
@@ -476,6 +481,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
                 printInfo2.updateUI();
             }
             if (entry.getValue().equals(playerList.get(2).getName())) {
+
                 traps3[countTraps3] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps3);
                 printInfo3.add(traps3[countTraps3]);
                 countTraps3 += 1;
@@ -487,7 +493,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
                 printInfo4.add(traps4[countTraps4]);
                 countTraps4 += 1;
                 printInfo4.updateUI();
-
             }
 
         }

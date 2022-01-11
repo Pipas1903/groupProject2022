@@ -3,16 +3,13 @@ package tvg.client;
 import tvg.board.Frame;
 import tvg.common.UpdateMessages;
 import tvg.game.Game;
-import tvg.player.Player;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.EventListener;
-import java.util.Observer;
 import java.util.Scanner;
 
-public class Client2 implements EventListener {
+public class Client2 {
 
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
@@ -37,6 +34,7 @@ public class Client2 implements EventListener {
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
 
+        print("*connection established*");
     }
 
     public void speak() throws IOException, ClassNotFoundException {
@@ -95,27 +93,29 @@ public class Client2 implements EventListener {
                 if (game.getCurrentPlayer().isDead()) {
                     game.resetEndOfTurn();
                     game.playerIndex++;
+
                     if (game.playerIndex >= game.playerList.size()) {
                         game.playerIndex = 0;
                         game.round++;
                     }
+
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;
-                }else{
-
-                    while (!game.getCurrentPlayer().isEndOfTurn()) {
-
-                    }
-
-                    if (game.getCurrentPlayer().isEndOfTurn()) {
-                        game.resetEndOfTurn();
-                        game.setCurrentPlayer(game.playerList.get(game.playerIndex));
-                        sendGameAfterTurn();
-                        continue;
-                    }
 
                 }
+
+                while (!game.getCurrentPlayer().isEndOfTurn()) {
+
+                }
+
+                if (game.getCurrentPlayer().isEndOfTurn()) {
+                    game.resetEndOfTurn();
+                    game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    sendGameAfterTurn();
+                    continue;
+                }
+
 
             }
             receiveGame();
@@ -160,3 +160,4 @@ public class Client2 implements EventListener {
         System.out.println(message);
     }
 }
+

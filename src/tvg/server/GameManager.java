@@ -144,7 +144,7 @@ public class GameManager {
             }
 
             if (received) {
-               // removeFaintedPlayerFromGameList();
+                // removeFaintedPlayerFromGameList();
                 for (Player player : game.playerList) {
                     if (player.getLifePoints() <= 0) {
                         player.setDead(true);
