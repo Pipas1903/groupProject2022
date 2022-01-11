@@ -25,7 +25,7 @@ public class Game implements ActionListener, Serializable {
     int luck = 150;
 
     private Board gameBoard;
-    private int round = 1;
+    public int round = 1;
     private final int lifeRestoration = 80;
     Player currentPlayer = null;
 

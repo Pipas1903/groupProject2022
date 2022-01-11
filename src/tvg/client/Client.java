@@ -93,6 +93,10 @@ public class Client {
                 if (game.getCurrentPlayer().isDead()) {
                     game.resetEndOfTurn();
                     game.playerIndex++;
+                    if (game.playerIndex >= game.playerList.size()) {
+                        game.playerIndex = 0;
+                        game.round++;
+                    }
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
                     sendGameAfterTurn();
                     continue;
