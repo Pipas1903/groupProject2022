@@ -1,6 +1,7 @@
 package tvg.board;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -109,33 +110,28 @@ public class Tile extends JPanel implements Serializable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.number == 1 || this.number == 3 || this.number == 4 || this.number == 5) {
-            g.drawRect(0, this.getHeight() - 20, this.getWidth(), 20);
-            g.setColor(Color.BLUE);
-            g.fillRect(0, this.getHeight() - 20, this.getWidth(), 20);
+            this.setBackground(new Color(204,255,204));
+           // Border border = new LineBorder(Color.BLUE, 3, false);
+            //this.setBorder(border);
+
         }
         if (this.number == 18) {
             setBackground(new Color(255, 114, 111));
         }
         if (this.number == 12) {
-            setBackground(new Color(153, 255, 153));
+            setBackground(new Color(51, 204, 051));
         }
         if (this.number == 2 || this.number == 6 || this.number == 8 || this.number == 14 || this.number == 21) {
             setBackground(new Color(255, 178, 102));
         }
         if (this.number == 7 || this.number == 9 || this.number == 10 || this.number == 11) {
-            g.drawRect(0, 0, 20, this.getHeight());
-            g.setColor(new Color(224, 100, 168));
-            g.fillRect(0, 0, 20, this.getHeight());
+            this.setBackground(new Color(204, 255, 255));
         }
         if (this.number == 13 || this.number == 15 || this.number == 16 || this.number == 17) {
-            g.drawRect(0, 0, this.getWidth(), 20);
-            g.setColor(new Color(0, 180, 0));
-            g.fillRect(0, 0, this.getWidth(), 20);
+            this.setBackground(new Color(255, 255, 153));
         }
         if (this.number == 19 || this.number == 20 || this.number == 22 || this.number == 23) {
-            g.drawRect(this.getWidth() - 20, 0, 20, this.getHeight());
-            g.setColor(Color.ORANGE);
-            g.fillRect(this.getWidth() - 20, 0, 20, this.getHeight());
+           this.setBackground(new Color(230, 204, 255));
         }
 
     }

@@ -34,6 +34,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public JLabel upgradePrice;
     public JLabel damageDealt;
     public JLabel armed;
+    public JLabel winner;
 
     public JLabel printPlayer1, printPlayer2, printPlayer3, printPlayer4;
     public JLabel printName1, printName2, printName3, printName4;
@@ -81,6 +82,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(info);
 
 
+
         buttonsList.add(stealTrap);
         buttonsList.add(passTurn);
         buttonsList.add(upgradeTrap);
@@ -90,7 +92,20 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         initializeSquares();
     }
 
+    public void Winner(){
+        winner = new JLabel();
+        winner.setBounds(215,200,330,300);
+        winner.setFont(new Font("Chalkboard",Font.PLAIN, 40));
+        winner.setText("Winner Player1");
+        winner.setHorizontalTextPosition(JLabel.CENTER);
+        winner.setVerticalTextPosition(JLabel.CENTER);
+
+        winner.setVisible(true);
+        this.add(winner);
+
+    }
     private void initializeSquares() {
+
         // TODO Auto-generated method stub
         String[] squareNames = {
                 "Start",
@@ -138,7 +153,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(tile02);
         allTiles.add(tile02);
         unbuyableTiles.add(tile02);
-        tile02.addMouseListener(this);
+
 
         Tile tile03 = new Tile(306, 6, 100, 100, squareNames[3], 0, true);
         this.add(tile03);
@@ -160,7 +175,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(tile06);
         allTiles.add(tile06);
         unbuyableTiles.add(tile06);
-        tile06.addMouseListener(this);
+
 
         // squares on the right
         Tile tile07 = new Tile(606, 106, 100, 100, squareNames[7], -90, true);
@@ -168,11 +183,12 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         allTiles.add(tile07);
         tile07.addMouseListener(this);
 
+
         Tile tile08 = new Tile(606, 206, 100, 100, squareNames[8], -90, false);
         this.add(tile08);
         allTiles.add(tile08);
         unbuyableTiles.add(tile08);
-        tile08.addMouseListener(this);
+
 
         Tile tile09 = new Tile(606, 306, 100, 100, squareNames[9], -90, true);
         this.add(tile09);
@@ -194,7 +210,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(tile12);
         allTiles.add(tile12);
         unbuyableTiles.add(tile12);
-        tile12.addMouseListener(this);
         tile12.setGoodLuck(true);
 
         // squares on the bottom
@@ -207,7 +222,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(tile14);
         allTiles.add(tile14);
         unbuyableTiles.add(tile14);
-        tile14.addMouseListener(this);
 
         Tile tile15 = new Tile(306, 606, 100, 100, squareNames[15], 0, true);
         this.add(tile15);
@@ -229,7 +243,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(tile18);
         allTiles.add(tile18);
         unbuyableTiles.add(tile18);
-        tile18.addMouseListener(this);
         tile18.setBadLuck(true);
 
 
@@ -248,7 +261,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(tile21);
         allTiles.add(tile21);
         unbuyableTiles.add(tile21);
-        tile21.addMouseListener(this);
 
         Tile tile22 = new Tile(6, 206, 100, 100, squareNames[22], 90, true);
         this.add(tile22);
@@ -357,7 +369,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo1.setVisible(true);
         printInfo1.setOpaque(true);
         printInfo1.setPreferredSize(new Dimension(200, 150));
-        printInfo1.setLayout(new GridLayout(5, 1, 0, 5));
+        printInfo1.setLayout(new GridLayout(6, 1, 0, 5));
 
         printName1 = new JLabel();
         printName1.setOpaque(true);
@@ -376,7 +388,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo2.setVisible(true);
         printInfo2.setOpaque(true);
         printInfo2.setPreferredSize(new Dimension(200, 150));
-        printInfo2.setLayout(new GridLayout(5, 1, 0, 5));
+        printInfo2.setLayout(new GridLayout(6, 1, 0, 5));
 
         printName2 = new JLabel();
         printName2.setOpaque(true);
@@ -397,7 +409,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo3.setVisible(true);
         printInfo3.setOpaque(true);
         printInfo3.setPreferredSize(new Dimension(200, 150));
-        printInfo3.setLayout(new GridLayout(5, 1, 0, 5));
+        printInfo3.setLayout(new GridLayout(6, 1, 0, 5));
 
         printName3 = new JLabel();
         printName3.setVisible(true);
@@ -419,7 +431,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printInfo4.setVisible(true);
         printInfo4.setOpaque(true);
         printInfo4.setPreferredSize(new Dimension(200, 150));
-        printInfo4.setLayout(new GridLayout(5, 1, 0, 5));
+        printInfo4.setLayout(new GridLayout(6, 1, 0, 5));
 
         printName4 = new JLabel();
         printName4.setOpaque(true);
@@ -468,35 +480,32 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         for (Map.Entry<Integer, String> entry : game.getArmedTrapsRegister().entrySet()) {
 
             if (entry.getValue().equals(playerList.get(0).getName())) {
-                traps1[countTraps1] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps1);
+                traps1[countTraps1] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName());
                 printInfo1.add(traps1[countTraps1]);
                 countTraps1 += 1;
                 printInfo1.updateUI();
             }
 
             if (entry.getValue().equals(playerList.get(1).getName())) {
-                traps2[countTraps2] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps2);
+                traps2[countTraps2] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName());
                 printInfo2.add(traps2[countTraps2]);
                 countTraps2 += 1;
                 printInfo2.updateUI();
             }
             if (entry.getValue().equals(playerList.get(2).getName())) {
-
-                traps3[countTraps3] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps3);
+                traps3[countTraps3] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName());
                 printInfo3.add(traps3[countTraps3]);
                 countTraps3 += 1;
                 printInfo3.updateUI();
             }
 
             if (entry.getValue().equals(playerList.get(3).getName())) {
-                traps4[countTraps4] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName() + " " + countTraps4);
+                traps4[countTraps4] = new JLabel(getTileAtIndex((Integer) entry.getKey()).getName());
                 printInfo4.add(traps4[countTraps4]);
                 countTraps4 += 1;
                 printInfo4.updateUI();
             }
-
         }
-
     }
 
     public void panel(Tile tile) {
