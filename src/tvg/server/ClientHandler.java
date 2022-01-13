@@ -93,6 +93,8 @@ public class ClientHandler extends Thread {
             }
         }
 
+        ExistingGames.remove(gameManager);
+
         for (Map.Entry<Socket, Player> map : gameManager.getClientSocketList().entrySet()) {
 
             out = new PrintWriter(map.getKey().getOutputStream());
@@ -125,8 +127,6 @@ public class ClientHandler extends Thread {
             ExistingGames.get(index).notifyAll();
         }
     }
-
-
 
     private void printExistingGames() throws IOException {
 
