@@ -24,7 +24,7 @@ public class Tile extends JPanel implements Serializable {
     private boolean isBadLuck;
 
     JLabel nameLabel;
-
+    Image bearTrap;
     private String name;
     private String owner = null;
 
@@ -70,7 +70,6 @@ public class Tile extends JPanel implements Serializable {
             this.add(nameLabel);
         } else {
 
-
             nameLabel = new JLabel(labelString) {
                 protected void paintComponent(Graphics g) {
                     Graphics2D g2 = (Graphics2D) g;
@@ -109,10 +108,9 @@ public class Tile extends JPanel implements Serializable {
     // NEEDS CHANGES, GROUPS OF TWO, NOT THREE
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         if (this.number == 1 || this.number == 3 || this.number == 4 || this.number == 5) {
             this.setBackground(new Color(204,255,204));
-           // Border border = new LineBorder(Color.BLUE, 3, false);
-            //this.setBorder(border);
 
         }
         if (this.number == 18) {
@@ -125,6 +123,7 @@ public class Tile extends JPanel implements Serializable {
             setBackground(new Color(255, 178, 102));
         }
         if (this.number == 7 || this.number == 9 || this.number == 10 || this.number == 11) {
+
             this.setBackground(new Color(204, 255, 255));
         }
         if (this.number == 13 || this.number == 15 || this.number == 16 || this.number == 17) {
@@ -132,6 +131,7 @@ public class Tile extends JPanel implements Serializable {
         }
         if (this.number == 19 || this.number == 20 || this.number == 22 || this.number == 23) {
            this.setBackground(new Color(230, 204, 255));
+
         }
 
     }

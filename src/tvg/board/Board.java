@@ -452,7 +452,10 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     }
 
-    public void listTraps() {
+
+
+    public void listTraps(){
+
 
 
         printInfo1.removeAll();
