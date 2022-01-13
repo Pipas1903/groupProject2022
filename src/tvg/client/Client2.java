@@ -1,6 +1,7 @@
 package tvg.client;
 
 import tvg.board.Frame;
+import tvg.common.Messages;
 import tvg.common.UpdateMessages;
 import tvg.game.Game;
 
@@ -34,7 +35,6 @@ public class Client2 {
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
 
-        print("*connection established*");
     }
 
     public void speak() throws IOException, ClassNotFoundException {
@@ -83,6 +83,12 @@ public class Client2 {
             frame.repaint();
             game.getGameBoard().updateUI();
 
+            if(game.getGameBoard().textinho.getText().contains("The winner is: ")){
+                objectInputStream.close();
+                objectOutputStream.close();
+                game.turnOffOtherPlayerButtons();
+                return;
+            }
 
             if (!game.getCurrentPlayer().getName().equals(name)) {
                 game.turnOffOtherPlayerButtons();
@@ -100,6 +106,7 @@ public class Client2 {
                     }
 
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    game.getGameBoard().textinho.setText(game.getCurrentPlayer().getName() + Messages.THROW_DICE);
                     sendGameAfterTurn();
                     continue;
 
@@ -112,6 +119,7 @@ public class Client2 {
                 if (game.getCurrentPlayer().isEndOfTurn()) {
                     game.resetEndOfTurn();
                     game.setCurrentPlayer(game.playerList.get(game.playerIndex));
+                    game.getGameBoard().textinho.setText(game.getCurrentPlayer().getName() + Messages.THROW_DICE);
                     sendGameAfterTurn();
                     continue;
                 }
@@ -133,12 +141,6 @@ public class Client2 {
             game.getGameBoard().updateUI();
             frame.validate();
             print(UpdateMessages.RECEIVED_GAME + game);
-        }
-
-        if (object instanceof String) {
-            System.out.println("message received: " + objectInputStream.readObject());
-            serverSocket.close();
-            System.exit(1);
         }
     }
 

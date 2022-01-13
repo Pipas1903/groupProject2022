@@ -18,7 +18,6 @@ public class GameManager {
 
     private Game game;
     private String gameName;
-    private String gameMode;
 
     ObjectInputStream objectInputStream = null;
 
@@ -79,29 +78,47 @@ public class GameManager {
                 System.out.println();
                 if (game.getCurrentPlayer().getName().equals(map.getValue().getName())) {
                     receive(map.getKey());
-
                     received = true;
                     break;
                 }
             }
+
             if (received) {
                 for (Player player : game.playerList) {
                     if (player.getLifePoints() <= 0) {
                         player.setDead(true);
+                        System.out.println(player.getName() + " is dead.");
                     }
                 }
 
                 send();
             }
-            for(Player player : game.playerList){
-                if(!player.isDead()){
+            for (Player player : game.playerList) {
+                if (!player.isDead()) {
                     playersAlive++;
                 }
             }
+
+            if (playersAlive == 1) {
+                winner();
+            }
         }
 
+    }
 
-
+    public void winner() throws IOException, ClassNotFoundException {
+        for (Player player : game.playerList) {
+            if (!player.isDead()) {
+                Map.Entry<Socket, Player> entry = Objects.requireNonNull(clientSocketList.entrySet().stream().filter(p -> p.getValue().getName().equals(player.getName())).findAny().orElse(null));
+                receive(entry.getKey());
+                String winner = entry.getValue().getName();
+                game.getGameBoard().textinho.setText("The winner is: " + winner + "!");
+                send();
+                System.out.println("sent winner");
+                System.out.println("GAME " + gameName + " IS OVER");
+                return;
+            }
+        }
     }
 
     public void receive(Socket clientSocket) throws IOException, ClassNotFoundException {
@@ -114,7 +131,6 @@ public class GameManager {
             System.out.println("Recebi um jogo: " + game);
         }
     }
-
 
     public void playingOrder() {
 

@@ -35,7 +35,6 @@ public class Client {
         scan.nextLine();
         serverSocket = new Socket(hostName, portNumber);
 
-        print("*connection established*");
     }
 
     public void speak() throws IOException, ClassNotFoundException {
@@ -84,6 +83,12 @@ public class Client {
             frame.repaint();
             game.getGameBoard().updateUI();
 
+            if(game.getGameBoard().textinho.getText().contains("The winner is: ")){
+                objectInputStream.close();
+                objectOutputStream.close();
+                game.turnOffOtherPlayerButtons();
+                return;
+            }
 
             if (!game.getCurrentPlayer().getName().equals(name)) {
                 game.turnOffOtherPlayerButtons();
@@ -136,12 +141,6 @@ public class Client {
             game.getGameBoard().updateUI();
             frame.validate();
             print(UpdateMessages.RECEIVED_GAME + game);
-        }
-
-        if (object instanceof String) {
-            System.out.println("message received: " + objectInputStream.readObject());
-            serverSocket.close();
-            System.exit(1);
         }
     }
 

@@ -1,15 +1,12 @@
 package tvg;
 
-import tvg.board.Frame;
-import tvg.game.Game;
-import tvg.player.Player;
+import tvg.client.Client;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        List<Player> lista = new ArrayList<>();
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+       /* List<Player> lista = new ArrayList<>();
 
         lista.add(new Player("joao"));
         lista.add(new Player("rui"));
@@ -19,6 +16,10 @@ public class Main {
         Game jogo = new Game(lista);
 
         Frame frame = new Frame(jogo);
+*/
+        Client client = new Client();
+        client.getServerInfo();
+        client.speak();
 
     }
 }
