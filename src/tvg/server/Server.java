@@ -9,7 +9,7 @@ public class Server {
 
     private ServerSocket serverSocket;
     private Socket clientSocket;
-    private int port = 940;
+    private int port = 930;
 
     public static void main(String[] args) {
         Server server = new Server();
