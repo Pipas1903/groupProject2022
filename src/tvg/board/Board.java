@@ -102,8 +102,9 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
         winner.setVisible(true);
         this.add(winner);
-
     }
+
+
     private void initializeSquares() {
 
         // TODO Auto-generated method stub
@@ -453,9 +454,7 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
-
     public void listTraps(){
-
 
 
         printInfo1.removeAll();

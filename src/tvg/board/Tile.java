@@ -24,7 +24,6 @@ public class Tile extends JPanel implements Serializable {
     private boolean isBadLuck;
 
     JLabel nameLabel;
-    Image bearTrap;
     private String name;
     private String owner = null;
 
