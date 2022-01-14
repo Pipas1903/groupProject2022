@@ -1,6 +1,6 @@
-package tvg.server;
+package entrapped.server;
 
-import tvg.common.UpdateMessages;
+import entrapped.common.UpdateMessages;
 
 import java.net.ServerSocket;
 import java.net.Socket;

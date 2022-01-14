@@ -1,7 +1,6 @@
-package tvg.board;
+package entrapped.board;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -24,7 +23,6 @@ public class Tile extends JPanel implements Serializable {
     private boolean isBadLuck;
 
     JLabel nameLabel;
-    Image bearTrap;
     private String name;
     private String owner = null;
 

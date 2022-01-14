@@ -1,4 +1,4 @@
-package tvg.common;
+package entrapped.common;
 
 public class UpdateMessages {
     public static final String WAITING_FOR_CLIENT = "WAITING FOR CLIENT";
