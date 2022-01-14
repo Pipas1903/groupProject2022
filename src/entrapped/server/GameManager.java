@@ -1,8 +1,7 @@
-package tvg.server;
+package entrapped.server;
 
-import tvg.common.Messages;
-import tvg.game.Game;
-import tvg.player.Player;
+import entrapped.game.Game;
+import entrapped.player.Player;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -90,17 +89,16 @@ public class GameManager {
                         System.out.println(player.getName() + " is dead.");
                     }
                 }
-
-                send();
-            }
-            for (Player player : game.playerList) {
-                if (!player.isDead()) {
-                    playersAlive++;
+                for (Player player : game.playerList) {
+                    if (!player.isDead()) {
+                        playersAlive++;
+                    }
                 }
-            }
-
-            if (playersAlive == 1) {
-                winner();
+                if (playersAlive == 1) {
+                    winner();
+                    return;
+                }
+                send();
             }
         }
 
@@ -109,14 +107,19 @@ public class GameManager {
     public void winner() throws IOException, ClassNotFoundException {
         for (Player player : game.playerList) {
             if (!player.isDead()) {
-                Map.Entry<Socket, Player> entry = Objects.requireNonNull(clientSocketList.entrySet().stream().filter(p -> p.getValue().getName().equals(player.getName())).findAny().orElse(null));
-                receive(entry.getKey());
-                String winner = entry.getValue().getName();
-                game.getGameBoard().textinho.setText("The winner is: " + winner + "!");
-                send();
-                System.out.println("sent winner");
-                System.out.println("GAME " + gameName + " IS OVER");
-                return;
+                for (Map.Entry<Socket, Player> entry : clientSocketList.entrySet()) {
+                    if (entry.getValue().getName().equals(player.getName())) {
+                        //receive(entry.getKey());
+                        game.getGameBoard().winner.setVisible(true);
+                        String announceWinner = "Winner is: " + player.getName();
+                        game.getGameBoard().winner.setText(announceWinner);
+                        send();
+                        System.out.println("sent winner");
+                        System.out.println("GAME " + gameName + " IS OVER");
+                        return;
+                    }
+                }
+                //Map.Entry<Socket, Player> entry = Objects.requireNonNull(clientSocketList.entrySet().stream().filter(p -> p.getValue().getName().equals(player.getName())).findAny().orElse(null));
             }
         }
     }

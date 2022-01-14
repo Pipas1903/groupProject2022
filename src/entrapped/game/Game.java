@@ -1,9 +1,9 @@
-package tvg.game;
+package entrapped.game;
 
-import tvg.board.Board;
-import tvg.board.Tile;
-import tvg.common.Messages;
-import tvg.player.Player;
+import entrapped.board.Board;
+import entrapped.board.Tile;
+import entrapped.common.Messages;
+import entrapped.player.Player;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -1,9 +1,9 @@
-package tvg.client;
+package entrapped.client;
 
-import tvg.board.Frame;
-import tvg.common.Messages;
-import tvg.common.UpdateMessages;
-import tvg.game.Game;
+import entrapped.board.Frame;
+import entrapped.common.Messages;
+import entrapped.common.UpdateMessages;
+import entrapped.game.Game;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -62,6 +62,7 @@ public class Client3 {
                 frame = new Frame(game);
 
                 playingLoop();
+                return;
             }
 
             print(received);
@@ -74,6 +75,7 @@ public class Client3 {
                 firstIteration = false;
             }
         }
+        System.out.println("connection finished");
     }
 
     public void playingLoop() throws IOException, ClassNotFoundException {
@@ -82,9 +84,10 @@ public class Client3 {
             frame.repaint();
             game.getGameBoard().updateUI();
 
-            if(game.getGameBoard().textinho.getText().contains("The winner is: ")){
+            if(game.getGameBoard().winner.getText().contains("Winner")){
                 objectInputStream.close();
                 objectOutputStream.close();
+                serverSocket.close();
                 game.turnOffOtherPlayerButtons();
                 return;
             }

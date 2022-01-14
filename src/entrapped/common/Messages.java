@@ -1,4 +1,4 @@
-package tvg.common;
+package entrapped.common;
 
 public class Messages {
     public static final String ROUND = "ROUND ";

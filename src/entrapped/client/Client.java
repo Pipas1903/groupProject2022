@@ -1,16 +1,16 @@
-package tvg.client;
+package entrapped.client;
 
-import tvg.board.Frame;
-import tvg.common.Messages;
-import tvg.common.UpdateMessages;
-import tvg.game.Game;
+import entrapped.board.Frame;
+import entrapped.common.Messages;
+import entrapped.common.UpdateMessages;
+import entrapped.game.Game;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client4 {
+public class Client {
 
     Scanner scan = new Scanner(System.in);
     InetAddress hostName;
@@ -63,6 +63,7 @@ public class Client4 {
                 frame = new Frame(game);
 
                 playingLoop();
+                return;
             }
 
             print(received);
@@ -75,6 +76,7 @@ public class Client4 {
                 firstIteration = false;
             }
         }
+        System.out.println("connection finished");
     }
 
     public void playingLoop() throws IOException, ClassNotFoundException {
@@ -83,10 +85,10 @@ public class Client4 {
             frame.repaint();
             game.getGameBoard().updateUI();
 
-            if (game.getGameBoard().textinho.getText().contains("The winner is: ")) {
-                game.getGameBoard().updateUI();
+            if(game.getGameBoard().winner.getText().contains("Winner")){
                 objectInputStream.close();
                 objectOutputStream.close();
+                serverSocket.close();
                 game.turnOffOtherPlayerButtons();
                 return;
             }
@@ -99,8 +101,8 @@ public class Client4 {
 
                 if (game.getCurrentPlayer().isDead()) {
                     game.resetEndOfTurn();
-                    game.playerIndex++;
 
+                    game.playerIndex++;
                     if (game.playerIndex >= game.playerList.size()) {
                         game.playerIndex = 0;
                         game.round++;
@@ -125,8 +127,8 @@ public class Client4 {
                     continue;
                 }
 
-            }
 
+            }
             receiveGame();
         }
     }
@@ -154,7 +156,7 @@ public class Client4 {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Client4 client = new Client4();
+        Client client = new Client();
         client.getServerInfo();
         client.speak();
     }
@@ -163,5 +165,4 @@ public class Client4 {
         System.out.println(message);
     }
 }
-
 

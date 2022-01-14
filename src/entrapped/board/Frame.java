@@ -1,6 +1,6 @@
-package tvg.board;
+package entrapped.board;
 
-import tvg.game.Game;
+import entrapped.game.Game;
 
 import javax.swing.*;
 

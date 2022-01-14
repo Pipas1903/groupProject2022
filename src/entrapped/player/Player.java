@@ -1,4 +1,4 @@
-package tvg.player;
+package entrapped.player;
 
 import java.io.Serializable;
 

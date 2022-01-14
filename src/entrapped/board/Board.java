@@ -1,7 +1,7 @@
-package tvg.board;
+package entrapped.board;
 
-import tvg.game.Game;
-import tvg.player.Player;
+import entrapped.game.Game;
+import entrapped.player.Player;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -82,7 +82,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(info);
 
 
-
         buttonsList.add(stealTrap);
         buttonsList.add(passTurn);
         buttonsList.add(upgradeTrap);
@@ -92,11 +91,11 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         initializeSquares();
     }
 
-    public void Winner(){
+    public void winnerBox() {
         winner = new JLabel();
-        winner.setBounds(215,200,330,300);
-        winner.setFont(new Font("Chalkboard",Font.PLAIN, 40));
-        winner.setText("Winner Player1");
+        winner.setBounds(215, 200, 330, 300);
+        winner.setFont(new Font("Chalkboard", Font.PLAIN, 40));
+        winner.setText("");
         winner.setHorizontalTextPosition(JLabel.CENTER);
         winner.setVerticalTextPosition(JLabel.CENTER);
 
@@ -107,7 +106,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
 
     private void initializeSquares() {
 
-        // TODO Auto-generated method stub
         String[] squareNames = {
                 "Start",
                 "Iron Foothold",
@@ -135,13 +133,13 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
                 "Gold Bear Trap"
         };
 
+        winnerBox();
 
         // squares on the top
         Tile tile00 = new Tile(6, 6, 100, 100, squareNames[0], -45, false);
         this.add(tile00);
         allTiles.add(tile00);
         unbuyableTiles.add(tile00);
-        tile00.addMouseListener(this);
 
 
         Tile tile01 = new Tile(106, 6, 100, 100, squareNames[1], 0, true);
@@ -360,7 +358,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     public void mouseExited(MouseEvent e) {
     }
 
-
     public void panelInfo() {
 
 
@@ -454,7 +451,9 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
     }
 
 
+
     public void listTraps(){
+
 
 
         printInfo1.removeAll();
@@ -520,6 +519,9 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         if (!tile.isArmed()) {
             armed.setText("Armed");
             armed.setIcon(x);
+        } else if (tile.isUpgraded()) {
+            armed.setText("Upgraded by: " + tile.getOwner());
+            armed.setIcon(right);
         } else {
             armed.setText("Armed by: " + tile.getOwner());
             armed.setIcon(right);
@@ -561,8 +563,8 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         info.add(damageDealt);
 //armed
         armed = new JLabel();
-        right = new ImageIcon("src/tvg/images/right.png");
-        x = new ImageIcon("src/tvg/images/x.png");
+        right = new ImageIcon("src/entrapped/images/right.png");
+        x = new ImageIcon("src/entrapped/images/x.png");
         info.add(armed);
 //printPlayer
         printPlayer1 = new JLabel();
@@ -629,10 +631,10 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         printName4.setText(playerList.get(3).getName() + "                   life : " + playerList.get(3).getLifePoints());
         printName4.updateUI();
 
-        ImageIcon redCircle = new ImageIcon("src/tvg/images/redcircle.png");
-        ImageIcon blueCircle = new ImageIcon("src/tvg/images/bluecircle.png");
-        ImageIcon yellowCircle = new ImageIcon("src/tvg/images/yellowcircle.png");
-        ImageIcon greenCircle = new ImageIcon("src/tvg/images/greencircle.png");
+        ImageIcon redCircle = new ImageIcon("src/entrapped/images/redcircle.png");
+        ImageIcon blueCircle = new ImageIcon("src/entrapped/images/bluecircle.png");
+        ImageIcon yellowCircle = new ImageIcon("src/entrapped/images/yellowcircle.png");
+        ImageIcon greenCircle = new ImageIcon("src/entrapped/images/greencircle.png");
 
         Player player1 = playerList.get(0);
         Player player2 = playerList.get(1);

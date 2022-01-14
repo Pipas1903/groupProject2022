@@ -1,4 +1,4 @@
-package tvg.game;
+package entrapped.game;
 
 import java.util.Random;
 
