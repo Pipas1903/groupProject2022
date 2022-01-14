@@ -140,7 +140,6 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         this.add(tile00);
         allTiles.add(tile00);
         unbuyableTiles.add(tile00);
-        tile00.addMouseListener(this);
 
 
         Tile tile01 = new Tile(106, 6, 100, 100, squareNames[1], 0, true);
@@ -517,6 +516,9 @@ public class Board extends JPanel implements MouseListener, ActionListener, Seri
         if (!tile.isArmed()) {
             armed.setText("Armed");
             armed.setIcon(x);
+        } else if (tile.isUpgraded()) {
+            armed.setText("Upgraded by: " + tile.getOwner());
+            armed.setIcon(right);
         } else {
             armed.setText("Armed by: " + tile.getOwner());
             armed.setIcon(right);
